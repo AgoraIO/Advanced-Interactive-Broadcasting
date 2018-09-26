@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">TransactionStream</string>
+
+    <!-- replace app_id with your app id -->
+    <string name="app_id"><#your app id#></string>
+    <!-- replace rtmp_url with your url, plz ensure this url is usable-->
+    <string name="stream_url"><#your url#></string>
+</resources>

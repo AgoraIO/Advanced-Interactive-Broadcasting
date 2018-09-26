@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+    <TextView
+        android:id="@+id/tv_chat_room_message_bubble"
+        android:gravity="center_vertical"
+        android:paddingLeft="9dp"
+        android:paddingRight="9dp"
+        android:textColor="@color/agora_white"
+        style="@style/text_edit_view_style"
+        android:background="@drawable/chat_room_et_style_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+</LinearLayout>

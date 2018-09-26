@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">RTMP Streaming</string>
+
+    <!-- replace app_id with your app id -->
+    <string name="app_id"><#YOUR APPID#></string>
+    <!-- replace rtmp_url with your url, plz ensure this url is usable-->
+    <string name="stream_url"><#RTMP_URL#></string>
+</resources>

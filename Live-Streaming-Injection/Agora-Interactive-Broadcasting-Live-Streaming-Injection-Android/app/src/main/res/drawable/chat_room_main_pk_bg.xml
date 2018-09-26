@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <gradient android:startColor="@color/agora_chat_room_main_pk_bg_start"
+        android:endColor="@color/agora_chat_room_main_pk_bg_end"
+        android:angle="90"/>
+</shape>

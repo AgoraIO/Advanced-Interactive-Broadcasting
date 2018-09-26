@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:keepScreenOn="true"
+    tools:context=".ui.LiveRoomActivity">
+
+    <io.agora.propeller.ui.GridVideoViewContainer
+        android:id="@+id/grid_video_view_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/room_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="6dp"
+            android:textColor="@color/dark_black"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/audio_sample_info_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/room_name"
+            android:layout_alignParentLeft="true"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="5dp"
+            android:visibility="gone"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:textColor="@android:color/white"
+            android:textSize="11sp"
+            android:background="@drawable/round_room_info_bg"/>
+
+        <io.agora.propeller.ui.AGLinearLayout
+            android:id="@+id/bottom_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/bottom_action_end_call"
+                android:layout_width="54dp"
+                android:layout_height="54dp"
+                android:layout_gravity="center_horizontal"
+                android:onClick="onEndCallClicked"
+                android:scaleType="center"
+                android:src="@drawable/btn_end_call" />
+
+            <RelativeLayout
+                android:id="@+id/bottom_action_container"
+                android:layout_width="match_parent"
+                android:layout_height="54dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@id/switch_broadcasting_id"
+                    android:layout_width="54dp"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:scaleType="center"
+                    android:src="@drawable/btn_request_broadcast" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_centerInParent="true"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@id/switch_speaker_id"
+                        android:layout_width="54dp"
+                        android:layout_height="match_parent"
+                        android:onClick="onSwitchSpeakerClicked"
+                        android:scaleType="center"
+                        android:src="@drawable/btn_speaker" />
+
+                    <ImageView
+                        android:id="@id/mute_local_speaker_id"
+                        android:layout_width="54dp"
+                        android:layout_height="match_parent"
+                        android:onClick="onVoiceMuteClicked"
+                        android:scaleType="center"
+                        android:src="@drawable/btn_mute" />
+
+                </LinearLayout>
+
+            </RelativeLayout>
+        </io.agora.propeller.ui.AGLinearLayout>
+    </RelativeLayout>
+</FrameLayout>

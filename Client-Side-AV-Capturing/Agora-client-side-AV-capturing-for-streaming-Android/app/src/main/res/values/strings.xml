@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<resources>
+    <string name="app_name">Agora A/V capturing and streaming</string>
+
+    <string name="msg_welcome_message">You can customizing your streaming parameters!</string>
+
+    <string name="label_room_name_hint">Room name</string>
+
+    <string name="msg_choose_role">Would you like to be the broadcaster or an audience?</string>
+
+    <string name="label_audience">Audience</string>
+
+    <string name="label_broadcaster">Broadcaster</string>
+
+    <string name="label_confirm">Confirm</string>
+
+    <string name="label_join">Join</string>
+
+    <string name="msg_no_network_connection">No network connection, please check the network settings</string>
+
+    <string name="audio_sample_info">sample rate: %1$s, samples per call: %2$s</string>
+
+    <string-array name="audio_sample_rate_values">
+        <item>16000</item>
+        <item>32000</item>
+        <item>44100</item>
+        <item>48000</item>
+    </string-array>
+
+    <string-array name="audio_samples_per_call_values">
+        <item>640</item>
+        <item>1024</item>
+        <item>2048</item>
+    </string-array>
+
+    // DO NOT TRANSLATE
+    <string translatable="false" name="bit_rate_value_with_unit">%d kbps</string>
+</resources>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="PopView" customModule="AgoraInjectStreaming" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="O0H-5q-wb5">
+                    <rect key="frame" x="38" y="283" width="300" height="1"/>
+                    <color key="backgroundColor" red="0.34509803921568627" green="0.36470588235294116" blue="0.37254901960784315" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="589-lr-e9F"/>
+                    </constraints>
+                </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7Ph-8O-eEx">
+                    <rect key="frame" x="37" y="311.5" width="300" height="44"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="44" id="tJH-2i-HNm"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="17"/>
+                    <state key="normal">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </state>
+                    <connections>
+                        <action selector="doPopViewButtonPressed:" destination="iN0-l3-epB" eventType="touchUpInside" id="gxa-xZ-Faf"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7Yo-5k-zHI">
+                    <rect key="frame" x="325" y="20" width="50" height="50"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="50" id="9mh-b3-2eq"/>
+                        <constraint firstAttribute="width" constant="50" id="shD-KZ-cr2"/>
+                    </constraints>
+                    <state key="normal" image="btn_close"/>
+                    <connections>
+                        <action selector="doCancelButton:" destination="iN0-l3-epB" eventType="touchUpInside" id="KzY-kc-Bex"/>
+                    </connections>
+                </button>
+                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="BlE-zd-lv2">
+                    <rect key="frame" x="42.5" y="243" width="290" height="40"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="40" id="RTp-WR-JbK"/>
+                    </constraints>
+                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="alphabet"/>
+                </textField>
+            </subviews>
+            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.80000000000000004" colorSpace="custom" customColorSpace="displayP3"/>
+            <constraints>
+                <constraint firstItem="BlE-zd-lv2" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="BGe-H4-zc3"/>
+                <constraint firstItem="O0H-5q-wb5" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="DH9-mT-aeO"/>
+                <constraint firstItem="O0H-5q-wb5" firstAttribute="top" secondItem="BlE-zd-lv2" secondAttribute="bottom" id="DUT-ok-NR3"/>
+                <constraint firstItem="O0H-5q-wb5" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="width" multiplier="0.8" id="TIM-sl-yeN"/>
+                <constraint firstItem="7Ph-8O-eEx" firstAttribute="width" secondItem="O0H-5q-wb5" secondAttribute="width" id="WL4-EW-Gbg"/>
+                <constraint firstItem="7Yo-5k-zHI" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="20" id="YbY-Di-BMD"/>
+                <constraint firstItem="7Ph-8O-eEx" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="Z4i-FM-JaO"/>
+                <constraint firstAttribute="trailing" secondItem="7Yo-5k-zHI" secondAttribute="trailing" id="hCI-zz-GxE"/>
+                <constraint firstItem="O0H-5q-wb5" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" multiplier="0.85" id="rqM-C0-Xsb"/>
+                <constraint firstItem="BlE-zd-lv2" firstAttribute="width" secondItem="O0H-5q-wb5" secondAttribute="width" constant="-10" id="v4h-Ci-KqT"/>
+                <constraint firstItem="7Ph-8O-eEx" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="zrP-yf-KCF"/>
+            </constraints>
+            <connections>
+                <outlet property="inputTextField" destination="BlE-zd-lv2" id="FWi-WC-iHG"/>
+                <outlet property="popViewButton" destination="7Ph-8O-eEx" id="Bz4-Nz-6ez"/>
+            </connections>
+        </view>
+    </objects>
+    <resources>
+        <image name="btn_close" width="30" height="30"/>
+    </resources>
+</document>
