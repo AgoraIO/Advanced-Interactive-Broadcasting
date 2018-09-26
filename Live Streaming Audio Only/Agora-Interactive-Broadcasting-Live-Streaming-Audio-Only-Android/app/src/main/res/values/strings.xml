@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<resources>
+    <string name="app_name">Voice Only Live Streaming</string>
+
+    <string name="msg_welcome_message">Welcome to Voice Only Live Streamin!</string>
+
+    <string name="label_room_name_hint">Room name</string>
+
+    <string name="msg_choose_role">Would you like to be the broadcaster or an audience?</string>
+
+    <string name="label_audience">Audience</string>
+
+    <string name="label_broadcaster">Broadcaster</string>
+
+    <string name="label_confirm">Confirm</string>
+
+    <string name="label_join">Join</string>
+
+    <string name="msg_no_network_connection">No network connection, please check the network settings</string>
+
+    // DO NOT TRANSLATE
+    <string name="bit_rate_value_with_unit">%d kbps</string>
+</resources>

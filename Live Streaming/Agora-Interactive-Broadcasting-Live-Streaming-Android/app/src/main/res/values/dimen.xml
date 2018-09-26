@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="dialog_horizontal_margin">8dp</dimen>
+
+    <dimen name="transcoding_setting_left_width">48dp</dimen>
+    <dimen name="transcoding_setting_right_width">32dp</dimen>
+</resources>

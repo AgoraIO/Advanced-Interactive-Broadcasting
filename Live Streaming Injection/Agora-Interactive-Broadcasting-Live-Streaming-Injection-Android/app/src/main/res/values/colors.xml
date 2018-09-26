@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <color name="agora_black">#000000</color>
+    <color name="agora_white">#ffffff</color>
+
+    <color name="main_btn_blue">#3EAEFF</color>
+    <color name="agora_alpha_black">#00000000</color>
+    <color name="agora_alpha_deep_black">#66000000</color>
+
+    <color name="agora_chat_room_main_pk_bg_end">#8FD3F5</color>
+    <color name="agora_chat_room_main_pk_bg_start">#D3FDFF</color>
+</resources>
