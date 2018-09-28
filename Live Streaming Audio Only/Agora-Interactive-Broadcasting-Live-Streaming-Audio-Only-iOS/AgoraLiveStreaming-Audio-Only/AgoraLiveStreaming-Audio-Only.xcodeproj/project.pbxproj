@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0F523029215E33F50091EAB0 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F523028215E33F50091EAB0 /* Accelerate.framework */; };
 		0F88E96A2113FF0200F0A7E5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F88E9692113FF0200F0A7E5 /* AppDelegate.swift */; };
 		0F88E96F2113FF0200F0A7E5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0F88E96D2113FF0200F0A7E5 /* Main.storyboard */; };
 		0F88E9712113FF0400F0A7E5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0F88E9702113FF0400F0A7E5 /* Assets.xcassets */; };
@@ -28,6 +29,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0F523028215E33F50091EAB0 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		0F88E9662113FF0200F0A7E5 /* AgoraLiveStreaming-Audio-Only.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "AgoraLiveStreaming-Audio-Only.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0F88E9692113FF0200F0A7E5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0F88E96E2113FF0200F0A7E5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -55,6 +57,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0F523029215E33F50091EAB0 /* Accelerate.framework in Frameworks */,
 				0F88E98B2113FFCC00F0A7E5 /* AgoraAudioKit.framework in Frameworks */,
 				0F88E9892113FFA600F0A7E5 /* AVFoundation.framework in Frameworks */,
 				0F88E9872113FFA000F0A7E5 /* AudioToolbox.framework in Frameworks */,
@@ -107,6 +110,7 @@
 		0F88E97D2113FF8000F0A7E5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0F523028215E33F50091EAB0 /* Accelerate.framework */,
 				0F88E98A2113FFCC00F0A7E5 /* AgoraAudioKit.framework */,
 				0F88E9882113FFA600F0A7E5 /* AVFoundation.framework */,
 				0F88E9862113FFA000F0A7E5 /* AudioToolbox.framework */,

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0F52302B215E340F0091EAB0 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F52302A215E340F0091EAB0 /* Accelerate.framework */; };
 		0F88E9D82119717000F0A7E5 /* ServerHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F88E9D72119717000F0A7E5 /* ServerHelper.swift */; };
 		0F88E9DB211971C200F0A7E5 /* AlertUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F88E9DA211971C200F0A7E5 /* AlertUtil.swift */; };
 		0F99AA9921003185008AFD51 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F99AA9821003185008AFD51 /* AppDelegate.swift */; };
@@ -33,6 +34,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0F52302A215E340F0091EAB0 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		0F88E9D72119717000F0A7E5 /* ServerHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerHelper.swift; sourceTree = "<group>"; };
 		0F88E9DA211971C200F0A7E5 /* AlertUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertUtil.swift; sourceTree = "<group>"; };
 		0F99AA9521003185008AFD51 /* AgoraInjectStreaming.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AgoraInjectStreaming.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -65,6 +67,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0F52302B215E340F0091EAB0 /* Accelerate.framework in Frameworks */,
 				0F99AAC621004E45008AFD51 /* libstdc++.tbd in Frameworks */,
 				0F99AABE210035CE008AFD51 /* libresolv.tbd in Frameworks */,
 				0F99AABC210035C5008AFD51 /* AgoraRtcEngineKit.framework in Frameworks */,
@@ -135,6 +138,7 @@
 		0F99AAB02100359E008AFD51 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0F52302A215E340F0091EAB0 /* Accelerate.framework */,
 				0F99AAC521004E44008AFD51 /* libstdc++.tbd */,
 				0F99AABD210035CE008AFD51 /* libresolv.tbd */,
 				0F99AABB210035C5008AFD51 /* AgoraRtcEngineKit.framework */,
