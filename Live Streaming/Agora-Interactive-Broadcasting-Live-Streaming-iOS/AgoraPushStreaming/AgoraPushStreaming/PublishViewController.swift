@@ -8,6 +8,8 @@
 
 import UIKit
 
+let PushUrl: String = <#Your Stream URL#>
+
 protocol PublishVCDelegate: NSObjectProtocol {
     func publishVC(_ publishVC: PublishViewController, didAddPublishInfo info: PublishInfo)
     func publishVC(_ publishVC: PublishViewController, didRemovePublishInfo info: PublishInfo)
@@ -89,7 +91,7 @@ private extension PublishViewController {
     }
     //Setting Push Streaming URL, Also Custom url
     func streamURL(for room: String) -> String {
-        return <#streamURL#>  + "\(room)"
+        return PushUrl + "\(room)"
     }
     func alert(string: String) {
         let alert = UIAlertController(title: nil, message: string, preferredStyle: .alert)

@@ -1,12 +1,13 @@
 //
 //  TranscodingTableViewController.swift
-//  AgoraStreaming
+//  AgoraPushStreaming
 //
-//  Created by GongYuhua on 2017/7/31.
-//  Copyright © 2017年 Agora. All rights reserved.
+//  Created by ZhangJi on 2018/9/28.
+//  Copyright © 2018 Agora. All rights reserved.
 //
 
 import UIKit
+import AgoraRtcEngineKit
 
 protocol TranscodingTableVCDelegate: NSObjectProtocol {
     func transcodingTableVCDidUpdate(_ transcodingTableVC: TranscodingTableViewController)
@@ -177,10 +178,12 @@ private extension TranscodingTableViewController {
         let width = transcoding.size.width
         widthSlider.cgFloatValue = width
         widthLabel.formattedCGFloatValue = width
+        widthSlider.isEnabled = !isCustom
         
         let height = transcoding.size.height
         heightSlider.cgFloatValue = height
         heightLabel.formattedCGFloatValue = height
+        heightSlider.isEnabled = !isCustom
         
         let bitRate = transcoding.videoBitrate
         bitrateSlider.intValue = bitRate
@@ -283,5 +286,103 @@ enum AGStreamAudioBitRate: Int {
         case 1: return .type128k
         default: return nil
         }
+    }
+}
+
+extension UILabel {
+    var formattedFloatValue: Float {
+        get {
+            if let text = text, let value = Float(text) {
+                return value
+            } else {
+                return 0
+            }
+        }
+        set {
+            text = NSString(format: "%.0f", newValue) as String
+        }
+    }
+    
+    var formattedCGFloatValue: CGFloat {
+        get {
+            if let text = text, let value = Float(text) {
+                return CGFloat(value)
+            } else {
+                return 0
+            }
+        }
+        set {
+            text = NSString(format: "%.0f", newValue) as String
+        }
+    }
+    
+    var formattedIntValue: Int {
+        get {
+            if let text = text, let value = Int(text) {
+                return value
+            } else {
+                return 0
+            }
+        }
+        set {
+            text = NSString(format: "%d", newValue) as String
+        }
+    }
+    
+    var formattedDoubleValue: Double {
+        get {
+            if let text = text, let value = Double(text) {
+                return value
+            } else {
+                return 0
+            }
+        }
+        set {
+            text = NSString(format: "%.2f", newValue) as String
+        }
+    }
+}
+
+extension UISlider {
+    var cgFloatValue: CGFloat {
+        get {
+            return CGFloat(value)
+        }
+        set {
+            value = Float(newValue)
+        }
+    }
+    
+    var intValue: Int {
+        get {
+            return Int(value)
+        }
+        set {
+            value = Float(newValue)
+        }
+    }
+}
+
+extension UIColor {
+    convenience init(hex: Int, alpha: CGFloat = 1) {
+        func transform(_ input: Int, offset: Int = 0) -> CGFloat {
+            let value = (input >> offset) & 0xff
+            return CGFloat(value) / 255
+        }
+        
+        self.init(red: transform(hex, offset: 16),
+                  green: transform(hex, offset: 8),
+                  blue: transform(hex),
+                  alpha: alpha)
+    }
+    
+    func rgbValue() -> (red: CGFloat, green: CGFloat, blue: CGFloat) {
+        var red: CGFloat = 0
+        var green: CGFloat = 0
+        var blue: CGFloat = 0
+        
+        getRed(&red, green: &green, blue: &blue, alpha: nil)
+        
+        return (red * 255, green * 255, blue * 255)
     }
 }
