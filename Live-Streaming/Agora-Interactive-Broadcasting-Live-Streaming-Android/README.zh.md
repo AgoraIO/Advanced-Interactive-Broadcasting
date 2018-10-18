@@ -22,6 +22,12 @@
 <string name="stream_url"><#your url#></string>
 ```
 
+然后, 从 [Agora.io SDK](https://www.agora.io/en/download/) 下载 **Agora SDK** . 解压sdk包，把 **libs** 目录下的 ***.jar** 拷贝到代码目录 **app/libs**, 把 **libs** 目录下的 **arm64-v8a**/**x86**/**armeabi-v7a** 拷贝到代码目录 **app/src/main/jniLibs**. 在 "app/build.gradle" 中增加下面一句:
+
+```
+compile fileTree(dir: 'libs', include: ['*.jar'])
+```
+
 最后用 Android Studio 打开该项目，连上设备，编译并运行。
 
 也可以使用 `Gradle` 直接编译运行。
