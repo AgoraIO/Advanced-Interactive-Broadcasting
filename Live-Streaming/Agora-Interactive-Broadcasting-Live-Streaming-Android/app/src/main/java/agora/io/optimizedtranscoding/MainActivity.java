@@ -1,6 +1,7 @@
 package agora.io.optimizedtranscoding;
 
 import android.annotation.TargetApi;
+import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.os.Build;
 import android.os.Bundle;
@@ -21,36 +22,28 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-import io.agora.live.LiveChannelConfig;
-import io.agora.live.LiveEngine;
-import io.agora.live.LiveEngineHandler;
-import io.agora.live.LivePublisher;
-import io.agora.live.LivePublisherHandler;
-import io.agora.live.LiveSubscriber;
-import io.agora.live.LiveSubscriberHandler;
-
 import io.agora.rtc.Constants;
+import io.agora.rtc.IRtcEngineEventHandler;
 import io.agora.rtc.RtcEngine;
 
 // If your Agora RTC SDK version is under 2.3.0, please import `io.agora.live.LiveTranscoding;`
 import io.agora.rtc.live.LiveTranscoding;
+
 // If your Agora RTC SDK version is under 2.3.0, please replace 'setVideoEncoderConfiguration' with 'setVideoProfile'
 import io.agora.rtc.video.VideoEncoderConfiguration;
 
-public class MainActivity extends AppCompatActivity {
-    private final static String mChannelName = "agora-test-room";
+import io.agora.rtc.video.VideoCanvas;
 
-    private final static boolean mEnableVideo = true;
+public class MainActivity extends AppCompatActivity {
+    private String mChannelName;
+    private String mPublishUrl = "";
 
     private RecyclerView mSmallView;
     private LinearLayout mSelfView;
     private TextView mTvRoomName;
     private ImageView mIvRtmp;
 
-    private LiveEngine mLiveEngine;
-    private LiveChannelConfig mLiveChannelConfig;
-    private LiveSubscriber mLiveSubscriber;
-    private LivePublisher mLivePublisher;
+    private RtcEngine mRtcEngine;
     private LiveTranscoding mLiveTranscoding;
 
     private Map<Integer, UserInfo> mUserInfo = new HashMap<>();
@@ -63,29 +56,53 @@ public class MainActivity extends AppCompatActivity {
     private MessageAdapter mMessageAdapter;
     private ArrayList<String> mMsgList;
 
-    LiveEngineHandler mLiveEngineHandler = new LiveEngineHandler() {
+    IRtcEngineEventHandler mRtcEngineEventHandler = new IRtcEngineEventHandler() {
         @Override
         public void onError(int errorCode) {
             super.onError(errorCode);
+            sendMsg("-->onError<--" + errorCode);
         }
 
         @Override
-        public void onJoinChannel(String channel, final int uid, int elapsed) {
-            super.onJoinChannel(channel, uid, elapsed);
-            mBigUserId = uid;
-            sendMsg(uid + " -->join in<--" + channel);
+        public void onWarning(int warn) {
+            super.onWarning(warn);
+            sendMsg("-->onWarning<--" + warn);
         }
 
         @Override
-        public void onLeaveChannel() {
-            super.onLeaveChannel();
-            sendMsg("-->leaveChannel<--");
+        public void onJoinChannelSuccess(String channel, final int uid, int elapsed) {
+            super.onJoinChannelSuccess(channel, uid, elapsed);
+            sendMsg("-->onJoinChannelSuccess<--" + channel + "  -->uid<--" + uid);
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    mBigUserId = uid;
+
+                    UserInfo mUI = new UserInfo();
+                    mUI.view = mBigView;
+                    mUI.uid = mBigUserId;
+                    mUI.view.setZOrderOnTop(true);
+                    mUserInfo.put(mBigUserId, mUI);
+                }
+            });
         }
 
         @Override
-        public void onRejoinChannel(String channel, int uid, int elapsed) {
-            super.onRejoinChannel(channel, uid, elapsed);
+        public void onFirstLocalVideoFrame(int width, int height, int elapsed) {
+            super.onFirstLocalVideoFrame(width, height, elapsed);
+            sendMsg("-->onFirstLocalVideoFrame<--");
+        }
+
+        @Override
+        public void onRejoinChannelSuccess(String channel, int uid, int elapsed) {
+            super.onRejoinChannelSuccess(channel, uid, elapsed);
             sendMsg(uid + " -->RejoinChannel<--");
+        }
+
+        @Override
+        public void onLeaveChannel(RtcStats stats) {
+            super.onLeaveChannel(stats);
+            sendMsg("-->leaveChannel<--");
         }
 
         @Override
@@ -99,41 +116,41 @@ public class MainActivity extends AppCompatActivity {
             super.onConnectionLost();
             sendMsg("-->onConnectionLost<--");
         }
-    };
 
-    LivePublisherHandler mLivePublisherHandler = new LivePublisherHandler() {
         @Override
-        public void onStreamUrlUnpublished(String url) {
-            super.onStreamUrlUnpublished(url);
+        public void onStreamPublished(String url, final int error) {
+            super.onStreamPublished(url, error);
+            sendMsg("-->onStreamUrlPublished<--" + url + " -->error code<--" + error);
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    // error code
+                    // 19 republish
+                    // 0 publish success
+                    if (error != 0) {
+                        mIvRtmp.clearColorFilter();
+                        mIvRtmp.setTag(false);
+                    }
+                }
+            });
+
+        }
+
+        @Override
+        public void onStreamUnpublished(String url) {
+            super.onStreamUnpublished(url);
             sendMsg("-->onStreamUrlUnpublished<--" + url);
         }
 
         @Override
-        public void onStreamUrlPublished(String url) {
-            super.onStreamUrlPublished(url);
-            sendMsg("-->onStreamUrlPublished<--" + url);
+        public void onTranscodingUpdated() {
+            super.onTranscodingUpdated();
         }
 
         @Override
-        public void onPublishStreamUrlFailed(String url, int errorCode) {
-            super.onPublishStreamUrlFailed(url, errorCode);
-            sendMsg("-->onStreamUrlFailed<--" + url + "-->" + errorCode);
-            mIvRtmp.clearColorFilter();
-            mIvRtmp.setTag(false);
-        }
-
-        @Override
-        public void onPublisherTranscodingUpdated(LivePublisher publisher) {
-            super.onPublisherTranscodingUpdated(publisher);
-            sendMsg("-->onPublisherTranscodingUpdated<--");
-        }
-    };
-
-    LiveSubscriberHandler mLiveSubscriberHandler = new LiveSubscriberHandler() {
-        @Override
-        public void publishedByHost(final int uid, final int streamType) {
-            super.publishedByHost(uid, streamType);
-            sendMsg("-->publishedByHost<--" + uid + "<-->" + streamType);
+        public void onUserJoined(final int uid, int elapsed) {
+            super.onUserJoined(uid, elapsed);
+            sendMsg("-->onUserJoined<--" + uid);
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
@@ -142,23 +159,21 @@ public class MainActivity extends AppCompatActivity {
                     mUI.uid = uid;
                     mUI.view.setZOrderOnTop(true);
                     mUserInfo.put(uid, mUI);
-                    mLiveSubscriber.subscribe(uid, streamType, mUI.view, Constants.RENDER_MODE_HIDDEN, Constants.VIDEO_STREAM_HIGH);
                     mSmallAdapter.update(getSmallVideoUser(mUserInfo, mBigUserId));
-
+                    mRtcEngine.setupRemoteVideo(new VideoCanvas(mUI.view, Constants.RENDER_MODE_HIDDEN, uid));
                     setTranscoding();
                 }
             });
         }
 
         @Override
-        public void unpublishedByHost(final int uid) {
-            super.unpublishedByHost(uid);
+        public void onUserOffline(final int uid, int reason) {
+            super.onUserOffline(uid, reason);
             sendMsg("-->unPublishedByHost<--" + uid);
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
                     mUserInfo.remove(uid);
-                    mLiveSubscriber.unsubscribe(uid);
                     mSmallAdapter.update(getSmallVideoUser(mUserInfo, mBigUserId));
 
                     setTranscoding();
@@ -181,40 +196,62 @@ public class MainActivity extends AppCompatActivity {
         return users;
     }
 
-    public static ArrayList<LiveTranscoding.TranscodingUser> cdnLayout(int meId,
-                                                                       ArrayList<UserInfo> publishers,
+    public static ArrayList<UserInfo> getAllVideoUser(Map<Integer, UserInfo> userInfo) {
+        ArrayList<UserInfo> users = new ArrayList<>();
+        Iterator<Map.Entry<Integer, UserInfo>> iterator = userInfo.entrySet().iterator();
+        while (iterator.hasNext()) {
+            Map.Entry<Integer, UserInfo> entry = iterator.next();
+            UserInfo user = entry.getValue();
+            users.add(user);
+        }
+        return users;
+    }
+
+    public static ArrayList<LiveTranscoding.TranscodingUser> cdnLayout(int bigUserId, ArrayList<UserInfo> publishers,
                                                                        int canvasWidth,
                                                                        int canvasHeight) {
+
         ArrayList<LiveTranscoding.TranscodingUser> users;
         int index = 0;
         float xIndex, yIndex;
-        int viewWidth = (int) (canvasWidth * 0.25);
-        int viewHEdge = viewWidth * 4 / 3;
+        int viewWidth;
+        int viewHEdge;
+
+        if (publishers.size() <= 1)
+            viewWidth = canvasWidth;
+        else
+            viewWidth = canvasWidth / 2;
+
+        if (publishers.size() <= 2)
+            viewHEdge = canvasHeight;
+        else
+            viewHEdge = canvasHeight / ((publishers.size() - 1) / 2 + 1);
 
         users = new ArrayList<>(publishers.size());
 
         LiveTranscoding.TranscodingUser user0 = new LiveTranscoding.TranscodingUser();
-        user0.uid = meId;
+        user0.uid = bigUserId;
         user0.alpha = 1;
         user0.zOrder = 0;
         user0.audioChannel = 0;
 
         user0.x = 0;
         user0.y = 0;
-        user0.width = canvasWidth;
-        user0.height = canvasHeight;
+        user0.width = viewWidth;
+        user0.height = viewHEdge;
         users.add(user0);
 
+        index++;
         for (UserInfo entry : publishers) {
-            if (entry.uid == meId)
+            if (entry.uid == bigUserId)
                 continue;
 
-            xIndex = index % 3;
-            yIndex = index / 3;
+            xIndex = index % 2;
+            yIndex = index / 2;
             LiveTranscoding.TranscodingUser tmpUser = new LiveTranscoding.TranscodingUser();
             tmpUser.uid = entry.uid;
-            tmpUser.x = (int) ((xIndex) * viewWidth + 16);
-            tmpUser.y = (int) (viewHEdge * (yIndex) + 9);
+            tmpUser.x = (int) ((xIndex) * viewWidth);
+            tmpUser.y = (int) (viewHEdge * (yIndex));
             tmpUser.width = viewWidth;
             tmpUser.height = viewHEdge;
             tmpUser.zOrder = index + 1;
@@ -232,6 +269,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Intent i = getIntent();
+        mChannelName = i.getStringExtra("CHANNEL");
+        mPublishUrl = i.getStringExtra("URL");
 
         if (shouldRequestPermission()) {
             askPermission();
@@ -260,39 +301,34 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initEngine() {
-        mLiveEngine = LiveEngine.createLiveEngine(getApplicationContext(), getResources().getString(R.string.app_id), mLiveEngineHandler);
+        try {
+            mRtcEngine = RtcEngine.create(getApplicationContext(), getResources().getString(R.string.app_id), mRtcEngineEventHandler);
 
-        if (mLiveEngine == null) {
-            throw new RuntimeException("failed to create live engine");
+            mRtcEngine.setChannelProfile(Constants.CHANNEL_PROFILE_LIVE_BROADCASTING);
+            mRtcEngine.setClientRole(Constants.CLIENT_ROLE_BROADCASTER);
+
+            mRtcEngine.enableVideo();
+
+//          mRtcEngine.setVideoProfile(Constants.VIDEO_PROFILE_480P, true); // Replaced by setVideoEncoderConfiguration in Agora RTC SDK after 2.3.0+
+            mRtcEngine.setVideoEncoderConfiguration(new VideoEncoderConfiguration(VideoEncoderConfiguration.VD_640x480, VideoEncoderConfiguration.FRAME_RATE.FRAME_RATE_FPS_15, VideoEncoderConfiguration.STANDARD_BITRATE, VideoEncoderConfiguration.ORIENTATION_MODE.ORIENTATION_MODE_FIXED_PORTRAIT));
+
+            mRtcEngine.joinChannel(null, mChannelName, "", mBigUserId);
+
+            mBigView = RtcEngine.CreateRendererView(MainActivity.this);
+            if (mSelfView.getChildCount() > 0)
+                mSelfView.removeAllViews();
+            mBigView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+            mBigView.setZOrderMediaOverlay(false);
+            mBigView.setZOrderOnTop(false);
+            mSelfView.addView(mBigView);
+
+            mRtcEngine.setupLocalVideo(new VideoCanvas(mBigView, Constants.RENDER_MODE_HIDDEN, mBigUserId));
+
+            initTranscoding(480, 640, 1800);
+            setTranscoding();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-
-        mLiveSubscriber = new LiveSubscriber(mLiveEngine, mLiveSubscriberHandler);
-        mLivePublisher = new LivePublisher(mLiveEngine, mLivePublisherHandler);
-
-        mLiveChannelConfig = new LiveChannelConfig();
-        mLiveChannelConfig.videoEnabled = mEnableVideo;
-
-//      mLivePublisher.setVideoProfile(480, 640, 15, 1800); // If your Agora RTC SDK version is under 2.3.0
-        mLiveEngine.getRtcEngine().setVideoEncoderConfiguration(new VideoEncoderConfiguration(VideoEncoderConfiguration.VD_640x480, VideoEncoderConfiguration.FRAME_RATE.FRAME_RATE_FPS_15, VideoEncoderConfiguration.STANDARD_BITRATE, VideoEncoderConfiguration.ORIENTATION_MODE.ORIENTATION_MODE_FIXED_PORTRAIT));
-
-        mLivePublisher.setMediaType(Constants.MEDIA_TYPE_AUDIO_AND_VIDEO);
-
-        mLiveEngine.joinChannel(mChannelName, null, mLiveChannelConfig, mBigUserId);
-
-        //publish first
-        mLivePublisher.publish();
-
-        mBigView = RtcEngine.CreateRendererView(this);
-        if (mSelfView.getChildCount() > 0)
-            mSelfView.removeAllViews();
-        mBigView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
-        mBigView.setZOrderMediaOverlay(false);
-        mBigView.setZOrderOnTop(false);
-        mSelfView.addView(mBigView);
-        mLiveEngine.startPreview(mBigView, Constants.RENDER_MODE_HIDDEN);
-
-        initTranscoding(480, 640, 1800);
-        setTranscoding();
     }
 
     private void initMessage() {
@@ -308,12 +344,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initTranscoding(int width, int height, int bitrate) {
-        mLiveTranscoding = new LiveTranscoding();
-        mLiveTranscoding.width = width;
-        mLiveTranscoding.height = height;
-        mLiveTranscoding.videoBitrate = bitrate;
-        // if you want high fps, modify videoFramerate
-        mLiveTranscoding.videoFramerate = 15;
+        if (mLiveTranscoding == null) {
+            mLiveTranscoding = new LiveTranscoding();
+            mLiveTranscoding.width = width;
+            mLiveTranscoding.height = height;
+            mLiveTranscoding.videoBitrate = bitrate;
+            // if you want high fps, modify videoFramerate
+            mLiveTranscoding.videoFramerate = 15;
+        }
     }
 
     private void sendMsg(final String msg) {
@@ -351,13 +389,13 @@ public class MainActivity extends AppCompatActivity {
 
     private void setTranscoding() {
         ArrayList<LiveTranscoding.TranscodingUser> transcodingUsers;
-        ArrayList<UserInfo> smallVideoUsers = getSmallVideoUser(mUserInfo, mBigUserId);
+        ArrayList<UserInfo> videoUsers = getAllVideoUser(mUserInfo);
 
-        transcodingUsers = cdnLayout(mBigUserId, smallVideoUsers, mLiveTranscoding.width, mLiveTranscoding.height);
+        transcodingUsers = cdnLayout(mBigUserId, videoUsers, mLiveTranscoding.width, mLiveTranscoding.height);
 
         mLiveTranscoding.setUsers(transcodingUsers);
         mLiveTranscoding.userCount = transcodingUsers.size();
-        mLivePublisher.setLiveTranscoding(mLiveTranscoding);
+        mRtcEngine.setLiveTranscoding(mLiveTranscoding);
     }
 
     private boolean shouldRequestPermission() {
@@ -401,11 +439,11 @@ public class MainActivity extends AppCompatActivity {
 
         if (!(boolean) v.getTag()) {
             setTranscoding();
-            mLivePublisher.addStreamUrl(getResources().getString(R.string.stream_url), true);
+            mRtcEngine.addPublishStreamUrl(mPublishUrl, true);
             ((ImageView) v).setColorFilter(getResources().getColor(R.color.agora_blue), PorterDuff.Mode.MULTIPLY);
             v.setTag(true);
         } else {
-            mLivePublisher.removeStreamUrl(getResources().getString(R.string.stream_url));
+            mRtcEngine.removePublishStreamUrl(mPublishUrl);
             ((ImageView) v).clearColorFilter();
             v.setTag(false);
         }
@@ -413,16 +451,12 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (mLivePublisher != null) {
-            mLivePublisher.unpublish();
-            mLivePublisher.removeStreamUrl(getResources().getString(R.string.stream_url));
+        if (mRtcEngine != null) {
+            mRtcEngine.removePublishStreamUrl(mPublishUrl);
+            mRtcEngine.leaveChannel();
         }
-
-        if (mLiveEngine != null)
-            mLiveEngine.leaveChannel();
-
-        mLivePublisher = null;
-        mLiveEngine = null;
+        RtcEngine.destroy();
+        mRtcEngine = null;
         finish();
     }
 }
