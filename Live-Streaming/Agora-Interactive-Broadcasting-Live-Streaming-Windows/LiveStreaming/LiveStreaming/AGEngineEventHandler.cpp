@@ -170,7 +170,7 @@ void CAGEngineEventHandler::onVideoDeviceStateChanged(const char* deviceId, int 
 	LPAGE_VIDEO_DEVICE_STATE_CHANGED lpData = new AGE_VIDEO_DEVICE_STATE_CHANGED;
 
 	int nDeviceIDLen = strlen(deviceId) + 1;
-
+																																		
 	lpData->deviceId = new char[nDeviceIDLen];
 
 	strcpy_s(lpData->deviceId, nDeviceIDLen, deviceId);

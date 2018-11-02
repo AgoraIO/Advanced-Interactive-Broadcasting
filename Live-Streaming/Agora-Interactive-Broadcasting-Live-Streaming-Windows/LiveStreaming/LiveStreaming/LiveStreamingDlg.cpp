@@ -796,7 +796,7 @@ LRESULT CLiveStreamingDlg::onRequestChannelKey(WPARAM wParam, LPARAM lParam)
 	if (m_lpRtcEngine){
 		CString strChannelName = m_lpAgoraObject->GetChanelName();
 		CStringA strNewMediaChannelKey = m_lpAgoraObject->getDynamicMediaChannelKey(strChannelName);
-		m_lpRtcEngine->renewChannelKey(strNewMediaChannelKey);
+		//m_lpRtcEngine->renewChannelKey(strNewMediaChannelKey);
 	}
 
 	return true;
