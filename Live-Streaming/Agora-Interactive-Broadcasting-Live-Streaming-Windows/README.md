@@ -24,7 +24,7 @@ contact us
 - If you have problems with the integration, you can go to [Developer Community] (https://dev.agora.io/cn/)
 - If there is a pre-sale consultation question, you can call 400 632 6626, or join the official Q group 12742516
 - If you need after-sale technical support, you can submit a ticket at [Agora Dashboard] (https://dashboard.agora.io)
-- If you find bugs in the sample code, please submit [issue](https://github.com/AgoraIO/Agora-Android-Voice-Tutorial-1to1/issues)
+- If you find bugs in the sample code, please submit [issue](https://github.com/AgoraIO/Advanced-Interactive-Broadcasting/issues)
 
  Code license
 The MIT License (MIT).

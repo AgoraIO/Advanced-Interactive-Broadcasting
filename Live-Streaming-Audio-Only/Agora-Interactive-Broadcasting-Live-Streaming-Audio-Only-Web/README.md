@@ -1223,7 +1223,7 @@ To identify any unpublishing stream errors, invoke `client.unpublish()` and add 
 
 ## Resources
 * Find complete [API documentation at the Document Center](https://docs.agora.io/en/).
-* [File bugs about this sample](https://github.com/AgoraIO/Agora-Interactive-Broadcasting-Live-Streaming-Web/issues).
+* [File bugs about this sample](https://github.com/AgoraIO/Advanced-Interactive-Broadcasting/issues).
 
 ## License
 This software is under the MIT License (MIT). [View the license](LICENSE.md).

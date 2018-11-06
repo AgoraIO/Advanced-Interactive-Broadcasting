@@ -8,7 +8,7 @@
 
 ## Connect Us
 - You can find the API documentation at the [Developer Center](https://docs.agora.io/en/).
-- You can report issues about this demo at [issue](https://github.com/AgoraIO/Agora-Interactive-Broadcasting-Live-Streaming-iOS/issues)
+- You can report issues about this demo at [issue](https://github.com/AgoraIO/Advanced-Interactive-Broadcasting/issues)
 
 ## License
 

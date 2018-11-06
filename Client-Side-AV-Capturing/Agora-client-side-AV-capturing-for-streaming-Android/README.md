@@ -10,9 +10,9 @@ With this sample app, you can:
 - Get raw data of audio and video streaming from Agora Video SDK
 - Merge raw data to push to RTMP server
 
-A tutorial demo for Agora Video SDK can be found here: [Agora-Android-Tutorial-1to1](https://github.com/AgoraIO/Agora-Android-Tutorial-1to1)
+A tutorial demo for Agora Video SDK can be found here: [Agora-Android-Tutorial-1to1](https://github.com/AgoraIO/Basic-Video-Call/tree/master/One-to-One-Video/Agora-Android-Tutorial-1to1)
 
-You can find demo for iOS here: [Agora-client-side-AV-capturing-for-streaming-iOS](https://github.com/AgoraIO-Community/Agora-client-side-AV-capturing-for-streaming-iOS)
+You can find demo for iOS here: [Agora-client-side-AV-capturing-for-streaming-iOS](https://github.com/AgoraIO/Advanced-Interactive-Broadcasting/tree/master/Client-Side-AV-Capturing/Agora-client-side-AV-capturing-for-streaming-iOS)
 
 ## Running the App
 **First**, create a developer account at [Agora.io](https://dashboard.agora.io/signin/), and obtain an App ID. Update "app/src/main/res/values/strings_config.xml" with your App ID.
@@ -51,7 +51,7 @@ Or use `Gradle` to build and run.
 ## Connect Us
 
 - You can find full API document at [Document Center](https://docs.agora.io/en/)
-- You can file bugs about this demo at [issue](https://github.com/AgoraIO-Community/Agora-client-side-AV-capturing-for-streaming-Android/issues)
+- You can file bugs about this demo at [issue](https://github.com/AgoraIO/Advanced-Interactive-Broadcasting/issues)
 
 ## License
 

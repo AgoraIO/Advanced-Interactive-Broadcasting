@@ -48,7 +48,7 @@ If you encounter this error, you need to wait for a while before re-streaming.
 ## Connect Us
 
 - You can find full API document at [Document Center](https://docs.agora.io/en/)
-- You can file bugs about this demo at [issue](https://github.com/AgoraIO/Agora-iOS-Voice-Tutorial-Swift-1to1/issues)
+- You can file bugs about this demo at [issue](https://github.com/AgoraIO/Advanced-Interactive-Broadcasting/issues)
 
 ## License
 
