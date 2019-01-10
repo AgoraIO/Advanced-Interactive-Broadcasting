@@ -128,7 +128,7 @@ extension PublishViewController: UITableViewDataSource {
         return true
     }
     
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         switch tableView {
         case pushRtmpURLTableView:
             let info = publishList.infos[indexPath.row]
@@ -142,7 +142,7 @@ extension PublishViewController: UITableViewDataSource {
 }
 
 extension PublishViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
         return .delete
     }
 }

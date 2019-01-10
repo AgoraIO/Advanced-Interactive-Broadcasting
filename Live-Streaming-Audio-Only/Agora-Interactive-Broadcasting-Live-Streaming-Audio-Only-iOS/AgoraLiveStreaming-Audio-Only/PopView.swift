@@ -24,8 +24,8 @@ class PopView: UIView {
         let nibView = Bundle.main.loadNibNamed("PopView", owner: nil, options: nil)
         if let view = nibView?.first as? PopView {
             let attDic = NSMutableDictionary()
-            attDic[NSAttributedStringKey.foregroundColor] = UIColor.lightGray
-            let attPlaceholder = NSAttributedString(string: placeholder, attributes: attDic as? [NSAttributedStringKey : Any])
+            attDic[NSAttributedString.Key.foregroundColor] = UIColor.lightGray
+            let attPlaceholder = NSAttributedString(string: placeholder, attributes: attDic as? [NSAttributedString.Key : Any])
             view.inputTextField.attributedPlaceholder = attPlaceholder
             view.popViewButton.setTitle(buttonTitle, for: .normal)
             return view

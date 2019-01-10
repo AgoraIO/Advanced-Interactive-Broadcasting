@@ -19,13 +19,13 @@
 		0F88E9852113FF9800F0A7E5 /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F88E9842113FF9800F0A7E5 /* libresolv.tbd */; };
 		0F88E9872113FFA000F0A7E5 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F88E9862113FFA000F0A7E5 /* AudioToolbox.framework */; };
 		0F88E9892113FFA600F0A7E5 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F88E9882113FFA600F0A7E5 /* AVFoundation.framework */; };
-		0F88E98B2113FFCC00F0A7E5 /* AgoraAudioKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F88E98A2113FFCC00F0A7E5 /* AgoraAudioKit.framework */; };
 		0F88E98D2113FFE500F0A7E5 /* KeyCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F88E98C2113FFE500F0A7E5 /* KeyCenter.swift */; };
 		0F88E990211400D600F0A7E5 /* LogCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F88E98E211400D600F0A7E5 /* LogCell.swift */; };
 		0F88E991211400D600F0A7E5 /* RoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F88E98F211400D600F0A7E5 /* RoomViewController.swift */; };
 		0F88E996211402F900F0A7E5 /* PopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F88E994211402F800F0A7E5 /* PopView.swift */; };
 		0F88E997211402F900F0A7E5 /* PopView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F88E995211402F800F0A7E5 /* PopView.xib */; };
 		0F88E9992114037500F0A7E5 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F88E9982114037400F0A7E5 /* Constants.swift */; };
+		38845B8221E72701005BBCAD /* AgoraAudioKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38845B8121E72701005BBCAD /* AgoraAudioKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -43,13 +43,13 @@
 		0F88E9842113FF9800F0A7E5 /* libresolv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.tbd; path = usr/lib/libresolv.tbd; sourceTree = SDKROOT; };
 		0F88E9862113FFA000F0A7E5 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		0F88E9882113FFA600F0A7E5 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
-		0F88E98A2113FFCC00F0A7E5 /* AgoraAudioKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AgoraAudioKit.framework; sourceTree = "<group>"; };
 		0F88E98C2113FFE500F0A7E5 /* KeyCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyCenter.swift; sourceTree = "<group>"; };
 		0F88E98E211400D600F0A7E5 /* LogCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogCell.swift; sourceTree = "<group>"; };
 		0F88E98F211400D600F0A7E5 /* RoomViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoomViewController.swift; sourceTree = "<group>"; };
 		0F88E994211402F800F0A7E5 /* PopView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopView.swift; sourceTree = "<group>"; };
 		0F88E995211402F800F0A7E5 /* PopView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PopView.xib; sourceTree = "<group>"; };
 		0F88E9982114037400F0A7E5 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		38845B8121E72701005BBCAD /* AgoraAudioKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AgoraAudioKit.framework; path = "AgoraLiveStreaming-Audio-Only/AgoraAudioKit.framework"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,13 +58,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				0F523029215E33F50091EAB0 /* Accelerate.framework in Frameworks */,
-				0F88E98B2113FFCC00F0A7E5 /* AgoraAudioKit.framework in Frameworks */,
 				0F88E9892113FFA600F0A7E5 /* AVFoundation.framework in Frameworks */,
 				0F88E9872113FFA000F0A7E5 /* AudioToolbox.framework in Frameworks */,
 				0F88E9852113FF9800F0A7E5 /* libresolv.tbd in Frameworks */,
 				0F88E9832113FF9200F0A7E5 /* libc++.tbd in Frameworks */,
 				0F88E9812113FF8900F0A7E5 /* CoreTelephony.framework in Frameworks */,
 				0F88E97F2113FF8000F0A7E5 /* SystemConfiguration.framework in Frameworks */,
+				38845B8221E72701005BBCAD /* AgoraAudioKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -110,8 +110,8 @@
 		0F88E97D2113FF8000F0A7E5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				38845B8121E72701005BBCAD /* AgoraAudioKit.framework */,
 				0F523028215E33F50091EAB0 /* Accelerate.framework */,
-				0F88E98A2113FFCC00F0A7E5 /* AgoraAudioKit.framework */,
 				0F88E9882113FFA600F0A7E5 /* AVFoundation.framework */,
 				0F88E9862113FFA000F0A7E5 /* AudioToolbox.framework */,
 				0F88E9842113FF9800F0A7E5 /* libresolv.tbd */,
@@ -154,6 +154,7 @@
 				TargetAttributes = {
 					0F88E9652113FF0200F0A7E5 = {
 						CreatedOnToolsVersion = 9.4.1;
+						LastSwiftMigration = 1010;
 					};
 				};
 			};
@@ -349,6 +350,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/AgoraLiveStreaming-Audio-Only",
 				);
 				INFOPLIST_FILE = "AgoraLiveStreaming-Audio-Only/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -360,7 +362,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "28d072e1-f550-49ef-a601-6038e4fddc51";
 				PROVISIONING_PROFILE_SPECIFIER = AgoraIODev2018;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -374,6 +376,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/AgoraLiveStreaming-Audio-Only",
 				);
 				INFOPLIST_FILE = "AgoraLiveStreaming-Audio-Only/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -384,7 +387,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "io.agora.AgoraLiveStreaming-Audio-Only";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
