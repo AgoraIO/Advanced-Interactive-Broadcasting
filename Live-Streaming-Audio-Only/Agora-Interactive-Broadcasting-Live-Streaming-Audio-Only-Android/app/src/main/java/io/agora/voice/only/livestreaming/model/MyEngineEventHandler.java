@@ -141,9 +141,9 @@ public class MyEngineEventHandler {
         }
 
         @Override
-        public void onStreamUnpublished(String url) {
-            super.onStreamUnpublished(url);
-            log.debug("onStreamUnpublished :" + url);
+        public void onStreamUnpublished(String url, final int error) {
+            super.onStreamUnpublished(url, error);
+            log.debug("onStreamUnpublished :" + url + " error :" + error);
 
         }
 

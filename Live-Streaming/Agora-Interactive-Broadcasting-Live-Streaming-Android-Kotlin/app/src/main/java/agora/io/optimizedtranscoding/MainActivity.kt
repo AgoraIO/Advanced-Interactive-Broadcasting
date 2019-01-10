@@ -119,9 +119,9 @@ class MainActivity : AppCompatActivity() {
 
         }
 
-        override fun onStreamUnpublished(url: String?) {
-            super.onStreamUnpublished(url)
-            sendMsg("-->onStreamUrlUnpublished<--" + url!!)
+        override fun onStreamUnpublished(url: String?, error: Int) {
+            super.onStreamUnpublished(url, error)
+            sendMsg("-->onStreamUrlUnpublished<--$url -->error code<--$error")
         }
 
         override fun onTranscodingUpdated() {

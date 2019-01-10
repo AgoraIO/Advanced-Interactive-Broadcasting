@@ -137,9 +137,9 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @Override
-        public void onStreamUnpublished(String url) {
-            super.onStreamUnpublished(url);
-            sendMsg("-->onStreamUrlUnpublished<--" + url);
+        public void onStreamUnpublished(String url, final int error) {
+            super.onStreamUnpublished(url, error);
+            sendMsg("-->onStreamUrlUnpublished<--" + url + " -->error code<--" + error);
         }
 
         @Override
