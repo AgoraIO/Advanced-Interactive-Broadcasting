@@ -80,7 +80,7 @@ private extension LiveRoomViewController {
 private extension LiveRoomViewController {
     func updateInterface(withAnimation animation: Bool) {
         if animation {
-            UIView.animate(withDuration: 0.3, animations: { [weak self] _ in
+            UIView.animate(withDuration: 0.3, animations: { [weak self] in
                 self?.updateInterface()
                 self?.view.layoutIfNeeded()
             })

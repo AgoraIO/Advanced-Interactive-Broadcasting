@@ -29,6 +29,8 @@
 		07CCB8161E97835300D25FB1 /* AGVideoBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = 07CCB8151E97835300D25FB1 /* AGVideoBuffer.m */; };
 		07CCB8191E9783E600D25FB1 /* AGAudioBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = 07CCB8181E9783E600D25FB1 /* AGAudioBuffer.m */; };
 		07CCB8211E97882500D25FB1 /* StreamingClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 07CCB8201E97882500D25FB1 /* StreamingClient.m */; };
+		38845B8B21E7345C005BBCAD /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38845B8A21E7345C005BBCAD /* Accelerate.framework */; };
+		38845B8D21E734A7005BBCAD /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38845B8C21E734A6005BBCAD /* SystemConfiguration.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -82,6 +84,8 @@
 		07CCB8181E9783E600D25FB1 /* AGAudioBuffer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AGAudioBuffer.m; sourceTree = "<group>"; };
 		07CCB81F1E97882500D25FB1 /* StreamingClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StreamingClient.h; sourceTree = "<group>"; };
 		07CCB8201E97882500D25FB1 /* StreamingClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StreamingClient.m; sourceTree = "<group>"; };
+		38845B8A21E7345C005BBCAD /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
+		38845B8C21E734A6005BBCAD /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,6 +93,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				072643CC1E94EA2700589514 /* AgoraRtcEngineKit.framework in Frameworks */,
+				38845B8D21E734A7005BBCAD /* SystemConfiguration.framework in Frameworks */,
+				38845B8B21E7345C005BBCAD /* Accelerate.framework in Frameworks */,
 				072644291E95F8D700589514 /* CoreTelephony.framework in Frameworks */,
 				072644271E95F8CF00589514 /* CoreMedia.framework in Frameworks */,
 				072644251E95F8C800589514 /* AudioToolbox.framework in Frameworks */,
@@ -96,7 +103,6 @@
 				072644211E95F8B300589514 /* AVFoundation.framework in Frameworks */,
 				0726441F1E95F8AE00589514 /* libresolv.tbd in Frameworks */,
 				072643F11E94EB7600589514 /* libyuv.a in Frameworks */,
-				072643CC1E94EA2700589514 /* AgoraRtcEngineKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -188,6 +194,8 @@
 		0726441D1E95F8AE00589514 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				38845B8C21E734A6005BBCAD /* SystemConfiguration.framework */,
+				38845B8A21E7345C005BBCAD /* Accelerate.framework */,
 				072644281E95F8D700589514 /* CoreTelephony.framework */,
 				072644261E95F8CF00589514 /* CoreMedia.framework */,
 				072644241E95F8C800589514 /* AudioToolbox.framework */,
@@ -242,12 +250,12 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0830;
-				LastUpgradeCheck = 0830;
+				LastUpgradeCheck = 1010;
 				ORGANIZATIONNAME = Agora;
 				TargetAttributes = {
 					072643B11E94E72F00589514 = {
 						CreatedOnToolsVersion = 8.3;
-						LastSwiftMigration = 0830;
+						LastSwiftMigration = 1010;
 						ProvisioningStyle = Manual;
 					};
 				};
@@ -334,15 +342,23 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -385,15 +401,23 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -444,7 +468,8 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Agora-client-side-AV-capturing-for-streaming-iOS/Agora-client-side-AV-capturing-for-streaming-iOS-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
 		};
@@ -473,7 +498,8 @@
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Agora-client-side-AV-capturing-for-streaming-iOS/Agora-client-side-AV-capturing-for-streaming-iOS-Bridging-Header.h";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Release;
 		};

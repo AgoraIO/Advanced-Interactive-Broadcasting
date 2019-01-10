@@ -21,7 +21,6 @@
 		0F99AAB6210035AC008AFD51 /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F99AAB5210035AC008AFD51 /* VideoToolbox.framework */; };
 		0F99AAB8210035B6008AFD51 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F99AAB7210035B6008AFD51 /* CoreTelephony.framework */; };
 		0F99AABA210035BD008AFD51 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F99AAB9210035BD008AFD51 /* SystemConfiguration.framework */; };
-		0F99AABC210035C5008AFD51 /* AgoraRtcEngineKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F99AABB210035C5008AFD51 /* AgoraRtcEngineKit.framework */; };
 		0F99AABE210035CE008AFD51 /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F99AABD210035CE008AFD51 /* libresolv.tbd */; };
 		0F99AAC02100367C008AFD51 /* LiveRoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F99AABF2100367C008AFD51 /* LiveRoomViewController.swift */; };
 		0F99AAC221003FEB008AFD51 /* InjectStreamConfigTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F99AAC121003FEB008AFD51 /* InjectStreamConfigTableViewController.swift */; };
@@ -31,6 +30,7 @@
 		0F99AAD8210085D3008AFD51 /* PopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F99AAD3210085D3008AFD51 /* PopView.swift */; };
 		0F99AADA210085D3008AFD51 /* PopView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F99AAD5210085D3008AFD51 /* PopView.xib */; };
 		0F99AADB210085D3008AFD51 /* VideoViewLayouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F99AAD6210085D3008AFD51 /* VideoViewLayouter.swift */; };
+		38845B8F21E735AD005BBCAD /* AgoraRtcEngineKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38845B8E21E735AD005BBCAD /* AgoraRtcEngineKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,7 +50,6 @@
 		0F99AAB5210035AC008AFD51 /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
 		0F99AAB7210035B6008AFD51 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		0F99AAB9210035BD008AFD51 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
-		0F99AABB210035C5008AFD51 /* AgoraRtcEngineKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AgoraRtcEngineKit.framework; sourceTree = "<group>"; };
 		0F99AABD210035CE008AFD51 /* libresolv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.tbd; path = usr/lib/libresolv.tbd; sourceTree = SDKROOT; };
 		0F99AABF2100367C008AFD51 /* LiveRoomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveRoomViewController.swift; sourceTree = "<group>"; };
 		0F99AAC121003FEB008AFD51 /* InjectStreamConfigTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InjectStreamConfigTableViewController.swift; sourceTree = "<group>"; };
@@ -60,6 +59,7 @@
 		0F99AAD3210085D3008AFD51 /* PopView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopView.swift; sourceTree = "<group>"; };
 		0F99AAD5210085D3008AFD51 /* PopView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PopView.xib; sourceTree = "<group>"; };
 		0F99AAD6210085D3008AFD51 /* VideoViewLayouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoViewLayouter.swift; sourceTree = "<group>"; };
+		38845B8E21E735AD005BBCAD /* AgoraRtcEngineKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AgoraRtcEngineKit.framework; path = AgoraInjectStreaming/AgoraRtcEngineKit.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,10 +67,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				38845B8F21E735AD005BBCAD /* AgoraRtcEngineKit.framework in Frameworks */,
 				0F52302B215E340F0091EAB0 /* Accelerate.framework in Frameworks */,
 				0F99AAC621004E45008AFD51 /* libstdc++.tbd in Frameworks */,
 				0F99AABE210035CE008AFD51 /* libresolv.tbd in Frameworks */,
-				0F99AABC210035C5008AFD51 /* AgoraRtcEngineKit.framework in Frameworks */,
 				0F99AABA210035BD008AFD51 /* SystemConfiguration.framework in Frameworks */,
 				0F99AAB8210035B6008AFD51 /* CoreTelephony.framework in Frameworks */,
 				0F99AAB6210035AC008AFD51 /* VideoToolbox.framework in Frameworks */,
@@ -141,7 +141,7 @@
 				0F52302A215E340F0091EAB0 /* Accelerate.framework */,
 				0F99AAC521004E44008AFD51 /* libstdc++.tbd */,
 				0F99AABD210035CE008AFD51 /* libresolv.tbd */,
-				0F99AABB210035C5008AFD51 /* AgoraRtcEngineKit.framework */,
+				38845B8E21E735AD005BBCAD /* AgoraRtcEngineKit.framework */,
 				0F99AAB9210035BD008AFD51 /* SystemConfiguration.framework */,
 				0F99AAB7210035B6008AFD51 /* CoreTelephony.framework */,
 				0F99AAB5210035AC008AFD51 /* VideoToolbox.framework */,
@@ -194,6 +194,7 @@
 				TargetAttributes = {
 					0F99AA9421003185008AFD51 = {
 						CreatedOnToolsVersion = 9.4.1;
+						LastSwiftMigration = 1010;
 						ProvisioningStyle = Manual;
 					};
 				};
@@ -394,6 +395,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/AgoraInjectStreaming",
 				);
 				INFOPLIST_FILE = AgoraInjectStreaming/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -402,7 +404,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "28d072e1-f550-49ef-a601-6038e4fddc51";
 				PROVISIONING_PROFILE_SPECIFIER = AgoraIODev2018;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -417,6 +419,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/AgoraInjectStreaming",
 				);
 				INFOPLIST_FILE = AgoraInjectStreaming/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -425,7 +428,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "28d072e1-f550-49ef-a601-6038e4fddc51";
 				PROVISIONING_PROFILE_SPECIFIER = AgoraIODev2018;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
