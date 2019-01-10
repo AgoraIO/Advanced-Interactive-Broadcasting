@@ -1,4 +1,4 @@
-# **Agora-Interactive-Broadcasting-Live-Streaming-Andorid**
+# **Agora-Interactive-Broadcasting-Live-Streaming-Android**
 *Read this in other languages: [English](README.md)*
 
 这个开源示例项目演示了如何如何使用直播优化API进行转码推流。
