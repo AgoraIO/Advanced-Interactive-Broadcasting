@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="agora.io.optimizedtranscoding">
+    package="io.agora.interactivebroadcastingwithcdnstreaming">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
@@ -18,12 +18,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <activity
-            android:name=".MainActivity"
+            android:name=".VideoActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:screenOrientation="portrait">
 
         </activity>
-        <activity android:name=".LoadActivity"
+        <activity
+            android:name=".MainActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:screenOrientation="portrait">
             <intent-filter>

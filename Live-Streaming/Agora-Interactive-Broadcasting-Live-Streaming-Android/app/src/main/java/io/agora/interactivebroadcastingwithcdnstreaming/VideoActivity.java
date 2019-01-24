@@ -1,12 +1,8 @@
-package agora.io.optimizedtranscoding;
+package io.agora.interactivebroadcastingwithcdnstreaming;
 
-import android.annotation.TargetApi;
 import android.content.Intent;
 import android.graphics.PorterDuff;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.content.PermissionChecker;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -25,16 +21,14 @@ import java.util.Map;
 import io.agora.rtc.Constants;
 import io.agora.rtc.IRtcEngineEventHandler;
 import io.agora.rtc.RtcEngine;
-
-// If your Agora RTC SDK version is under 2.3.0, please import `io.agora.live.LiveTranscoding;`
 import io.agora.rtc.live.LiveTranscoding;
-
-// If your Agora RTC SDK version is under 2.3.0, please replace 'setVideoEncoderConfiguration' with 'setVideoProfile'
+import io.agora.rtc.video.VideoCanvas;
 import io.agora.rtc.video.VideoEncoderConfiguration;
 
-import io.agora.rtc.video.VideoCanvas;
+// If your Agora RTC SDK version is under 2.3.0, please import `io.agora.live.LiveTranscoding;`
+// If your Agora RTC SDK version is under 2.3.0, please replace 'setVideoEncoderConfiguration' with 'setVideoProfile'
 
-public class MainActivity extends AppCompatActivity {
+public class VideoActivity extends AppCompatActivity {
     private String mChannelName;
     private String mPublishUrl = "";
 
@@ -49,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
     private Map<Integer, UserInfo> mUserInfo = new HashMap<>();
     private SmallAdapter mSmallAdapter;
 
-    //before join channel success, big-uid is zero, after join success big-uid will modify by onJoinChannel-uid
+    // before join channel success, big-uid is zero, after join success big-uid will modify by onJoinChannel-uid
     private int mBigUserId = 0;
     private SurfaceView mBigView;
 
@@ -155,7 +149,7 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void run() {
                     UserInfo mUI = new UserInfo();
-                    mUI.view = RtcEngine.CreateRendererView(MainActivity.this);
+                    mUI.view = RtcEngine.CreateRendererView(VideoActivity.this);
                     mUI.uid = uid;
                     mUI.view.setZOrderOnTop(true);
                     mUserInfo.put(uid, mUI);
@@ -268,18 +262,14 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_video);
 
         Intent i = getIntent();
         mChannelName = i.getStringExtra("CHANNEL");
         mPublishUrl = i.getStringExtra("URL");
 
-        if (shouldRequestPermission()) {
-            askPermission();
-        } else {
-            init();
-            initEngine();
-        }
+        init();
+        initEngine();
     }
 
     private void init() {
@@ -302,7 +292,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void initEngine() {
         try {
-            mRtcEngine = RtcEngine.create(getApplicationContext(), getResources().getString(R.string.app_id), mRtcEngineEventHandler);
+            mRtcEngine = RtcEngine.create(getApplicationContext(), getResources().getString(R.string.agora_app_id), mRtcEngineEventHandler);
 
             mRtcEngine.setChannelProfile(Constants.CHANNEL_PROFILE_LIVE_BROADCASTING);
             mRtcEngine.setClientRole(Constants.CLIENT_ROLE_BROADCASTER);
@@ -314,7 +304,7 @@ public class MainActivity extends AppCompatActivity {
 
             mRtcEngine.joinChannel(null, mChannelName, "", mBigUserId);
 
-            mBigView = RtcEngine.CreateRendererView(MainActivity.this);
+            mBigView = RtcEngine.CreateRendererView(VideoActivity.this);
             if (mSelfView.getChildCount() > 0)
                 mSelfView.removeAllViews();
             mBigView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
@@ -396,36 +386,6 @@ public class MainActivity extends AppCompatActivity {
         mLiveTranscoding.setUsers(transcodingUsers);
         mLiveTranscoding.userCount = transcodingUsers.size();
         mRtcEngine.setLiveTranscoding(mLiveTranscoding);
-    }
-
-    private boolean shouldRequestPermission() {
-        return Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP_MR1;
-    }
-
-    @TargetApi(23)
-    private void askPermission() {
-        requestPermissions(new String[]{
-                        "android.permission.CAMERA",
-                        "android.permission.RECORD_AUDIO",
-                        "android.permission.RECORD_AUDIO",
-                        "android.permission.WRITE_EXTERNAL_STORAGE"},
-                200);
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == 200) {
-            for (int g : grantResults) {
-                if (g != PermissionChecker.PERMISSION_GRANTED) {
-                    finish();
-                    return;
-                }
-            }
-
-            init();
-            initEngine();
-        }
     }
 
     public void onEndCallClicked(View v) {
