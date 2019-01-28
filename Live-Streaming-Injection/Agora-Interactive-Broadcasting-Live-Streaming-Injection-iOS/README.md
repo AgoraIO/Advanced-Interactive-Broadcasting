@@ -1,8 +1,8 @@
 # Injection Streaming iOS for Swift
 
-This tutorial describes how to add Agora injection streaming for CDN live, to your iOS applications using Swift and the Agora Video SDK.
+This tutorial describes how to add Agora injection streaming for CDN live to your iOS applications using Swift and the Agora Video SDK.
 
-With this sample app, you can:
+With this sample app you can:
 
 - [Join / leave channel](#create-liveroomviewcontroller-class-agora-extension)
 - [Add injection stream URL](#create-liveroomviewcontroller-helper-delegate-methods)
@@ -195,7 +195,7 @@ If `segueId` is equal to `mainToLive`:
 
 The `showRoleSelection()` method displays a window to choose the connection role type.
 
-1. Create a broadcaster `UIAlertController` object
+1. Create a broadcaster `UIAlertController` object.
 2. Create three `UIAlertAction` objects.
 
 	- Create a broadcaster option. If `broadcaster` is selected, join the channel as a broadcaster using `self?.join()`.
