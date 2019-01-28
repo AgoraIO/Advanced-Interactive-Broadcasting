@@ -1320,4 +1320,4 @@ enum AGStreamAudioBitRate: Int {
 
 ## License
 
-This software is licensed under the MIT License (MIT). [View the license](LICENSE.md).
+This software is licensed under the MIT License (MIT). [View the license](../../LICENSE.md).
