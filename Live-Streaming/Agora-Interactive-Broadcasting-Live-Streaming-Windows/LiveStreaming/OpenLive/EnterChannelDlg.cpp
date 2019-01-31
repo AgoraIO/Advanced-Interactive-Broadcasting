@@ -234,3 +234,20 @@ void CEnterChannelDlg::OnBnClickedBtnRtmp()
 {
 	GetParent()->SendMessage(WM_SETPUBLISH_RTMP, 0, 0);
 }
+
+void CEnterChannelDlg::SetCtrlPos()
+{
+	CRect ClientRect;
+
+	GetClientRect(&ClientRect);
+	m_ctrChannel.MoveWindow(ClientRect.Width() / 2 - 150, 33, 300, 22, TRUE);
+	
+	m_ctrPassword.MoveWindow(ClientRect.Width() / 2 - 150, 82, 120, 22, TRUE);
+	m_ctrRole.MoveWindow(ClientRect.Width() / 2 + 40, 78, 130, 22, TRUE);
+	
+	int height = 36;
+	m_btnJoin.MoveWindow(ClientRect.Width() / 2 - 180, 310, 350, height, TRUE);
+	m_btnTest.MoveWindow(ClientRect.Width() / 2 - 180, 355, 108, height, TRUE);
+	m_btnSetup.MoveWindow(ClientRect.Width() / 2 - 60, 355, 240, height, TRUE);
+	m_btnRTMP.MoveWindow(ClientRect.Width() / 2 - 180 , 401, 108 , height, TRUE);//m_btnTest downside
+}
