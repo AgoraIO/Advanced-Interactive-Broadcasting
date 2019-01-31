@@ -58,4 +58,5 @@ private:
 
 public:
 	afx_msg void OnBnClickedBtnRtmp();
+	void SetCtrlPos();
 };

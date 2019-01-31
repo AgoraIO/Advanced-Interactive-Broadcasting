@@ -10,7 +10,37 @@
 // CPublisherDlg Dialog
 
 IMPLEMENT_DYNAMIC(CPublisherDlg, CDialogEx)
+void getScale(int& n, int& d)
+{
+	// Get desktop dc
+	HDC desktopDc = GetDC(NULL);
+	// Get native resolution
+	int horizontalDPI = GetDeviceCaps(desktopDc, LOGPIXELSX);
+	//int verticalDPI = GetDeviceCaps(desktopDc, LOGPIXELSY);
+	n = 1;
+	d = 1;
+	switch (horizontalDPI){
+	case 96:
+	{
+		n = 2;
+		d = 3;
+	}
+	break;
+	case 120:
+	{
+		n = 5;
+		d = 6;
+	}
+	break;
+	case 192:
+	{
+		n = 4;
+		d = 3;
+	}
+	break;
 
+	}
+}
 CPublisherDlg::CPublisherDlg(CWnd* pParent /*=NULL*/)
 	: CDialogEx(CPublisherDlg::IDD, pParent)
 	, m_nWidth(640)
@@ -65,17 +95,19 @@ BEGIN_MESSAGE_MAP(CPublisherDlg, CDialogEx)
 	ON_BN_CLICKED(IDC_BTNCANCEL_PUB, &CPublisherDlg::OnBnClickedBtncancelPub)
 END_MESSAGE_MAP()
 
-
-// CPublisherDlg Message Handler
-
-
 BOOL CPublisherDlg::OnInitDialog()
 {
 	CDialogEx::OnInitDialog();
 
-	m_ftHead.CreateFont(15, 0, 0, 0, FW_NORMAL, FALSE, FALSE, 0, ANSI_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH | FF_SWISS, _T("Arial"));
-	m_ftDesc.CreateFont(15, 0, 0, 0, FW_NORMAL, FALSE, FALSE, 0, ANSI_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH | FF_SWISS, _T("Arial"));
-	m_ftBtn.CreateFont(16, 0, 0, 0, FW_NORMAL, FALSE, FALSE, 0, ANSI_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH | FF_SWISS, _T("Arial"));
+	CRect rc;
+	int n = 1;
+	int d = 1;
+	getScale(n, d);
+	int font1 = 15;
+	int font2 = 16;
+	m_ftHead.CreateFont(font1, 0, 0, 0, FW_NORMAL, FALSE, FALSE, 0, ANSI_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH | FF_SWISS, _T("Arial"));
+	m_ftDesc.CreateFont(font1, 0, 0, 0, FW_NORMAL, FALSE, FALSE, 0, ANSI_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH | FF_SWISS, _T("Arial"));
+	m_ftBtn.CreateFont(font2, 0, 0, 0, FW_NORMAL, FALSE, FALSE, 0, ANSI_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH | FF_SWISS, _T("Arial"));
 	m_penFrame.CreatePen(PS_SOLID, 1, RGB(0xD8, 0xD8, 0xD8));
 
 	SetBackgroundColor(RGB(0xFE, 0xFE, 0xFE));
@@ -104,45 +136,53 @@ void CPublisherDlg::InitCtrls()
 	CRect ClientRect;
 
 	GetClientRect(&ClientRect);
-	
-	m_edbPbuString.MoveWindow(80, 56, 326, 24, TRUE);
-	m_chkTranscoding.MoveWindow(80, 90, 140, 24);
+	CRect rc;
+	int n = 1;
+	int d = 1;
+	getScale(n, d);
+	int  x = 80 * n / (float)d;
+	//1
+	m_edbPbuString.MoveWindow(80 * n / (float)d, 56 * n / (float)d, 400 * n / (float)d, 30 * n / (float)d, TRUE);
 	m_edbPbuString.SetFont(&m_ftHead);
 	m_edbPbuString.SetCaretPos(CPoint(12, 148));
 	m_edbPbuString.ShowCaret();
 	m_edbPbuString.SetTip(LANG_STR("IDS_PUB_STRINGTIP"));
 
-	m_edbWidth.MoveWindow(80, 128, 80, 24, TRUE);
+	//2
+	m_chkTranscoding.MoveWindow(80 * n / (float)d, 96 * n / (float)d, 160 * n / (float)d, 30 * n / (float)d);
+	//3
+	m_edbWidth.MoveWindow(80 * n / (float)d, 136 * n / (float)d, 90 * n / (float)d, 30 * n / (float)d, TRUE);
 	m_edbWidth.SetFont(&m_ftHead);
-	m_edbWidth.SetCaretPos(CPoint(12, 148));
+	m_edbWidth.SetCaretPos(CPoint(12 * n / (float)d, 148 * n / (float)d));
 	m_edbWidth.ShowCaret();
 	m_edbWidth.SetTip(LANG_STR("IDS_PUB_WIDTHTIP"));
 
-	m_edbHeight.MoveWindow(162, 128, 80, 24, TRUE);
+	m_edbHeight.MoveWindow(182 * n / (float)d, 136 * n / (float)d, 90 * n / (float)d, 30 * n / (float)d, TRUE);
 	m_edbHeight.SetFont(&m_ftHead);
 	m_edbHeight.SetCaretPos(CPoint(12, 148));
 	m_edbHeight.ShowCaret();
 	m_edbHeight.SetTip(LANG_STR("IDS_PUB_HEIGHTTIP"));
 
-	m_edbFramerate.MoveWindow(244, 128, 80, 24, TRUE);
+	m_edbFramerate.MoveWindow(284 * n / (float)d, 136 * n / (float)d, 90 * n / (float)d, 30 * n / (float)d, TRUE);
 	m_edbFramerate.SetFont(&m_ftHead);
 	m_edbFramerate.SetCaretPos(CPoint(12, 148));
 	m_edbFramerate.ShowCaret();
 	m_edbFramerate.SetTip(LANG_STR("IDS_PUB_FRAMERATETIP"));
 
-	m_edbBitrate.MoveWindow(326, 128, 80, 24, TRUE);
+	m_edbBitrate.MoveWindow(386 * n / (float)d, 136 * n / (float)d, 90 * n / (float)d, 30 * n / (float)d, TRUE);
 	m_edbBitrate.SetFont(&m_ftHead);
 	m_edbBitrate.SetCaretPos(CPoint(12, 148));
 	m_edbBitrate.ShowCaret();
 	m_edbBitrate.SetTip(LANG_STR("IDS_PUB_BITRATETIP"));
 
-	m_edtGOP.MoveWindow(80, 170, 80, 24, TRUE);
+	//4
+	m_edtGOP.MoveWindow(80 * n / (float)d, 176 * n / (float)d, 100 * n / (float)d, 30 * n / (float)d, TRUE);
 	m_edtGOP.SetFont(&m_ftHead);
 	m_edtGOP.SetCaretPos(CPoint(12, 148));
 	m_edtGOP.ShowCaret();
 	m_edtGOP.SetTip(_T("GOP"));
 
-	m_cmbVideoCodecProfile.MoveWindow(165, 170, 245, 24, TRUE);
+	m_cmbVideoCodecProfile.MoveWindow(195 * n / (float)d, 176 * n / (float)d, 295 * n / (float)d, 30 * n / (float)d, TRUE);
 	m_cmbVideoCodecProfile.SetFont(&m_ftHead);
 	m_cmbVideoCodecProfile.SetCaretPos(CPoint(12, 148));
 	m_cmbVideoCodecProfile.ShowCaret();
@@ -150,8 +190,8 @@ void CPublisherDlg::InitCtrls()
 		m_cmbVideoCodecProfile.InsertString(i, m_vecVideoCodecProfileString[i]);
 	}
 	m_cmbVideoCodecProfile.SetCurSel(2);
-
-	m_cmbAudioSampleRate.MoveWindow(80, 214, 195, 24, TRUE);
+	//5
+	m_cmbAudioSampleRate.MoveWindow(80 * n / (float)d, 224 * n / (float)d, 205 * n / (float)d, 30 * n / (float)d, TRUE);
 	m_cmbAudioSampleRate.SetFont(&m_ftHead);
 	m_cmbAudioSampleRate.SetCaretPos(CPoint(12, 148));
 	m_cmbAudioSampleRate.ShowCaret();
@@ -160,13 +200,13 @@ void CPublisherDlg::InitCtrls()
 	}
 	m_cmbAudioSampleRate.SetCurSel(1);
 
-	m_edbAudBitrate.MoveWindow(283, 214, 70, 24, TRUE);
+	m_edbAudBitrate.MoveWindow(303 * n / (float)d, 224 * n / (float)d, 90 * n / (float)d, 30 * n / (float)d, TRUE);
 	m_edbAudBitrate.SetFont(&m_ftHead);
 	m_edbAudBitrate.SetCaretPos(CPoint(12, 148));
 	m_edbAudBitrate.ShowCaret();
 	m_edbAudBitrate.SetTip(LANG_STR("IDS_PUB_AUDBITERATETIP"));
 
-	m_cmbAudioChannels.MoveWindow(366, 214, 40, 24, TRUE);
+	m_cmbAudioChannels.MoveWindow(413 * n / (float)d, 224 * n / (float)d, 70 * n / (float)d, 30 * n / (float)d, TRUE);
 	m_cmbAudioChannels.SetFont(&m_ftHead);
 	m_cmbAudioChannels.SetCaretPos(CPoint(12, 148));
 	m_cmbAudioChannels.ShowCaret();
@@ -177,42 +217,44 @@ void CPublisherDlg::InitCtrls()
 	}
 	m_cmbAudioChannels.SetCurSel(1);
 
-	m_staTranscodingUser.MoveWindow(80, 295, 130, 24, TRUE);
-	m_cmbWaterMark.MoveWindow(170, 295, 100, 24, TRUE);
+	//6
+	m_staTranscodingUser.MoveWindow(80 * n / (float)d, 305 * n / (float)d, 140 * n / (float)d, 30 * n / (float)d, TRUE);
+	m_cmbWaterMark.MoveWindow(190 * n / (float)d, 305 * n / (float)d, 140 * n / (float)d, 30 * n / (float)d, TRUE);
 	m_cmbWaterMark.InsertString(0, _T("None"));
 	m_cmbWaterMark.InsertString(1, _T("Locale File"));
 	m_cmbWaterMark.InsertString(2, _T("Image http url"));
 	m_cmbWaterMark.SetCurSel(2);
-
-	m_edbWaterMarkX.MoveWindow(80, 330, 80, 24, TRUE);
+	//7
+	m_edbWaterMarkX.MoveWindow(80 * n / (float)d, 345 * n / (float)d, 90 * n / (float)d, 30 * n / (float)d, TRUE);
 	m_edbWaterMarkX.SetFont(&m_ftHead);
 	m_edbWaterMarkX.SetCaretPos(CPoint(12, 148));
 	m_edbWaterMarkX.ShowCaret();
 	m_edbWaterMarkX.SetTip(_T("X"));
 
-	m_edbWaterMarkY.MoveWindow(162, 330, 80, 24, TRUE);
+	m_edbWaterMarkY.MoveWindow(182 * n / (float)d, 345 * n / (float)d, 90 * n / (float)d, 30 * n / (float)d, TRUE);
 	m_edbWaterMarkY.SetFont(&m_ftHead);
 	m_edbWaterMarkY.SetCaretPos(CPoint(12, 148));
 	m_edbWaterMarkY.ShowCaret();
 	m_edbWaterMarkY.SetTip(_T("Y"));
 
-	m_edbWaterMarkWidth.MoveWindow(244, 330, 80, 24, TRUE);
+	m_edbWaterMarkWidth.MoveWindow(292 * n / (float)d, 345 * n / (float)d, 90 * n / (float)d, 30 * n / (float)d, TRUE);
 	m_edbWaterMarkWidth.SetFont(&m_ftHead);
 	m_edbWaterMarkWidth.SetCaretPos(CPoint(12, 148));
 	m_edbWaterMarkWidth.ShowCaret();
 	m_edbWaterMarkWidth.SetTip(_T("Width"));
 
-	m_edbWaterMarkHeight.MoveWindow(326, 330, 80, 24, TRUE);
+	m_edbWaterMarkHeight.MoveWindow(402 * n / (float)d, 345 * n / (float)d, 90 * n / (float)d, 30 * n / (float)d, TRUE);
 	m_edbWaterMarkHeight.SetFont(&m_ftHead);
 	m_edbWaterMarkHeight.SetCaretPos(CPoint(12, 148));
 	m_edbWaterMarkHeight.ShowCaret();
 	m_edbWaterMarkHeight.SetTip(_T("Height"));
-
+	//8
 	m_edbWaterMarkPath.SetTip(_T("Local File/Image http url"));
-	m_edbWaterMarkPath.MoveWindow(80, 362, 290, 24, TRUE);
-	m_btnBrowse.MoveWindow(396, 362, 30, 24);
+	m_edbWaterMarkPath.MoveWindow(80 * n / (float)d, 395 * n / (float)d, 300 * n / (float)d, 30 * n / (float)d, TRUE);
+	m_btnBrowse.MoveWindow(406 * n / (float)d, 395 * n / (float)d, 50 * n / (float)d, 30 * n / (float)d);
 
 	m_chkTranscoding.SetCheck(1);
+
 }
 
 void CPublisherDlg::OnBnClickedBtnconfirmPub()
