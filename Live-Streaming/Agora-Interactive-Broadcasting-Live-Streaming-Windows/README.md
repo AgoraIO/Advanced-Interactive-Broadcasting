@@ -12,7 +12,7 @@ The following features are included in this sample project:
 Run the sample program
 First register your account with [Agora.io Registration] (https://dashboard.agora.io/cn/signup/) and create your own test project to get the AppID. Fill in the AppID into source code APP_ID macro.
 
-Then [Agora.io SDK](https://www.agora.io/cn/download/) to get 2.2.1 window side sdk into LiveStreaming directory sdk directory contains dll, lib, include 3 parts of the file
+Then [Agora.io SDK](https://www.agora.io/cn/download/) to get window side sdk into LiveStreaming directory sdk directory contains dll, lib, include 3 parts of the file
 
 Finally open the project with Visual Studio 2013, compile and run.
 Need to copy the dll in sdk to the execution directory

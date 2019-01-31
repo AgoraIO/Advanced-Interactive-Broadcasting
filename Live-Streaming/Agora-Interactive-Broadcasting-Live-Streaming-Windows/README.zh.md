@@ -13,7 +13,7 @@
 首先在 [Agora.io 注册](https://dashboard.agora.io/cn/signup/) 注册账号，并创建自己的测试项目，获取到 AppID。将appid放入代码中APP_ID宏定义中
 
 
-然后在 [Agora.io SDK](https://www.agora.io/cn/download/) 获取2.2.1 window端sdk 放到 LiveStreaming目录下 sdk目录下包含 dll,lib,include 3各部分文件
+然后在 [Agora.io SDK](https://www.agora.io/cn/download/) 获取window端sdk 放到 LiveStreaming目录下 sdk目录下包含 dll,lib,include 3各部分文件
 
 最后用 Visual Studio 2013 打开该项目，编译并运行。
 需要将sdk 中的dll 拷贝到 执行目录下
