@@ -4,9 +4,9 @@ This tutorial describes how to add Agora injection streaming for CDN live to you
 
 With this sample app you can:
 
-- [Join / leave channel](#define-interaction-methods)
-- [Add injection stream URL](#define-join-leave-event-listeners)
-- [Remove injection stream URL](#define-interaction-methods)
+- [Join / leave a channel](#define-interaction-methods)
+- [Add an injection stream URL](#define-join-leave-event-listeners)
+- [Remove an injection stream URL](#define-interaction-methods)
 
 ## Prerequisites
 
