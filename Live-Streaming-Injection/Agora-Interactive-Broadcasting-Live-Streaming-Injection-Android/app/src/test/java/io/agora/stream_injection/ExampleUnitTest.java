@@ -1,4 +1,4 @@
-package agora.io.injectstream;
+package io.agora.stream_injection;
 
 import org.junit.Test;
 

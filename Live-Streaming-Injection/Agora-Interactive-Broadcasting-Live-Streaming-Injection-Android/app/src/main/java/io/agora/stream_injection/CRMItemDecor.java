@@ -1,4 +1,4 @@
-package agora.io.injectstream;
+package io.agora.stream_injection;
 
 import android.graphics.Rect;
 import android.support.v7.widget.RecyclerView;
@@ -15,7 +15,7 @@ public class CRMItemDecor extends RecyclerView.ItemDecoration {
             outRect.bottom = 8;
             outRect.left = 9;
             outRect.right = 9;
-        } else if (parent.getChildAdapterPosition(view) < childCount -1) {
+        } else if (parent.getChildAdapterPosition(view) < childCount - 1) {
             outRect.top = 8;
             outRect.bottom = 8;
             outRect.left = 9;

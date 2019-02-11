@@ -1,4 +1,4 @@
-package agora.io.injectstream;
+package io.agora.stream_injection;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("agora.io.injectstream", appContext.getPackageName());
+        assertEquals("io.agora.stream_injection", appContext.getPackageName());
     }
 }

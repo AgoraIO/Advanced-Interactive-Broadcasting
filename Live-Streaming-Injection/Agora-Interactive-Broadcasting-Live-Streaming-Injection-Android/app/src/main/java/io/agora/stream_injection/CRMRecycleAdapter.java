@@ -1,4 +1,4 @@
-package agora.io.injectstream;
+package io.agora.stream_injection;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -11,7 +11,7 @@ import android.widget.TextView;
 import java.lang.ref.WeakReference;
 import java.util.List;
 
-public class CRMRecycleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
+public class CRMRecycleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private List<String> mDataSet;
     private Context mCtx;
 
@@ -37,7 +37,7 @@ public class CRMRecycleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        ((MyHolder)holder).tv.setText(mDataSet.get(position));
+        ((MyHolder) holder).tv.setText(mDataSet.get(position));
     }
 
     @Override
@@ -45,8 +45,9 @@ public class CRMRecycleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         return mDataSet.size();
     }
 
-    public class MyHolder extends RecyclerView.ViewHolder{
+    public class MyHolder extends RecyclerView.ViewHolder {
         private TextView tv;
+
         public MyHolder(View itemView) {
             super(itemView);
 

@@ -1,6 +1,17 @@
 <resources>
-    <string name="app_name">InjectStream</string>
+    <string name="app_name">CDN(RTMP/HLS/FLV) Stream Injection</string>
     <string name="title_activity_show">ShowActivity</string>
 
-    <string name="app_id">c9c0aab5db2a401299a352c71d969967</string>
+    <string name="hint_channel_name">Channel Name</string>
+    <string name="hint_stream_url">Stream Url</string>
+
+    <string name="text_default_channel">stream_injection</string>
+    <string name="text_default_stream_for_injection">http://220.194.237.28:8000/flv/live.flv</string>
+
+    <!-- PLEASE KEEP THIS App ID IN SAFE PLACE -->
+    <!-- Get your own App ID at https://dashboard.agora.io/ -->
+    <!-- After you entered the App ID, remove <##> outside of Your App ID -->
+    <!-- For formal released project, please use Security Keys/Token
+        https://docs.agora.io/en/Interactive%20Broadcast/token?platform=All%20Platforms -->
+    <string name="agora_app_id"><#YOUR APP ID#></string>
 </resources>

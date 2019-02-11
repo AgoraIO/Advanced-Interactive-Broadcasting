@@ -1,8 +1,7 @@
-package agora.io.injectstream;
+package io.agora.stream_injection;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.SurfaceView;
@@ -14,13 +13,11 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.agora.live.LiveInjectStreamConfig;
 import io.agora.rtc.Constants;
 import io.agora.rtc.IRtcEngineEventHandler;
 import io.agora.rtc.RtcEngine;
 
-public class ShowActivity extends AppCompatActivity implements IMediaEngineHandler {
-    private WorkThread mWorkThread;
+public class ShowActivity extends BaseActivity implements AGEventHandler {
     private SurfaceView localView;
     private SurfaceView injectView;
 
@@ -33,13 +30,13 @@ public class ShowActivity extends AppCompatActivity implements IMediaEngineHandl
     private CRMRecycleAdapter mCrmAdapter;
 
     private boolean hasInjectedJoined = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show);
 
-        ((MApplication)getApplication()).initWorkThread();
-
+        ((MyApplication) getApplication()).initWorkerThread();
 
         msgView = findViewById(R.id.rv_chat_room_main_message);
         msgView.setHasFixedSize(true);
@@ -48,10 +45,8 @@ public class ShowActivity extends AppCompatActivity implements IMediaEngineHandl
         msgView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         msgView.addItemDecoration(new CRMItemDecor());
 
-        mWorkThread = ((MApplication)getApplication()).getWorkThread();
-        mWorkThread.handler().addEventHandler(this);
-        mWorkThread.configEngine(Constants.CLIENT_ROLE_BROADCASTER, Constants.VIDEO_PROFILE_480P);
-        mWorkThread.joinChannel(getIntent().getStringExtra("CHANNEL_NAME"), 0);
+        event().addEventHandler(this);
+        worker().configEngine(Constants.CLIENT_ROLE_BROADCASTER);
 
         localView = RtcEngine.CreateRendererView(this);
         injectView = RtcEngine.CreateRendererView(this);
@@ -59,9 +54,28 @@ public class ShowActivity extends AppCompatActivity implements IMediaEngineHandl
         mLocal = findViewById(R.id.fl_local_view);
         mInject = findViewById(R.id.fl_inject_view);
 
-        mWorkThread.preview(true, localView, 0);
+        worker().preview(true, localView, 0);
+
+        worker().joinChannel(getIntent().getStringExtra("CHANNEL_NAME"), 0);
 
         url = getIntent().getStringExtra("INJECT_URL");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        event().removeEventHandler(this);
+    }
+
+    @Override
+    protected void initUIandEvent() {
+
+    }
+
+    @Override
+    protected void deInitUIandEvent() {
+
     }
 
     public void onExitClicked(View v) {
@@ -76,7 +90,7 @@ public class ShowActivity extends AppCompatActivity implements IMediaEngineHandl
 
     @Override
     public void onJoinChannelSuccess(String channel, int uid, int elapsed) {
-        sendChatMessage("joinSuccess:" + channel);
+        sendChatMessage("joinSuccess: " + channel);
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -87,11 +101,11 @@ public class ShowActivity extends AppCompatActivity implements IMediaEngineHandl
                     mLocal.removeAllViews();
 
                 if (localView.getParent() != null)
-                    ((ViewGroup)(localView.getParent())).removeAllViews();
+                    ((ViewGroup) (localView.getParent())).removeAllViews();
 
                 mLocal.addView(localView);
 
-                mWorkThread.rtcEngine().addInjectStreamUrl(url, getConfig());
+                rtcEngine().addInjectStreamUrl(url, newLiveInjectStreamConfig());
             }
         });
     }
@@ -101,11 +115,12 @@ public class ShowActivity extends AppCompatActivity implements IMediaEngineHandl
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                // FIXME 666 using a friendly uid
                 if (uid == 666 && !hasInjectedJoined) {
                     sendChatMessage("inject user joined: " + uid);
 
                     if (injectView.getParent() != null) {
-                        ((ViewGroup)(injectView.getParent())).removeAllViews();
+                        ((ViewGroup) (injectView.getParent())).removeAllViews();
                     }
 
                     if (mInject.getChildCount() > 0)
@@ -113,9 +128,10 @@ public class ShowActivity extends AppCompatActivity implements IMediaEngineHandl
 
                     injectView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
                     injectView.setZOrderOnTop(false);
-
-                    mWorkThread.setmRemoteView(injectView, uid);
                     mInject.addView(injectView);
+
+                    worker().setupRemoteView(injectView, uid);
+
                     hasInjectedJoined = true;
                 }
             }
@@ -135,7 +151,7 @@ public class ShowActivity extends AppCompatActivity implements IMediaEngineHandl
 
     @Override
     public void onError(int err) {
-
+        sendChatMessage("error: " + err);
     }
 
     @Override
@@ -150,26 +166,31 @@ public class ShowActivity extends AppCompatActivity implements IMediaEngineHandl
 
     @Override
     public void onStreamInjectedStatus(String url, int uid, int status) {
-        sendChatMessage("injected status:" + status);
+
+        String reason;
+        if (status == Constants.INJECT_STREAM_STATUS_START_TIMEDOUT) {
+            reason = "timeout";
+        } else if (status == Constants.INJECT_STREAM_STATUS_START_SUCCESS) {
+            reason = "success";
+        } else if (status == Constants.INJECT_STREAM_STATUS_START_ALREADY_EXISTS) {
+            reason = "exists";
+        } else if (status == Constants.INJECT_STREAM_STATUS_START_UNAUTHORIZED) {
+            reason = "unauthorized";
+        } else if (status == Constants.INJECT_STREAM_STATUS_START_FAILED) {
+            reason = "failed";
+        } else {
+            reason = "see Constants.INJECT_STREAM_STATUS*";
+        }
+
+        sendChatMessage("injected status: " + (uid & 0xFFFFFFFFL) + " " + reason + "(" + status + ") " + url);
     }
 
-    public LiveInjectStreamConfig getConfig() {
-        LiveInjectStreamConfig config = new LiveInjectStreamConfig();
-        config.width = 0;
-        config.height = 0;
-        config.videoGop = 30;
-        config.videoFramerate = 15;
-        config.videoBitrate = 400;
-        config.audioSampleRate = LiveInjectStreamConfig.AudioSampleRateType.TYPE_44100;
-        config.audioBitrate = 48;
-        config.audioChannels = 1;
+    public void stop() {
+        rtcEngine().removeInjectStreamUrl(url);
 
-        return config;
-    }
+        worker().preview(false, null, 0);
 
-    public void stop(){
-        mWorkThread.leaveChannel();
-        mWorkThread.rtcEngine().removeInjectStreamUrl(url);
+        worker().leaveChannel();
         finish();
     }
 
@@ -179,7 +200,7 @@ public class ShowActivity extends AppCompatActivity implements IMediaEngineHandl
             public void run() {
                 mMessageDataSet.add(message);
 
-                if (mMessageDataSet.size() > 14) {// max value is 15
+                if (mMessageDataSet.size() > 14) { // max value is 15
                     int len = mMessageDataSet.size() - 15;
                     for (int i = 0; i < len; i++) {
                         mMessageDataSet.remove(i);
