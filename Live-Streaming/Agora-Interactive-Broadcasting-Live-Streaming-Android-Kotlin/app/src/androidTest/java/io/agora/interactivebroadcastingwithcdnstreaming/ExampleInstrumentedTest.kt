@@ -21,6 +21,6 @@ class ExampleInstrumentedTest {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getTargetContext()
 
-        assertEquals("io.agora.interactivebroadcastingwithcdnstreaming", appContext.packageName)
+        assertEquals("io.agora.kotlin.interactivebroadcastingwithcdnstreaming", appContext.packageName)
     }
 }

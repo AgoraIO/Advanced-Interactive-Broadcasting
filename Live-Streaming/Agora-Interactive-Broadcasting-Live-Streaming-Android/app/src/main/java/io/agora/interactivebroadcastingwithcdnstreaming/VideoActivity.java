@@ -100,12 +100,6 @@ public class VideoActivity extends AppCompatActivity {
         }
 
         @Override
-        public void onConnectionInterrupted() {
-            super.onConnectionInterrupted();
-            sendMsg("-->onConnectionInterrupted<--");
-        }
-
-        @Override
         public void onConnectionLost() {
             super.onConnectionLost();
             sendMsg("-->onConnectionLost<--");
@@ -205,7 +199,7 @@ public class VideoActivity extends AppCompatActivity {
                                                                        int canvasWidth,
                                                                        int canvasHeight) {
 
-        ArrayList<LiveTranscoding.TranscodingUser> users;
+        ArrayList<LiveTranscoding.TranscodingUser> users = new ArrayList<>(publishers.size());
         int index = 0;
         float xIndex, yIndex;
         int viewWidth;
@@ -220,8 +214,6 @@ public class VideoActivity extends AppCompatActivity {
             viewHEdge = canvasHeight;
         else
             viewHEdge = canvasHeight / ((publishers.size() - 1) / 2 + 1);
-
-        users = new ArrayList<>(publishers.size());
 
         LiveTranscoding.TranscodingUser user0 = new LiveTranscoding.TranscodingUser();
         user0.uid = bigUserId;
@@ -384,7 +376,6 @@ public class VideoActivity extends AppCompatActivity {
         transcodingUsers = cdnLayout(mBigUserId, videoUsers, mLiveTranscoding.width, mLiveTranscoding.height);
 
         mLiveTranscoding.setUsers(transcodingUsers);
-        mLiveTranscoding.userCount = transcodingUsers.size();
         mRtcEngine.setLiveTranscoding(mLiveTranscoding);
     }
 

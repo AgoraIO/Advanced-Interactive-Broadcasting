@@ -182,7 +182,7 @@ class VideoActivity : AppCompatActivity() {
 
             mRtcEngine!!.enableVideo()
 
-            //          mRtcEngine.setVideoProfile(Constants.VIDEO_PROFILE_480P, true); // Replaced by setVideoEncoderConfiguration in Agora RTC SDK after 2.3.0+
+//          mRtcEngine.setVideoProfile(Constants.VIDEO_PROFILE_480P, true); // Replaced by setVideoEncoderConfiguration in Agora RTC SDK after 2.3.0+
             mRtcEngine!!.setVideoEncoderConfiguration(VideoEncoderConfiguration(VideoEncoderConfiguration.VD_640x480, VideoEncoderConfiguration.FRAME_RATE.FRAME_RATE_FPS_15, VideoEncoderConfiguration.STANDARD_BITRATE, VideoEncoderConfiguration.ORIENTATION_MODE.ORIENTATION_MODE_FIXED_PORTRAIT))
 
             mRtcEngine!!.joinChannel(null, mChannelName, "", mBigUserId)
@@ -263,8 +263,7 @@ class VideoActivity : AppCompatActivity() {
 
         transcodingUsers = cdnLayout(mBigUserId, videoUsers, mLiveTranscoding!!.width, mLiveTranscoding!!.height)
 
-        mLiveTranscoding!!.setUsers(transcodingUsers)
-        mLiveTranscoding!!.userCount = transcodingUsers.size
+        mLiveTranscoding!!.users = transcodingUsers
         mRtcEngine!!.setLiveTranscoding(mLiveTranscoding)
     }
 
@@ -330,7 +329,7 @@ class VideoActivity : AppCompatActivity() {
                       canvasWidth: Int,
                       canvasHeight: Int): ArrayList<LiveTranscoding.TranscodingUser> {
 
-            val users: ArrayList<LiveTranscoding.TranscodingUser>
+            val users: ArrayList<LiveTranscoding.TranscodingUser> = ArrayList(publishers.size)
             var index = 0
             var xIndex: Float
             var yIndex: Float
@@ -346,8 +345,6 @@ class VideoActivity : AppCompatActivity() {
                 viewHEdge = canvasHeight
             else
                 viewHEdge = canvasHeight / ((publishers.size - 1) / 2 + 1)
-
-            users = ArrayList<LiveTranscoding.TranscodingUser>(publishers.size)
 
             val user0 = LiveTranscoding.TranscodingUser()
             user0.uid = bigUserId
