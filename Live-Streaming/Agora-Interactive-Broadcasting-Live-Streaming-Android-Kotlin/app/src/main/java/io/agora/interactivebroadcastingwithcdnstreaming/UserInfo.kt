@@ -1,4 +1,4 @@
-package agora.io.optimizedtranscoding
+package io.agora.interactivebroadcastingwithcdnstreaming
 
 import android.view.SurfaceView
 

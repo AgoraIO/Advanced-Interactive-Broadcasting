@@ -32,7 +32,7 @@
         android:layout_gravity="center"
         android:layout_margin="16dp"
         android:gravity="center"
-        android:text="input a new url to replace the default url!! " />
+        android:text="input a new url to replace the default url!!" />
 
     <ImageView
         android:layout_width="wrap_content"

@@ -17,13 +17,12 @@
             android:textColor="@android:color/black"
             android:textStyle="bold" />
 
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dialog_horizontal_margin"
-            android:layout_marginRight="@dimen/dialog_horizontal_margin"
             android:layout_marginTop="10dp"
+            android:layout_marginRight="@dimen/dialog_horizontal_margin"
             android:orientation="horizontal">
 
             <TextView
@@ -53,8 +52,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dialog_horizontal_margin"
-            android:layout_marginRight="@dimen/dialog_horizontal_margin"
             android:layout_marginTop="10dp"
+            android:layout_marginRight="@dimen/dialog_horizontal_margin"
             android:orientation="horizontal">
 
             <TextView
@@ -84,8 +83,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dialog_horizontal_margin"
-            android:layout_marginRight="@dimen/dialog_horizontal_margin"
             android:layout_marginTop="10dp"
+            android:layout_marginRight="@dimen/dialog_horizontal_margin"
             android:orientation="horizontal">
 
             <TextView
@@ -115,8 +114,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dialog_horizontal_margin"
-            android:layout_marginRight="@dimen/dialog_horizontal_margin"
             android:layout_marginTop="10dp"
+            android:layout_marginRight="@dimen/dialog_horizontal_margin"
             android:orientation="horizontal">
 
             <TextView
@@ -146,8 +145,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dialog_horizontal_margin"
-            android:layout_marginRight="@dimen/dialog_horizontal_margin"
             android:layout_marginTop="10dp"
+            android:layout_marginRight="@dimen/dialog_horizontal_margin"
             android:orientation="horizontal">
 
             <TextView
@@ -187,8 +186,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dialog_horizontal_margin"
-            android:layout_marginRight="@dimen/dialog_horizontal_margin"
             android:layout_marginTop="10dp"
+            android:layout_marginRight="@dimen/dialog_horizontal_margin"
             android:orientation="horizontal">
 
             <TextView

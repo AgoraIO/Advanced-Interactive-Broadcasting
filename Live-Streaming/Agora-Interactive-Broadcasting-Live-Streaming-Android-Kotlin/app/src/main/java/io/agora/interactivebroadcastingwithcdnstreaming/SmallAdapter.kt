@@ -1,11 +1,17 @@
-package agora.io.optimizedtranscoding
+package io.agora.interactivebroadcastingwithcdnstreaming
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.util.DisplayMetrics
 import android.util.TypedValue
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.view.ViewManager
+import android.view.WindowManager
 import android.widget.FrameLayout
+
+import java.util.ArrayList
 
 class SmallAdapter(private val mContext: Context, users: ArrayList<UserInfo>) : RecyclerView.Adapter<SmallAdapter.ViewHolder>() {
     private var mUsers: ArrayList<UserInfo>? = null
@@ -44,7 +50,7 @@ class SmallAdapter(private val mContext: Context, users: ArrayList<UserInfo>) : 
         val user = mUsers!![position]
         val sv = user.view
         if (sv!!.parent != null)
-            (sv!!.parent as ViewManager).removeView(sv)
+            (sv.parent as ViewManager).removeView(sv)
 
         val lp = FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT)
         sv.layoutParams = lp
@@ -57,10 +63,9 @@ class SmallAdapter(private val mContext: Context, users: ArrayList<UserInfo>) : 
     }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        internal var root: FrameLayout
+        internal var root: FrameLayout = itemView as FrameLayout
 
         init {
-            root = itemView as FrameLayout
             root.layoutParams = RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT, RecyclerView.LayoutParams.MATCH_PARENT)
         }
     }

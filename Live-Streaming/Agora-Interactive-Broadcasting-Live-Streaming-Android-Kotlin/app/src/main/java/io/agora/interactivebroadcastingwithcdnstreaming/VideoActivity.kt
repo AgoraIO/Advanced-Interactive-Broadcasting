@@ -1,11 +1,7 @@
-package agora.io.optimizedtranscoding
+package io.agora.interactivebroadcastingwithcdnstreaming
 
-import android.annotation.TargetApi
-import android.content.Intent
 import android.graphics.PorterDuff
-import android.os.Build
 import android.os.Bundle
-import android.support.v4.content.PermissionChecker
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
@@ -22,17 +18,14 @@ import java.util.HashMap
 import io.agora.rtc.Constants
 import io.agora.rtc.IRtcEngineEventHandler
 import io.agora.rtc.RtcEngine
-
-// If your Agora RTC SDK version is under 2.3.0, please import `io.agora.live.LiveTranscoding;`
 import io.agora.rtc.live.LiveTranscoding
-
-// If your Agora RTC SDK version is under 2.3.0, please replace 'setVideoEncoderConfiguration' with 'setVideoProfile'
-import io.agora.rtc.video.AgoraImage
+import io.agora.rtc.video.VideoCanvas
 import io.agora.rtc.video.VideoEncoderConfiguration
 
-import io.agora.rtc.video.VideoCanvas
+// If your Agora RTC SDK version is under 2.3.0, please import `io.agora.live.LiveTranscoding;`
+// If your Agora RTC SDK version is under 2.3.0, please replace 'setVideoEncoderConfiguration' with 'setVideoProfile'
 
-class MainActivity : AppCompatActivity() {
+class VideoActivity : AppCompatActivity() {
     private var mChannelName: String? = null
     private var mPublishUrl = ""
 
@@ -47,7 +40,7 @@ class MainActivity : AppCompatActivity() {
     private val mUserInfo = HashMap<Int, UserInfo>()
     private var mSmallAdapter: SmallAdapter? = null
 
-    //before join channel success, big-uid is zero, after join success big-uid will modify by onJoinChannel-uid
+    // before join channel success, big-uid is zero, after join success big-uid will modify by onJoinChannel-uid
     private var mBigUserId = 0
     private var mBigView: SurfaceView? = null
 
@@ -65,7 +58,7 @@ class MainActivity : AppCompatActivity() {
             sendMsg("-->onWarning<--$warn")
         }
 
-        override fun onJoinChannelSuccess(channel: String?, uid: Int, elapsed: Int) {
+        override fun onJoinChannelSuccess(channel: String, uid: Int, elapsed: Int) {
             super.onJoinChannelSuccess(channel, uid, elapsed)
             sendMsg("-->onJoinChannelSuccess<--$channel  -->uid<--$uid")
             runOnUiThread {
@@ -84,19 +77,14 @@ class MainActivity : AppCompatActivity() {
             sendMsg("-->onFirstLocalVideoFrame<--")
         }
 
-        override fun onRejoinChannelSuccess(channel: String?, uid: Int, elapsed: Int) {
+        override fun onRejoinChannelSuccess(channel: String, uid: Int, elapsed: Int) {
             super.onRejoinChannelSuccess(channel, uid, elapsed)
-            sendMsg(uid.toString() + " -->RejoinChannel<--")
+            sendMsg("$uid -->RejoinChannel<--")
         }
 
-        override fun onLeaveChannel(stats: IRtcEngineEventHandler.RtcStats?) {
+        override fun onLeaveChannel(stats: RtcStats) {
             super.onLeaveChannel(stats)
             sendMsg("-->leaveChannel<--")
-        }
-
-        override fun onConnectionInterrupted() {
-            super.onConnectionInterrupted()
-            sendMsg("-->onConnectionInterrupted<--")
         }
 
         override fun onConnectionLost() {
@@ -104,7 +92,7 @@ class MainActivity : AppCompatActivity() {
             sendMsg("-->onConnectionLost<--")
         }
 
-        override fun onStreamPublished(url: String?, error: Int) {
+        override fun onStreamPublished(url: String, error: Int) {
             super.onStreamPublished(url, error)
             sendMsg("-->onStreamUrlPublished<--$url -->error code<--$error")
             runOnUiThread {
@@ -119,9 +107,9 @@ class MainActivity : AppCompatActivity() {
 
         }
 
-        override fun onStreamUnpublished(url: String?) {
+        override fun onStreamUnpublished(url: String) {
             super.onStreamUnpublished(url)
-            sendMsg("-->onStreamUrlUnpublished<--" + url!!)
+            sendMsg("-->onStreamUrlUnpublished<--$url")
         }
 
         override fun onTranscodingUpdated() {
@@ -133,7 +121,7 @@ class MainActivity : AppCompatActivity() {
             sendMsg("-->onUserJoined<--$uid")
             runOnUiThread {
                 val mUI = UserInfo()
-                mUI.view = RtcEngine.CreateRendererView(this@MainActivity)
+                mUI.view = RtcEngine.CreateRendererView(this@VideoActivity)
                 mUI.uid = uid
                 mUI.view!!.setZOrderOnTop(true)
                 mUserInfo[uid] = mUI
@@ -157,18 +145,14 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_video)
 
         val i = intent
         mChannelName = i.getStringExtra("CHANNEL")
         mPublishUrl = i.getStringExtra("URL")
 
-        if (shouldRequestPermission()) {
-            askPermission()
-        } else {
-            init()
-            initEngine()
-        }
+        init()
+        initEngine()
     }
 
     private fun init() {
@@ -191,7 +175,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun initEngine() {
         try {
-            mRtcEngine = RtcEngine.create(applicationContext, resources.getString(R.string.app_id), mRtcEngineEventHandler)
+            mRtcEngine = RtcEngine.create(applicationContext, resources.getString(R.string.agora_app_id), mRtcEngineEventHandler)
 
             mRtcEngine!!.setChannelProfile(Constants.CHANNEL_PROFILE_LIVE_BROADCASTING)
             mRtcEngine!!.setClientRole(Constants.CLIENT_ROLE_BROADCASTER)
@@ -203,7 +187,7 @@ class MainActivity : AppCompatActivity() {
 
             mRtcEngine!!.joinChannel(null, mChannelName, "", mBigUserId)
 
-            mBigView = RtcEngine.CreateRendererView(this@MainActivity)
+            mBigView = RtcEngine.CreateRendererView(this@VideoActivity)
             if (mSelfView!!.childCount > 0)
                 mSelfView!!.removeAllViews()
             mBigView!!.layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT)
@@ -225,10 +209,7 @@ class MainActivity : AppCompatActivity() {
         mMsgList = ArrayList()
         val msgRecycle = findViewById<RecyclerView>(R.id.msg_list)
 
-        var tmp = mMsgList;
-        if (tmp != null) {
-            mMessageAdapter = MessageAdapter(this, tmp)
-        }
+        mMessageAdapter = MessageAdapter(this, mMsgList!!)
         mMessageAdapter!!.setHasStableIds(true)
 
         msgRecycle.adapter = mMessageAdapter
@@ -262,15 +243,17 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun onSettingsClicked(v: View) {
-        //showTransCodingSettingDialog()
+        showTransCodingSettingDialog()
     }
 
     private fun showTransCodingSettingDialog() {
         val dialog = CustomTranscodingDialog(this, mLiveTranscoding!!)
-        //dialog.setOnUpdateTranscodingListener { customTranscoding ->
-        //    mLiveTranscoding = customTranscoding
-        //    setTranscoding()
-        //}
+        dialog.setOnUpdateTranscodingListener(object : CustomTranscodingDialog.OnUpdateTranscodingListener {
+            override fun onUpdateTranscoding(customTranscoding: LiveTranscoding) {
+                mLiveTranscoding = customTranscoding
+                setTranscoding()
+            }
+        })
         dialog.showDialog()
     }
 
@@ -280,43 +263,9 @@ class MainActivity : AppCompatActivity() {
 
         transcodingUsers = cdnLayout(mBigUserId, videoUsers, mLiveTranscoding!!.width, mLiveTranscoding!!.height)
 
-        mLiveTranscoding!!.users = transcodingUsers
+        mLiveTranscoding!!.setUsers(transcodingUsers)
         mLiveTranscoding!!.userCount = transcodingUsers.size
-
-        val watermark = AgoraImage()
-        watermark.url = "/sdcard/watermark.png"
-        watermark.x = 0
-        watermark.y = 0
-        watermark.width = 100
-        watermark.height = 100
-        mRtcEngine!!.addVideoWatermark(watermark)
-
         mRtcEngine!!.setLiveTranscoding(mLiveTranscoding)
-    }
-
-    private fun shouldRequestPermission(): Boolean {
-        return Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP_MR1
-    }
-
-    @TargetApi(23)
-    private fun askPermission() {
-        requestPermissions(arrayOf("android.permission.CAMERA", "android.permission.RECORD_AUDIO", "android.permission.RECORD_AUDIO", "android.permission.WRITE_EXTERNAL_STORAGE"),
-                200)
-    }
-
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == 200) {
-            for (g in grantResults) {
-                if (g != PermissionChecker.PERMISSION_GRANTED) {
-                    finish()
-                    return
-                }
-            }
-
-            init()
-            initEngine()
-        }
     }
 
     fun onEndCallClicked(v: View) {

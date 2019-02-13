@@ -1,9 +1,7 @@
-package agora.io.optimizedtranscoding
+package io.agora.interactivebroadcastingwithcdnstreaming
 
 import android.app.AlertDialog
 import android.content.Context
-import android.content.DialogInterface
-import android.support.annotation.IdRes
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.CheckBox
@@ -32,7 +30,7 @@ class CustomTranscodingDialog(private val mContext: Context, private val mTransC
                     progress = 1
                 }
 
-                widthTextView.text = progress.toString() + ""
+                widthTextView.text = "$progress"
                 mTransCoding.width = progress
             }
 
@@ -52,7 +50,7 @@ class CustomTranscodingDialog(private val mContext: Context, private val mTransC
                     progress = 1
                 }
 
-                heightTextView.text = progress.toString() + ""
+                heightTextView.text = "$progress"
                 mTransCoding.height = progress
             }
 
@@ -72,7 +70,7 @@ class CustomTranscodingDialog(private val mContext: Context, private val mTransC
                     progress = 1
                 }
 
-                bitRateTextView.text = progress.toString() + ""
+                bitRateTextView.text = "$progress"
                 mTransCoding.videoBitrate = progress
             }
 
@@ -94,7 +92,7 @@ class CustomTranscodingDialog(private val mContext: Context, private val mTransC
                     progress = 1
                 }
 
-                fpsTextView.text = progress.toString() + ""
+                fpsTextView.text = "$progress"
                 mTransCoding.videoFramerate = progress
             }
 
@@ -120,7 +118,7 @@ class CustomTranscodingDialog(private val mContext: Context, private val mTransC
                 }
 
                 mTransCoding.videoGop = progress
-                gopTextView.text = "" + progress
+                gopTextView.text = "$progress"
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar) {}
@@ -131,13 +129,13 @@ class CustomTranscodingDialog(private val mContext: Context, private val mTransC
         gopSeekBar.progress = mTransCoding.videoGop
 
         val videoCodec = layout.findViewById<View>(R.id.codec) as RadioGroup
-        if (mTransCoding.videoCodecProfile == LiveTranscoding.VideoCodecProfileType.BASELINE) {
+        if (mTransCoding.videoCodecProfile === LiveTranscoding.VideoCodecProfileType.BASELINE) {
             val button = layout.findViewById<View>(R.id.codec_baseline) as RadioButton
             button.isChecked = true
-        } else if (mTransCoding.videoCodecProfile == LiveTranscoding.VideoCodecProfileType.HIGH) {
+        } else if (mTransCoding.videoCodecProfile === LiveTranscoding.VideoCodecProfileType.HIGH) {
             val button = layout.findViewById<View>(R.id.codec_high) as RadioButton
             button.isChecked = true
-        } else if (mTransCoding.videoCodecProfile == LiveTranscoding.VideoCodecProfileType.MAIN) {
+        } else if (mTransCoding.videoCodecProfile === LiveTranscoding.VideoCodecProfileType.MAIN) {
             val button = layout.findViewById<View>(R.id.codec_main) as RadioButton
             button.isChecked = true
         }
@@ -152,13 +150,13 @@ class CustomTranscodingDialog(private val mContext: Context, private val mTransC
             }
         }
 
-        if (mTransCoding.audioSampleRate == LiveTranscoding.AudioSampleRateType.TYPE_32000) {
+        if (mTransCoding.audioSampleRate === LiveTranscoding.AudioSampleRateType.TYPE_32000) {
             val button = layout.findViewById<View>(R.id.samplerate_32) as RadioButton
             button.isChecked = true
-        } else if (mTransCoding.audioSampleRate == LiveTranscoding.AudioSampleRateType.TYPE_44100) {
+        } else if (mTransCoding.audioSampleRate === LiveTranscoding.AudioSampleRateType.TYPE_44100) {
             val button = layout.findViewById<View>(R.id.samplerate_44_1) as RadioButton
             button.isChecked = true
-        } else if (mTransCoding.audioSampleRate == LiveTranscoding.AudioSampleRateType.TYPE_48000) {
+        } else if (mTransCoding.audioSampleRate === LiveTranscoding.AudioSampleRateType.TYPE_48000) {
             val button = layout.findViewById<View>(R.id.samplerate_48) as RadioButton
             button.isChecked = true
         }
