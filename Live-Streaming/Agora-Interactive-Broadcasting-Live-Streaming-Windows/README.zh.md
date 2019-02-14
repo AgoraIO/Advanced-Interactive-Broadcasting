@@ -1,7 +1,7 @@
 # Agora-Interactive-Broadcasting-Live-Streaming-Windows
 *Other languages: [English](README.md)*
 
-基于声网直播项目[OpenLive](https://github.com/AgoraIO/OpenLive-Windows/tree/dev/2.2.0)修改，主要展示旁路推流2.0版本。
+基于声网直播项目[OpenLive](https://github.com/AgoraIO/Basic-Video-Broadcasting/tree/master/OpenLive-Windows)修改，主要展示旁路推流2.0版本。
 
 在这个示例项目中包含了以下功能：
 
