@@ -1,7 +1,7 @@
 # Agora-Interactive-Broadcasting-Live-Streaming-Windows
 *其他语言: [中文](README.zh.md)*
 
-This open source example is based on live demo [OpenLive](https://github.com/AgoraIO/OpenLive-Windows/tree/dev/2.2.0),and demonstrate how to transcode streaming 2.0.
+This open source example is based on live demo [OpenLive](https://github.com/AgoraIO/Basic-Video-Broadcasting/tree/master/OpenLive-Windows),and demonstrate how to transcode streaming 2.0.
 
 The following features are included in this sample project:
 
