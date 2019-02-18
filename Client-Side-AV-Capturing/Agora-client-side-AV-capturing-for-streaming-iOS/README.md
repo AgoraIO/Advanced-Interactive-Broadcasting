@@ -1,46 +1,42 @@
 # Agora client side AV capturing for streaming iOS
 
+*Other languages: [简体中文](README.zh.md)*
 
-*Read this in other languages: [English](README.en.md)*
+The Agora client side AV capturing for streaming iOS Sample App is an open-source demo that shows how to build a broadcasting application via Agora Video SDK, and get raw data of audio and video streaming for other purpose.
 
-这个开源示例项目演示了如何从Agora视频SDK获取音视频裸数据，并进行RTMP推流。
+With this sample app, you can:
 
-在这个示例项目中包含了以下功能：
+- Join / leave channel
+- Get raw data of audio and video streaming from Agora Video SDK
+- Return callbacks for audio frame(mixed) and video frame in Objective-C language
 
-- 加入通话和离开通话；
-- 从Agora视频SDK获取音视频裸数据；
-- 处理音视频裸数据以进行RTMP推流；
+A tutorial demo for Agora Video SDK can be found here: [Agora-iOS-Tutorial-Swift-1to1](https://github.com/AgoraIO/Basic-Video-Call/tree/master/One-to-One-Video/Agora-Android-Tutorial-1to1)
 
-你可以在这里查看Agora视频SDK的入门示例项目：[Agora-iOS-Tutorial-Swift-1to1](https://github.com/AgoraIO/Basic-Video-Call/tree/master/One-to-One-Video/Agora-iOS-Tutorial-Swift-1to1)
-
-你也可以查看 Android 平台的示例项目：
+You can find demo for Android here:
 
 - [Agora-client-side-AV-capturing-for-streaming-Android](https://github.com/AgoraIO/Advanced-Interactive-Broadcasting/tree/master/Client-Side-AV-Capturing/Agora-client-side-AV-capturing-for-streaming-Android)
 
-## 运行示例程序
-首先在 [Agora.io 注册](https://dashboard.agora.io/cn/signup/) 注册账号，并创建自己的测试项目，获取到 AppID。将 AppID 填写进 KeyCenter.swift
+## Running the App
+First, create a developer account at [Agora.io](https://dashboard.agora.io/signin/), and obtain an App ID. Update "KeyCenter.swift" with your App ID.
 
 ```
 static let AppId: String = "Your App ID"
 ```
 
-然后在 [Agora.io SDK](https://www.agora.io/cn/blog/download/) 下载 **视频通话 + 直播 SDK**，解压后将其中的 **libs/AgoraRtcEngineKit.framework** 复制到本项目的 “Agora-client-side-AV-capturing-for-streaming-iOS” 文件夹下。
+Next, download the **Agora Video SDK** from [Agora.io SDK](https://www.agora.io/en/blog/download/). Unzip the downloaded SDK package and copy the **libs/AgoraRtcEngineKit.framework** to the "Agora-client-side-AV-capturing-for-streaming-iOS" folder in project.
 
-最后使用 XCode 打开 Agora-client-side-AV-capturing-for-streaming-iOS.xcodeproj，连接 iPhone／iPad 测试设备，设置有效的开发者签名后即可运行。
+Finally, Open Agora-client-side-AV-capturing-for-streaming-iOS.xcodeproj, connect your iPhone／iPad device, setup your development signing and run.
 
-## 运行环境
-* XCode 8.0 +
-* iOS 真机设备
-* 不支持模拟器
+## Developer Environment Requirements
+* XCode 10.0+
+* Real devices (iPhone or iPad)
+* iOS simulator is NOT supported
 
-## 联系我们
+## Connect Us
 
-- 完整的 API 文档见 [文档中心](https://docs.agora.io/cn/)
-- 如果在集成中遇到问题，你可以到 [开发者社区](https://dev.agora.io/cn/) 提问
-- 如果有售前咨询问题，可以拨打 400 632 6626，或加入官方Q群 12742516 提问
-- 如果需要售后技术支持，你可以在 [Agora Dashboard](https://dashboard.agora.io) 提交工单
-- 如果发现了示例代码的bug，欢迎提交 [issue](https://github.com/AgoraIO/Advanced-Interactive-Broadcasting/issues)
+- You can find full API document at [Document Center](https://docs.agora.io/en/)
+- You can file bugs about this demo at [issue](https://github.com/AgoraIO/Advanced-Interactive-Broadcasting/issues)
 
-## 代码许可
+## License
 
 The MIT License (MIT).
