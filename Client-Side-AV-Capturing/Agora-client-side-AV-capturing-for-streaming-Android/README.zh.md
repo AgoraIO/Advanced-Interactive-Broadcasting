@@ -2,13 +2,13 @@
 
 *其他语言：[English](README.md)*
 
-这个开源示例项目演示了如何从 Agora 视频 SDK 获取音视频裸数据，并进行 RTMP 推流。
+这个开源示例项目演示了如何从 Agora 视频 SDK 获取音视频裸数据，以便用来进行其他操作。
 
 在这个示例项目中包含了以下功能：
 
 - 加入通话和离开通话；
 - 从 Agora 视频 SDK 获取音视频裸数据；
-- 处理音视频裸数据以进行 RTMP 推流；
+- 处理音视频裸数据并且把数据回传到 Java 代码层；
 
 你可以在这里查看 Agora 视频 SDK 的入门示例项目：[Agora-Android-Tutorial-1to1](https://github.com/AgoraIO/Basic-Video-Call/tree/master/One-to-One-Video/Agora-Android-Tutorial-1to1)
 
@@ -30,7 +30,7 @@
 第一步: 在项目对应的模块的 "app/build.gradle" 文件的依赖属性中加入通过 JCenter 自动集成 Agora 视频 SDK 的地址：
 
 ```
-implementation 'io.agora.rtc:full-sdk:2.3.0'
+implementation 'io.agora.rtc:full-sdk:2.3.3'
 ```
 
 (如果要在自己的应用中集成 Agora 视频 SDK，添加链接地址是最重要的一步。）
@@ -46,7 +46,7 @@ implementation 'io.agora.rtc:full-sdk:2.3.0'
 也可以使用 `Gradle` 直接编译运行。
 
 ## 运行环境
-- Android Studio 3.1 +
+- Android Studio 3.3+
 - 真实 Android 设备 (Nexus 5X 或者其它设备)
 - 部分模拟器会存在功能缺失或者性能问题，所以推荐使用真机
 
