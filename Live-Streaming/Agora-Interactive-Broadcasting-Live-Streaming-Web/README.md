@@ -1,6 +1,8 @@
 
 # Agora Interactive Broadcasting Tutorial for Web
 
+*Read this in other languages: [中文](README.zh.md)*
+
 This tutorial describes how to create an Agora account, download the SDK, and use the Agora sample app to integrate live streaming using the [Agora 2.0+ API](https://docs.agora.io/en/2.2/product/Voice/API%20Reference/communication_web_audio#voice-call-api).
 
 With this sample app, you can:
