@@ -17,7 +17,7 @@ This is an open-source demo that will help you inject live video stream integrat
 
 First, add the address which can integrate the Agora Video SDK automatically through JCenter in the property of the dependence of the "app/build.gradle":
 ```xml
-implemantion 'io.agora.rtc:full-sdk:2.3.2'
+implemantion 'io.agora.rtc:full-sdk:2.3.3'
 ```
 - Alternative way to integrate:
 
@@ -34,13 +34,13 @@ implemantion fileTree(dir: 'libs', include: ['*.jar'])
 Or use `Gradle` to build and run.
 
 ## Developer Environment Requirements
-- Android Studio 2.0 or above
+- Android Studio 3.3 or above
 - Real devices (Nexus 5X or other devices)
 - Some simulators are function missing or have performance issue, so real device is the best choice
 
 ## Connect Us
 - You can find full API document at [Document Center](https://docs.agora.io/en/)
-- You can file bugs about this demo at [issue](https://github.com/AgoraIO/OpenVideoCall-Android/issues)
+- You can file bugs about this demo at [issue](https://github.com/AgoraIO/Basic-Video-Call/issues)
 
 ## License
 The MIT License (MIT).

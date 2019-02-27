@@ -17,7 +17,7 @@
 在项目对应的模块的 "app/build.gradle" 文件的依赖属性中加入通过 JCenter 自动集成 Agora 视频 SDK 的地址：
 
 ```xml
-implemantion 'io.agora.rtc:full-sdk:2.3.2'
+implemantion 'io.agora.rtc:full-sdk:2.3.3'
 ```
 
 - 次选集成方式：
@@ -35,16 +35,16 @@ implemantion fileTree(dir: 'libs', include: ['*.jar'])
 也可以使用 `Gradle` 直接编译运行。
 
 ## 运行环境
-- Android Studio 2.0 +
+- Android Studio 3.3 +
 - 真实 Android 设备 (Nexus 5X 或者其它设备)
 - 部分模拟器会存在功能缺失或者性能问题，所以推荐使用真机
 
 ## 联系我们
 - 完整的 API 文档见 [文档中心](https://docs.agora.io/cn/)
-- 如果在集成中遇到问题, 你可以到 [开发者社区](https://dev.agora.io/cn/) 提问
+- 如果在集成中遇到问题, 你可以到 [开发者社区](https://rtcdeveloper.com/) 提问
 - 如果有售前咨询问题, 可以拨打 400 632 6626，或加入官方Q群 12742516 提问
 - 如果需要售后技术支持, 你可以在 [Agora Dashboard](https://dashboard.agora.io) 提交工单
-- 如果发现了示例代码的 bug, 欢迎提交 [issue](https://github.com/AgoraIO/OpenVideoCall-Android/issues)
+- 如果发现了示例代码的 bug, 欢迎提交 [issue](https://github.com/AgoraIO/Basic-Video-Call/issues)
 
 ## 代码许可
 The MIT License (MIT).
