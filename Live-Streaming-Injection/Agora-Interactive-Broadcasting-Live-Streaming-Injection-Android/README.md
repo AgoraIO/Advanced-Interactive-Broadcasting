@@ -40,7 +40,8 @@ Or use `Gradle` to build and run.
 
 ## Connect Us
 - You can find full API document at [Document Center](https://docs.agora.io/en/)
-- You can file bugs about this demo at [issue](https://github.com/AgoraIO/Basic-Video-Call/issues)
+- You can file bugs about this demo at [issue](https://github.com/AgoraIO/Advanced-Interactive-Broadcasting/issues)
 
 ## License
 The MIT License (MIT).
+
