@@ -29,6 +29,7 @@
 		07CCB8161E97835300D25FB1 /* AGVideoBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = 07CCB8151E97835300D25FB1 /* AGVideoBuffer.m */; };
 		07CCB8191E9783E600D25FB1 /* AGAudioBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = 07CCB8181E9783E600D25FB1 /* AGAudioBuffer.m */; };
 		07CCB8211E97882500D25FB1 /* StreamingClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 07CCB8201E97882500D25FB1 /* StreamingClient.m */; };
+		3802EF33225CC42E0065A2E1 /* CoreML.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3802EF32225CC42E0065A2E1 /* CoreML.framework */; };
 		38845B8B21E7345C005BBCAD /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38845B8A21E7345C005BBCAD /* Accelerate.framework */; };
 		38845B8D21E734A7005BBCAD /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38845B8C21E734A6005BBCAD /* SystemConfiguration.framework */; };
 /* End PBXBuildFile section */
@@ -84,6 +85,7 @@
 		07CCB8181E9783E600D25FB1 /* AGAudioBuffer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AGAudioBuffer.m; sourceTree = "<group>"; };
 		07CCB81F1E97882500D25FB1 /* StreamingClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StreamingClient.h; sourceTree = "<group>"; };
 		07CCB8201E97882500D25FB1 /* StreamingClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StreamingClient.m; sourceTree = "<group>"; };
+		3802EF32225CC42E0065A2E1 /* CoreML.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreML.framework; path = System/Library/Frameworks/CoreML.framework; sourceTree = SDKROOT; };
 		38845B8A21E7345C005BBCAD /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		38845B8C21E734A6005BBCAD /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
@@ -93,6 +95,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3802EF33225CC42E0065A2E1 /* CoreML.framework in Frameworks */,
 				072643CC1E94EA2700589514 /* AgoraRtcEngineKit.framework in Frameworks */,
 				38845B8D21E734A7005BBCAD /* SystemConfiguration.framework in Frameworks */,
 				38845B8B21E7345C005BBCAD /* Accelerate.framework in Frameworks */,
@@ -194,6 +197,7 @@
 		0726441D1E95F8AE00589514 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3802EF32225CC42E0065A2E1 /* CoreML.framework */,
 				38845B8C21E734A6005BBCAD /* SystemConfiguration.framework */,
 				38845B8A21E7345C005BBCAD /* Accelerate.framework */,
 				072644281E95F8D700589514 /* CoreTelephony.framework */,
@@ -250,7 +254,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0830;
-				LastUpgradeCheck = 1010;
+				LastUpgradeCheck = 1020;
 				ORGANIZATIONNAME = Agora;
 				TargetAttributes = {
 					072643B11E94E72F00589514 = {
@@ -262,7 +266,7 @@
 			};
 			buildConfigurationList = 072643AD1E94E72F00589514 /* Build configuration list for PBXProject "Agora-client-side-AV-capturing-for-streaming-iOS" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
@@ -336,6 +340,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -395,6 +400,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";

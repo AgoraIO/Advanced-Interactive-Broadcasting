@@ -30,6 +30,7 @@
 		0F99AAD8210085D3008AFD51 /* PopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F99AAD3210085D3008AFD51 /* PopView.swift */; };
 		0F99AADA210085D3008AFD51 /* PopView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F99AAD5210085D3008AFD51 /* PopView.xib */; };
 		0F99AADB210085D3008AFD51 /* VideoViewLayouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F99AAD6210085D3008AFD51 /* VideoViewLayouter.swift */; };
+		3802EF37225CC4E40065A2E1 /* CoreML.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3802EF36225CC4E40065A2E1 /* CoreML.framework */; };
 		38845B8F21E735AD005BBCAD /* AgoraRtcEngineKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38845B8E21E735AD005BBCAD /* AgoraRtcEngineKit.framework */; };
 /* End PBXBuildFile section */
 
@@ -59,6 +60,7 @@
 		0F99AAD3210085D3008AFD51 /* PopView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopView.swift; sourceTree = "<group>"; };
 		0F99AAD5210085D3008AFD51 /* PopView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PopView.xib; sourceTree = "<group>"; };
 		0F99AAD6210085D3008AFD51 /* VideoViewLayouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoViewLayouter.swift; sourceTree = "<group>"; };
+		3802EF36225CC4E40065A2E1 /* CoreML.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreML.framework; path = System/Library/Frameworks/CoreML.framework; sourceTree = SDKROOT; };
 		38845B8E21E735AD005BBCAD /* AgoraRtcEngineKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AgoraRtcEngineKit.framework; path = AgoraInjectStreaming/AgoraRtcEngineKit.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -67,6 +69,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3802EF37225CC4E40065A2E1 /* CoreML.framework in Frameworks */,
 				38845B8F21E735AD005BBCAD /* AgoraRtcEngineKit.framework in Frameworks */,
 				0F52302B215E340F0091EAB0 /* Accelerate.framework in Frameworks */,
 				0F99AAC621004E45008AFD51 /* libstdc++.tbd in Frameworks */,
@@ -138,6 +141,7 @@
 		0F99AAB02100359E008AFD51 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3802EF36225CC4E40065A2E1 /* CoreML.framework */,
 				0F52302A215E340F0091EAB0 /* Accelerate.framework */,
 				0F99AAC521004E44008AFD51 /* libstdc++.tbd */,
 				0F99AABD210035CE008AFD51 /* libresolv.tbd */,
