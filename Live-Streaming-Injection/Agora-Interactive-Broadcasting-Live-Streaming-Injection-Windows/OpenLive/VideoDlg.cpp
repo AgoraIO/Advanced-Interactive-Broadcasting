@@ -12,7 +12,7 @@
 IMPLEMENT_DYNAMIC(CVideoDlg, CDialogEx)
 
 CVideoDlg::CVideoDlg(CWnd* pParent /*=NULL*/)
-	: CDialogEx(CVideoDlg::IDD, pParent)
+: CDialogEx(CVideoDlg::IDD, pParent)
 {
 	m_brHead.CreateSolidBrush(RGB(0, 160, 239));
 	SetBackgroundColor(RGB(0x26, 0x26, 0x26));
@@ -33,7 +33,7 @@ void CVideoDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
 
-//	DDX_Control(pDX, IDC_CBXROLE_VIDEO, m_cbxRole);
+	//	DDX_Control(pDX, IDC_CBXROLE_VIDEO, m_cbxRole);
 	DDX_Control(pDX, IDC_BTNMIN_VIDEO, m_btnMin);
 	DDX_Control(pDX, IDC_BTNRSTO_VIDEO, m_btnRst);
 	DDX_Control(pDX, IDC_BTNCLOSE_VIDEO, m_btnClose);
@@ -54,16 +54,16 @@ BEGIN_MESSAGE_MAP(CVideoDlg, CDialogEx)
 	ON_MESSAGE(WM_MSGID(EID_FIRST_LOCAL_VIDEO_FRAME), &CVideoDlg::OnEIDFirstLocalFrame)
 
 	ON_MESSAGE(WM_MSGID(EID_FIRST_REMOTE_VIDEO_DECODED), &CVideoDlg::OnEIDFirstRemoteFrameDecoded)
-	ON_MESSAGE(WM_MSGID(EID_USER_JOINED),&CVideoDlg::OnEIDUserJoined)
+	ON_MESSAGE(WM_MSGID(EID_USER_JOINED), &CVideoDlg::OnEIDUserJoined)
 	ON_MESSAGE(WM_MSGID(EID_USER_OFFLINE), &CVideoDlg::OnEIDUserOffline)
-	
+
 	ON_MESSAGE(WM_MSGID(EID_REMOTE_VIDEO_STAT), &CVideoDlg::OnRemoteVideoStat)
 
 	ON_MESSAGE(WM_MSGID(EID_START_RCDSRV), &CVideoDlg::OnStartRecordingService)
 	ON_MESSAGE(WM_MSGID(EID_STOP_RCDSRV), &CVideoDlg::OnStopRecordingService)
-	ON_MESSAGE(WM_MSGID(EID_STREAM_INJECTED_STATUS),&CVideoDlg::OnStreamInjectedStatus)
-	
-    ON_BN_CLICKED(IDC_BTNMIN_VIDEO, &CVideoDlg::OnBnClickedBtnmin)
+	ON_MESSAGE(WM_MSGID(EID_STREAM_INJECTED_STATUS), &CVideoDlg::OnStreamInjectedStatus)
+
+	ON_BN_CLICKED(IDC_BTNMIN_VIDEO, &CVideoDlg::OnBnClickedBtnmin)
 	ON_BN_CLICKED(IDC_BTNCLOSE_VIDEO, &CVideoDlg::OnBnClickedBtnclose)
 	ON_BN_CLICKED(IDC_BTNRSTO_VIDEO, &CVideoDlg::OnBnClickedBtnrest)
 	ON_BN_CLICKED(IDC_BTNENDCALL_VIDEO, &CVideoDlg::OnBnClickedBtnclose)
@@ -79,7 +79,7 @@ BEGIN_MESSAGE_MAP(CVideoDlg, CDialogEx)
 
 	ON_BN_CLICKED(ID_SCRSHARE_DESKTOPSHARE, &CVideoDlg::OnBnClickedScreenshare)
 	ON_BN_CLICKED(ID_SCRSHARE_WINDOWSHARE, &CVideoDlg::OnBnClickedWindowshare)
-	
+
 	ON_BN_CLICKED(ID_IDR_DEVICE, &CVideoDlg::OnBnClickedBtnsetup)
 	ON_BN_CLICKED(ID_IDR_SEIPUSH, &CVideoDlg::OnBnClickedBtSEIPush)
 
@@ -246,7 +246,7 @@ void CVideoDlg::AdjustSizeVideoMulti(int cx, int cy)
 void CVideoDlg::OnMouseMove(UINT nFlags, CPoint point)
 {
 	// TODO:  在此添加消息处理程序代码和/或调用默认值
-		if (m_bFullScreen) {
+	if (m_bFullScreen) {
 		m_nTimeCounter = 5;
 		ShowControlButton(TRUE);
 	}
@@ -264,7 +264,7 @@ BOOL CVideoDlg::NeedShowSizeBox(CPoint point)
 	rcClient.right -= 5;
 	rcClient.top += 5;
 	rcClient.bottom -= 5;
-	
+
 	if (rcClient.PtInRect(point) || IsZoomed())
 		return FALSE;
 
@@ -383,7 +383,7 @@ void CVideoDlg::OnBnClickedBtnrest()
 	m_rcVideoArea.CopyRect(&rcClient);
 	m_rcVideoArea.top += 24;
 	m_rcVideoArea.bottom -= 72;
-	  
+
 	m_rcChildVideoArea.top = m_rcVideoArea.top + 16;
 	m_rcChildVideoArea.bottom = m_rcChildVideoArea.top + 144;
 	m_rcChildVideoArea.left = m_rcVideoArea.right - 212;
@@ -420,12 +420,12 @@ void CVideoDlg::OnBnClickedBtnfullscr()
 
 	if (m_bFullScreen) {
 		m_bFullScreen = FALSE;
-		nShowMode = SW_SHOW;		
+		nShowMode = SW_SHOW;
 		ShowWindow(SW_RESTORE);
 
 		GetClientRect(&m_rcVideoArea);
 		m_rcVideoArea.top += 24;
-		m_rcVideoArea.bottom -= 72;	
+		m_rcVideoArea.bottom -= 72;
 	}
 	else{
 		m_bFullScreen = TRUE;
@@ -438,11 +438,11 @@ void CVideoDlg::OnBnClickedBtnfullscr()
 	m_btnMin.ShowWindow(nShowMode);
 	m_btnRst.ShowWindow(nShowMode);
 	m_btnClose.ShowWindow(nShowMode);
-	
+
 	m_btnMode.ShowWindow(nShowMode);
 	m_btnAudio.ShowWindow(nShowMode);
 	m_btnEndCall.ShowWindow(nShowMode);
-	
+
 	m_btnMore.ShowWindow(nShowMode);
 
 	m_btnShow.ShowWindow(nShowMode);
@@ -588,6 +588,10 @@ void CVideoDlg::OnBnClickedBtntip()
 		m_btnTip.SwitchButtonStatus(CAGButton::AGBTN_PUSH);
 	else
 		m_btnTip.SwitchButtonStatus(CAGButton::AGBTN_NORMAL);
+
+	CAgoraObject* lpAgoraObject = CAgoraObject::GetAgoraObject();
+	CString strInjectUrl = lpAgoraObject->GetInjectedUrl();
+	lpAgoraObject->StreamUnInjected(strInjectUrl);
 }
 
 void CVideoDlg::OnBnClickedBtnScreenCapture()
@@ -674,7 +678,7 @@ LRESULT CVideoDlg::OnEIDJoinChannelSuccess(WPARAM wParam, LPARAM lParam)
 
 	m_listWndInfo.RemoveAll();
 	CAgoraObject *lpAgoraObject = CAgoraObject::GetAgoraObject();
-	
+
 	lpAgoraObject->SetSelfUID(lpData->uid);
 
 	SEI_INFO seiInfo;
@@ -839,7 +843,73 @@ LRESULT CVideoDlg::OnStopRecordingService(WPARAM wParam, LPARAM lParam)
 LRESULT CVideoDlg::OnStreamInjectedStatus(WPARAM wParam, LPARAM lParam)
 {
 	LPAGE_STREAM_INJECTED_STATUS lpData = (LPAGE_STREAM_INJECTED_STATUS)wParam;
-	
+	INJECT_STREAM_STATUS nStreamStatus = (INJECT_STREAM_STATUS)lpData->status;
+	switch (nStreamStatus)
+	{
+	case agora::rtc::INJECT_STREAM_STATUS_START_SUCCESS: {
+		BOOL bFound = FALSE;
+		SEI_INFO seiInfo;
+
+		POSITION pos = m_listWndInfo.GetHeadPosition();
+		while (pos != NULL) {
+			AGVIDEO_WNDINFO &agvWndInfo = m_listWndInfo.GetNext(pos);
+			if (agvWndInfo.nUID == lpData->uid) {
+				bFound = TRUE;
+				break;
+			}
+		}
+
+		if (!bFound) {
+			AGVIDEO_WNDINFO agvWndInfo;
+			memset(&agvWndInfo, 0, sizeof(AGVIDEO_WNDINFO));
+			agvWndInfo.nUID = lpData->uid;
+
+			m_listWndInfo.AddTail(agvWndInfo);
+		}
+
+		RebindVideoWnd();
+
+		memset(&seiInfo, 0, sizeof(SEI_INFO));
+
+		seiInfo.nUID = lpData->uid;
+		CAgoraObject::GetAgoraObject()->SetSEIInfo(seiInfo.nUID, &seiInfo);
+	}
+														 break;
+	case agora::rtc::INJECT_STREAM_STATUS_START_ALREADY_EXISTS:
+		break;
+	case agora::rtc::INJECT_STREAM_STATUS_START_UNAUTHORIZED:
+		break;
+	case agora::rtc::INJECT_STREAM_STATUS_START_TIMEDOUT:
+		break;
+	case agora::rtc::INJECT_STREAM_STATUS_START_FAILED:
+		break;
+	case agora::rtc::INJECT_STREAM_STATUS_STOP_SUCCESS: {
+		POSITION pos = m_listWndInfo.GetHeadPosition();
+		while (pos != NULL){
+			if (m_listWndInfo.GetAt(pos).nUID == lpData->uid) {
+				m_listWndInfo.RemoveAt(pos);
+				RebindVideoWnd();
+				break;
+			}
+
+			m_listWndInfo.GetNext(pos);
+		}
+	}
+														break;
+	case agora::rtc::INJECT_STREAM_STATUS_STOP_NOT_FOUND:
+		break;
+	case agora::rtc::INJECT_STREAM_STATUS_STOP_UNAUTHORIZED:
+		break;
+	case agora::rtc::INJECT_STREAM_STATUS_STOP_TIMEDOUT:
+		break;
+	case agora::rtc::INJECT_STREAM_STATUS_STOP_FAILED:
+		break;
+	case agora::rtc::INJECT_STREAM_STATUS_BROKEN:
+		break;
+	default:
+		break;
+	}
+
 	delete lpData;
 	lpData = nullptr;
 
@@ -872,9 +942,9 @@ void CVideoDlg::InitCtrls()
 	CRect	rcClient;
 	int nScreenWidth = ::GetSystemMetrics(SM_CXSCREEN);
 	int nScreenHeight = ::GetSystemMetrics(SM_CYSCREEN);
-	
+
 	GetClientRect(&rcClient);
-	
+
 	m_btnMode.Create(NULL, WS_VISIBLE | WS_CHILD, CRect(0, 0, 1, 1), this, IDC_BTNMODE_VIDEO);
 	m_btnAudio.Create(NULL, WS_VISIBLE | WS_CHILD, CRect(0, 0, 1, 1), this, IDC_BTNAUDIO_VIDEO);
 	m_btnEndCall.Create(NULL, WS_VISIBLE | WS_CHILD, CRect(0, 0, 1, 1), this, IDC_BTNENDCALL_VIDEO);
@@ -893,7 +963,7 @@ void CVideoDlg::InitCtrls()
 
 	m_btnShow.Create(NULL, WS_VISIBLE | WS_CHILD, CRect(0, 0, 1, 1), this, IDC_BTNSCR_VIDEO);
 	m_btnTip.Create(NULL, WS_VISIBLE | WS_CHILD, CRect(0, 0, 1, 1), this, IDC_BTNTIP_VIDEO);
-	
+
 	for (int nIndex = 0; nIndex < 4; nIndex++){
 		m_wndVideo[nIndex].Create(NULL, NULL, WS_CHILD | WS_VISIBLE | WS_BORDER, CRect(0, 0, 1, 1), this, IDC_BASEWND_VIDEO + nIndex);
 		m_wndVideo[nIndex].SetBackImage(IDB_BACKGROUND_VIDEO, 96, 96, RGB(0x44, 0x44, 0x44));
@@ -911,7 +981,7 @@ void CVideoDlg::InitCtrls()
 
 	m_btnMode.MoveWindow(rcClient.Width() / 2 - 24, rcClient.Height() - 84, 72, 72, TRUE);
 	m_btnAudio.MoveWindow(rcClient.Width() / 2 + 24, rcClient.Height() - 84, 72, 72, TRUE);
-	m_btnShow.MoveWindow(rcClient.Width()/2 + 144, rcClient.Height() - 84, 72, 72, TRUE);
+	m_btnShow.MoveWindow(rcClient.Width() / 2 + 144, rcClient.Height() - 84, 72, 72, TRUE);
 	m_btnEndCall.MoveWindow(rcClient.Width() - 120, rcClient.Height() - 84, 72, 72, TRUE);
 
 	m_cbxRole.MoveWindow(rcClient.Width() - 80, rcClient.Height() - 84, 300, 48, TRUE);
@@ -942,7 +1012,7 @@ void CVideoDlg::InitCtrls()
 	m_btnAudio.SetBackColor(RGB(0x26, 0x26, 0x26), RGB(0x26, 0x26, 0x26), RGB(0x26, 0x26, 0x26), RGB(0x26, 0x26, 0x26));
 	m_btnAudio.EnableFrameEffect(FALSE);
 	m_btnAudio.SetBackImage(IDB_BTNMAUDIO_VIDEO, RGB(0x26, 0x26, 0x26));
-	
+
 	m_btnShow.SetBackColor(RGB(0x26, 0x26, 0x26), RGB(0x26, 0x26, 0x26), RGB(0x26, 0x26, 0x26), RGB(0x26, 0x26, 0x26));
 	m_btnShow.EnableFrameEffect(FALSE);
 	m_btnShow.SetBackImage(IDB_BTNFULLSCR_VIDEO, RGB(0x26, 0x26, 0x26));
@@ -1001,7 +1071,7 @@ void CVideoDlg::ShowVideo4()
 
 	CRect	rcLocal;
 	int		nRemoteCount = m_listWndInfo.GetCount();
-	
+
 	if (nRemoteCount == 2)
 		m_wndLocal.MoveWindow(0, m_rcVideoArea.top + m_rcVideoArea.Height() / 2, m_rcVideoArea.Width() / 2, m_rcVideoArea.Height() / 2, FALSE);
 	else
@@ -1014,7 +1084,7 @@ void CVideoDlg::ShowVideo4()
 	m_nScreenMode = SCREEN_VIDEO4;
 
 	ShowButtonsNormal();
-	
+
 }
 
 void CVideoDlg::ShowMulti()
@@ -1027,7 +1097,7 @@ void CVideoDlg::ShowMulti()
 		m_wndVideo[nIndex].ShowWindow(SW_HIDE);
 		m_wndVideo[nIndex].SetBigShowFlag(FALSE);
 	}
-	
+
 	if (m_lpBigShowed == NULL)
 		m_lpBigShowed = &m_wndVideo[0];
 
@@ -1035,7 +1105,7 @@ void CVideoDlg::ShowMulti()
 	m_lpBigShowed->MoveWindow(&m_rcVideoArea, TRUE);
 	m_lpBigShowed->SetParent(this);
 	m_lpBigShowed->SetBigShowFlag(TRUE);
-	
+
 	for (int nIndex = 0; nIndex < 4; nIndex++) {
 		int nXPos = (m_rcVideoArea.Width() / 2) - 402 + (204 * nLocalIndex);
 		int nYPos = m_rcVideoArea.top + 16;
@@ -1077,7 +1147,7 @@ BOOL CVideoDlg::OnInitDialog()
 
 	m_bitMenuDevice.LoadBitmap(IDB_MENU_DEVICE);
 	m_bitMenuSEI.LoadBitmap(IDB_MENU_SEI);
-	
+
 	InitCtrls();
 
 	return TRUE;  // return TRUE unless you set the focus to a control
@@ -1144,7 +1214,7 @@ BOOL CVideoDlg::PreTranslateMessage(MSG* pMsg)
 		case VK_ESCAPE:
 			if (m_bFullScreen)
 				OnBnClickedBtnfullscr();
-			
+
 			return FALSE;
 		}
 	}
@@ -1164,7 +1234,7 @@ LRESULT CVideoDlg::OnShowModeChanged(WPARAM wParam, LPARAM lParam)
 		m_lpBigShowed = (CAGVideoWnd *)wParam;
 		ShowMulti();
 	}
-	
+
 	return 0;
 }
 

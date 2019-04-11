@@ -222,6 +222,9 @@ void CAGEngineEventHandler::onFirstRemoteVideoFrame(uid_t uid, int width, int he
 
 void CAGEngineEventHandler::onUserJoined(uid_t uid, int elapsed)
 {
+	if (666 == uid)
+		return;
+
 	LPAGE_USER_JOINED lpData = new AGE_USER_JOINED;
 
 	lpData->uid = uid;
@@ -234,6 +237,9 @@ void CAGEngineEventHandler::onUserJoined(uid_t uid, int elapsed)
 
 void CAGEngineEventHandler::onUserOffline(uid_t uid, USER_OFFLINE_REASON_TYPE reason)
 {
+	if (666 == uid)
+		return;
+
 	LPAGE_USER_OFFLINE lpData = new AGE_USER_OFFLINE;
 
 	lpData->uid = uid;
@@ -367,7 +373,7 @@ void CAGEngineEventHandler::onStreamInjectedStatus(const char* url, uid_t uid, i
 {
 	LPAGE_STREAM_INJECTED_STATUS lpData = new AGE_STREAM_INJECTED_STATUS;
 
-	strcpy_s(lpData->url, 128, url);
+	strcpy_s(lpData->url, MAX_PATH, url);
 	lpData->uid = uid;
 	lpData->status = status;
 

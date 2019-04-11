@@ -909,6 +909,19 @@ BOOL CAgoraObject::StreamInjected(LPCTSTR lpInjectedURL)
 	}
 }
 
+BOOL CAgoraObject::StreamUnInjected(LPCTSTR lpInjectedURL)
+{
+	if (lpInjectedURL == NULL || 0 == wcslen(lpInjectedURL))
+		return false;
+
+	int nRet = 0;
+	if (m_lpAgoraEngine) {
+		nRet = m_lpAgoraEngine->removeInjectStreamUrl(CStringA(CString(lpInjectedURL).GetBuffer(0)).GetBuffer(0));
+
+		return nRet == 0 ? TRUE : FALSE;
+	}
+}
+
 BOOL CAgoraObject::EnableWhiteboardVer(BOOL bEnable)
 {
 	// HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Microsoft\Internet Explorer\MAIN\FeatureControl\FEATURE_BROWSER_EMULATION

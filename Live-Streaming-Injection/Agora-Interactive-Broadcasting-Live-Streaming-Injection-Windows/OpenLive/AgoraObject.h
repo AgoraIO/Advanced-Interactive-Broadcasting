@@ -19,7 +19,7 @@ using namespace agora::rtc;
 #define AG_ENGFLAG_NSON			0x00000200	// Noise reduction
 #define AG_ENGFLAG_AECON		0x00000400	// Echo Cancellation
 
-#define APP_ID				_T("")
+#define APP_ID				_T("aab8b8f5a8cd4469a63042fcfafe7063")
 
 typedef struct _SEI_INFO
 {
@@ -150,6 +150,7 @@ public:
 	void GetSelfResolution(int *nWidth, int *nHeight);
 
 	BOOL StreamInjected(LPCTSTR lpInjectedURL);
+	BOOL StreamUnInjected(LPCTSTR lpInjectedURL);
 
 	static IRtcEngine *GetEngine();
 	
