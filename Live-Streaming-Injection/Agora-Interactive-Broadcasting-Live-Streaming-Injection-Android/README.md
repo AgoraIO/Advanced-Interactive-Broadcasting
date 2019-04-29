@@ -17,7 +17,7 @@ This is an open-source demo that will help you inject live video stream integrat
 
 First, add the address which can integrate the Agora Video SDK automatically through JCenter in the property of the dependence of the "app/build.gradle":
 ```xml
-implemantion 'io.agora.rtc:full-sdk:2.3.3'
+implementation 'io.agora.rtc:full-sdk:2.3.3'
 ```
 - Alternative way to integrate:
 
@@ -26,7 +26,7 @@ First, download the **Agora Video SDK** from [Agora.io SDK](https://www.agora.io
 Then, add the fllowing code in the property of the dependence of the "app/build.gradle":
 
 ```xml
-implemantion fileTree(dir: 'libs', include: ['*.jar'])
+implementation fileTree(dir: 'libs', include: ['*.jar'])
 ```
 
 **Finally**, open project with Android Studio, connect your Android device, build and run.
