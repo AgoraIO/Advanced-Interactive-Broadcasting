@@ -17,7 +17,7 @@
 在项目对应的模块的 "app/build.gradle" 文件的依赖属性中加入通过 JCenter 自动集成 Agora 视频 SDK 的地址：
 
 ```xml
-implemantion 'io.agora.rtc:full-sdk:2.3.3'
+implementation 'io.agora.rtc:full-sdk:2.3.3'
 ```
 
 - 次选集成方式：
@@ -27,7 +27,7 @@ implemantion 'io.agora.rtc:full-sdk:2.3.3'
 第二步: 在本项目的 "app/build.gradle" 文件依赖属性中添加如下依赖关系：
 
 ```xml
-implemantion fileTree(dir: 'libs', include: ['*.jar'])
+implementation fileTree(dir: 'libs', include: ['*.jar'])
 ```
 
 **最后**用 Android Studio 打开该项目，连上设备，编译并运行。
