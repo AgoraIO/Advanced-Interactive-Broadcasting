@@ -337,18 +337,25 @@ extension LiveRoomViewController: AgoraRtcEngineDelegate {
         }
     }
     
-    func rtcEngine(_ engine: AgoraRtcEngineKit, streamPublishedWithUrl url: String, errorCode: AgoraErrorCode) {
-        let success = errorCode == .noError
-        if success {
-            info(string: "published With: \(url)")
-        } else {
-            info(string: "publish Failed With: \(url), errorCode: \(errorCode.rawValue)")
+    // callback added in 2.4.1 for you to get more precise rtmp state
+    func rtcEngine(_ engine: AgoraRtcEngineKit, rtmpStreamingChangedToState url: String, state: AgoraRtmpStreamingState, errorCode: AgoraRtmpStreamingErrorCode) {
+        info(string: "rtmp state changing - url: \(url), state: \(state.rawValue), error: \(errorCode.rawValue)")
+        switch(state) {
+        case .running:
+            info(string: "rtmp streaming success")
+            publishList.setResult(for: url, isSuccess: true)
+            break;
+        case .failure:
+            info(string: "rtmp streaming failed for reason \(errorCode.rawValue)")
+            publishList.setResult(for: url, isSuccess: false)
+            break;
+        case .idle:
+            info(string: "rtmp streaming stopped")
+            publishList.remove(url)
+            break;
+        default:
+            break;
         }
-        publishList.setResult(for: url, isSuccess: success)
-    }
-    
-    func rtcEngine(_ engine: AgoraRtcEngineKit, streamUnpublishedWithUrl url: String) {
-        info(string: "unpublished With: \(url)")
     }
 }
 
