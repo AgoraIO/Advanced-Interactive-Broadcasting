@@ -105,29 +105,41 @@ public class VideoActivity extends AppCompatActivity {
             sendMsg("-->onConnectionLost<--");
         }
 
-        @Override
-        public void onStreamPublished(String url, final int error) {
-            super.onStreamPublished(url, error);
-            sendMsg("-->onStreamUrlPublished<--" + url + " -->error code<--" + error);
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    // error code
-                    // 19 republish
-                    // 0 publish success
-                    if (error != 0) {
-                        mIvRtmp.clearColorFilter();
-                        mIvRtmp.setTag(false);
-                    }
-                }
-            });
 
-        }
-
+        // callback added in 2.4.1 for you to get more precise rtmp state
         @Override
-        public void onStreamUnpublished(String url) {
-            super.onStreamUnpublished(url);
-            sendMsg("-->onStreamUrlUnpublished<--" + url);
+        public void onRtmpStreamingStateChanged(String url, int state, int errCode) {
+            super.onRtmpStreamingStateChanged(url, state, errCode);
+            sendMsg("-->onRtmpStreamingStateChanged<--" + url + "-->state<--" + state +  "-->error code<--" + errCode);
+            switch(state) {
+                case 0:
+                    //idle
+                    sendMsg("-->rtmp streaming stopped<--" + url);
+                    break;
+                case 1:
+                    //connecting
+                    break;
+                case 2:
+                    //running
+                    sendMsg("-->rtmp streaming success<--" + url);
+                    break;
+                case 3:
+                    //recovering
+                    break;
+                case 4:
+                    //failure
+                    sendMsg("-->rtmp streaming failure<--" + url);
+                    //you may call addPublishStreamUrl to try again
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            //clear rtmp button state when failure
+                            mIvRtmp.clearColorFilter();
+                            mIvRtmp.setTag(false);
+                        }
+                    });
+                    break;
+            }
         }
 
         @Override

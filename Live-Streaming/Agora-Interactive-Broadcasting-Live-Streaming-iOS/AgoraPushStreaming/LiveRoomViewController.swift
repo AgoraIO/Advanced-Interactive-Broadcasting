@@ -352,6 +352,7 @@ extension LiveRoomViewController: AgoraRtcEngineDelegate {
         case .idle:
             info(string: "rtmp streaming stopped")
             publishList.remove(url)
+            //you may call addPublishStreamUrl to try again
             break;
         default:
             break;
