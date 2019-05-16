@@ -92,24 +92,25 @@ class VideoActivity : AppCompatActivity() {
             sendMsg("-->onConnectionLost<--")
         }
 
-        override fun onStreamPublished(url: String, error: Int) {
-            super.onStreamPublished(url, error)
-            sendMsg("-->onStreamUrlPublished<--$url -->error code<--$error")
-            runOnUiThread {
-                // error code
-                // 19 republish
-                // 0 publish success
-                if (error != 0) {
-                    mIvRtmp!!.clearColorFilter()
-                    mIvRtmp!!.tag = false
+        override fun onRtmpStreamingStateChanged(url: String?, state: Int, errCode: Int) {
+            super.onRtmpStreamingStateChanged(url, state, errCode)
+            sendMsg("-->onStreamUrlPublished<--$url -->state<--$state -->error code<--$errCode")
+
+            when(state) {
+                //idle
+                0 -> sendMsg("rtmp streaming stopped")
+                //running
+                2 -> sendMsg("rtmp streaming success")
+                //failure
+                4-> {
+                    //you can also call addPublishStreamUrl to retry from this state
+                    sendMsg("rtmp streaming failed")
+                    runOnUiThread {
+                        mIvRtmp!!.clearColorFilter()
+                        mIvRtmp!!.tag = false
+                    }
                 }
             }
-
-        }
-
-        override fun onStreamUnpublished(url: String) {
-            super.onStreamUnpublished(url)
-            sendMsg("-->onStreamUrlUnpublished<--$url")
         }
 
         override fun onTranscodingUpdated() {
