@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>CDN LiveStreaming</title>
+</head>
+
+<body>
+  <div class="sections-container">
+    <div class="section-container">
+      <div class="section-body">
+        <div class="notice"></div>
+        <div class="section-title">
+          <div class="title" id="basic">CDN LiveStreaming</div>
+          <hr/>
+        </div>
+        <!-- form -->
+        <form id="form">
+          <div class="section-form">
+            <div class="form-row">
+              <div class="form-item">
+                <label for="appID">APPID: </label>
+                <input placeholder="Enter APPID" type="text" id="appID" name="appID"/>
+              </div>
+              <div class="form-item">
+                <label for="channel">Channel: </label>
+                <input placeholder="Enter Channel" type="text" id="channel" name="channel"/>
+              </div>
+              <div class="form-item">
+                <label for="uid">UID(optional): </label>
+                <input placeholder="Enter UID" type="text" id="uid" name="uid"/>
+              </div>
+              <div class="form-item">
+                <label for="token">Token: </label>
+                <input placeholder="Enter Token" type="text" id="token" name="token"/>
+              </div>
+              <div class="form-item">
+                <label for="microphoneId">Audio Device: </label>
+                <select id="microphoneId" name="microphoneId" class="custom-select">
+                </select>
+              </div>
+              <div class="form-item">
+                <label for="cameraId">Video Device: </label>
+                <select id="cameraId" name="cameraId" class="custom-select">
+                </select>
+              </div>
+              <div class="form-item">
+                <label for="resolution">CDN Resolution: </label>
+                <select id="resolution" name="resolution" class="custom-select">
+                </select>
+              </div>
+            </div>
+            <div class="form-row-one">
+              <div class="form-item">
+                <label for="url">CDN Url: </label>
+                <input class="one-row" placeholder="Enter URL" type="text" id="url" name="url"/>
+              </div>
+            </div>
+            <hr/>
+            <div class="form-row button-list">
+              <a class="btn" id="create">Join Room</a>
+              <a class="btn" id="startLiveStreaming">startLiveStreaming</a>
+              <a class="btn" id="stopLiveStreaming">stopLiveStreaming</a>
+              <a class="btn leave" id="leave">leave</a>
+            </div>
+            <hr/>
+            <div class="video-grid" id="video">
+              <div id="local_stream" class="video-placeholder">
+                <div id="local_video_info" class="video-info"></div>
+              </div>
+            </div>
+          </div>
+        </form>
+        <!-- from -->
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

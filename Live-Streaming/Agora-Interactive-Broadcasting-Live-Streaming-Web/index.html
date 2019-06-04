@@ -1,545 +1,553 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-  <title>Agora Live Streaming Web Sample</title>
-  <link rel="stylesheet" href="vendor/bootstrap.min.css">
-  <script src="AgoraRTCSDK-2.1.0.js"></script>
-  <script src="vendor/jquery.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>CDN LiveStreaming</title>
+  <link rel="stylesheet" href="./assets/common.css">
+  <link rel="stylesheet" href="./vendor/toastify.min.css">
 </head>
 
 <body>
-  <div id="div_device" class="panel panel-default">
-    <div class="select">
-      <label for="audioSource">Audio source: </label>
-      <select id="audioSource"></select>
-    </div>
-    <div class="select">
-      <label for="videoSource">Video source: </label>
-      <select id="videoSource"></select>
-    </div>
-  </div>
-
-  <div id="div_join" class="panel panel-default">
-    <div class="panel-body">
-      Key:
-      <input id="key" type="text" value="" size="36"></input>
-      Channel:
-      <input id="channel" type="text" value="1000" size="4"></input>
-      Host:
-      <input id="video" type="checkbox" checked></input>
-      <button id="join" class="btn btn-primary" onclick="join()">Join</button>
-      <button id="leave" class="btn btn-primary" onclick="leave()">Leave</button>
-      <button id="publish" class="btn btn-primary" onclick="publish()">Publish</button>
-      <button id="unpublish" class="btn btn-primary" onclick="unpublish()">Unpublish</button>
-    </div>
-    <div class="panel-body">
-      <div id="js_live_streaming_box">
-        <div class="form-inline">
-          <h3>Transcoding</h3>
-          <div class="form-group">
-            <label>Publish Url: </label>
-            <input class="form-control" name="" id="live_streaming_url" value=""></input>
-          </div>
-          <div class="form-group">
-            <label>Gop: </label>
-            <input class="form-control" name="" id="live_streaming_gop" value="30"></input>
-          </div>
-
-          <div class="form-group">
-            <label>Background Color: </label>
-            <input class="form-control" name="" id="live_streaming_bg_color" value="000000"></input>
-          </div>
-          <div class="form-group">
-            <label>Bitrate: </label>
-            <input class="form-control" name="" id="live_streaming_bitrate" value=""></input>
-          </div>
-          <div class="form-group">
-            <label>Fps: </label>
-            <input class="form-control" name="" id="live_streaming_fps" value=""></input>
-          </div>
-          <div class="form-group">
-            <label>Video Codec: </label>
-            <select class="form-control" name="" id="live_streaming_codec">
-              <option value="66">baseline</option>
-              <option value="77">main</option>
-              <option value="100" selected>high</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label>Audio Samples: </label>
-            <select class="form-control" name="" id="live_streaming_audio_samples">
-              <option value="32000">32khz</option>
-              <option value="44100">44.1khz</option>
-              <option value="48000" selected>48khz</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label>Audio Channels: </label>
-            <input class="form-control" name="" id="live_streaming_audio_channels" value="1"></input>
-          </div>
-          <div class="form-group">
-            <label>Audio Bitrate: </label>
-            <input class="form-control" name="" id="live_streaming_audio_bitrate" value="48"></input>
-          </div>
-          <div class="form-group">
-            <label>Canvas Width: </label>
-            <input class="form-control" name="" id="live_streaming_canvas_width" value="640"></input>
-          </div>
-          <div class="form-group">
-            <label>Canvas Height: </label>
-            <input class="form-control" name="" id="live_streaming_canvas_height" value="480"></input>
-          </div>
-          <div class="checkbox">
-            <label>
-              <input type="checkbox" id="live_streaming_low_latency"> Low Latency
-            </label>
-          </div>
+  <div class="sections-container">
+    <div class="section-container">
+      <div class="section-body">
+        <div class="notice"></div>
+        <div class="section-title">
+          <div class="title" id="basic">CDN LiveStreaming</div>
+          <hr/>
         </div>
-        <div class="form-inline" style="margin-top: 10px">
-          <h3>Transcoding Users</h3>
-          <div class="form-group">
-            <label>Uid: </label>
-            <select class="form-control" name="" id="live_streaming_user_uid"></select>
+        <!-- form -->
+        <form id="form">
+          <div class="section-form">
+            <div class="form-row">
+              <div class="form-item">
+                <label for="appID">APPID: </label>
+                <input placeholder="Enter APPID" type="text" id="appID" name="appID"/>
+              </div>
+              <div class="form-item">
+                <label for="channel">Channel: </label>
+                <input placeholder="Enter Channel" type="text" id="channel" name="channel"/>
+              </div>
+              <div class="form-item">
+                <label for="uid">UID(optional): </label>
+                <input placeholder="Enter UID" type="text" id="uid" name="uid"/>
+              </div>
+              <div class="form-item">
+                <label for="token">Token: </label>
+                <input placeholder="Enter Token" type="text" id="token" name="token"/>
+              </div>
+              <div class="form-item">
+                <label for="microphoneId">Audio Device: </label>
+                <select id="microphoneId" name="microphoneId" class="custom-select">
+                </select>
+              </div>
+              <div class="form-item">
+                <label for="cameraId">Video Device: </label>
+                <select id="cameraId" name="cameraId" class="custom-select">
+                </select>
+              </div>
+              <div class="form-item">
+                <label for="resolution">CDN Resolution: </label>
+                <select id="resolution" name="resolution" class="custom-select">
+                </select>
+              </div>
+            </div>
+            <div class="form-row-one">
+              <div class="form-item">
+                <label for="url">CDN Url: </label>
+                <input class="one-row" placeholder="Enter URL" type="text" id="url" name="url"/>
+              </div>
+            </div>
+            <hr/>
+            <div class="form-row button-list">
+              <a class="btn" id="create">Join Room</a>
+              <a class="btn" id="startLiveStreaming">StartLiveStreaming</a>
+              <a class="btn" id="stopLiveStreaming">StopLiveStreaming</a>
+              <a class="btn leave" id="leave">Leave</a>
+            </div>
+            <hr/>
+            <div class="video-grid" id="video">
+              <div id="local_stream" class="video-placeholder">
+                <div id="local_video_info" class="video-info"></div>
+              </div>
+            </div>
           </div>
-          <div class="form-group">
-            <label>X: </label>
-            <input class="form-control" name="" id="live_streaming_user_x" value="0"></input>
-          </div>
-          <div class="form-group">
-            <label>Y: </label>
-            <input class="form-control" name="" id="live_streaming_user_y" value="0"></input>
-          </div>
-          <div class="form-group">
-            <label>Width: </label>
-            <input class="form-control" name="" id="live_streaming_user_width" value="320"></input>
-          </div>
-          <div class="form-group">
-            <label>Height: </label>
-            <input class="form-control" name="" id="live_streaming_user_height" value="240"></input>
-          </div>
-          <div class="form-group">
-            <label>Z-Order: </label>
-            <input class="form-control" name="" id="live_streaming_user_z" value="0"></input>
-          </div>
-          <div class="form-group">
-            <label>Alpha: </label>
-            <input class="form-control" name="" id="live_streaming_user_alpha" value="1"></input>
-          </div>
-        </div>
-        <div class="form-inline" style="margin-top: 10px">
-          <div class="form-group">
-            <select class="form-control" name="" id="live_streaming_users_list"></select>
-          </div>
-          <div class="form-group">
-            <button type="button" class="btn btn-primary" id="live_streaming_user_remove">Remove Transcoding User</button>
-          </div>
-          <div class="form-group">
-            <button type="button" class="btn btn-primary" id="live_streaming_user_add">Add Transcoding User</button>
-          </div>
-        </div>
-        <div class="form-inline" style="margin-top: 10px">
-          <div class="form-group">
-            <select class="form-control" name="" id="live_streaming_list"></select>
-          </div>
-          <div class="form-group">
-            <button type="button" class="btn btn-primary" id="live_streaming_set_encoding">Set Encoding</button>
-          </div>
-          <div class="form-group">
-            <button type="button" class="btn btn-primary" id="live_streaming_stop_streaming">Remove Streaming</button>
-          </div>
-          <div class="form-group">
-            <button type="button" class="btn btn-primary" id="live_streaming_start_streaming">Add Streaming</button>
-          </div>
-          <div class="checkbox">
-            <label>
-              <input type="checkbox" id="live_streaming_enable_transcoding" checked> Enable Transcoding
-            </label>
-          </div>
-        </div>
+        </form>
+        <!-- from -->
       </div>
     </div>
-
   </div>
+  <script src="vendor/jquery.js"></script>
+  <script src="vendor/toastify.js"></script>
+  <script src="assets/AgoraRTCSDK-2.6.1.js"></script>
+  <script src="assets/common.js"></script>
+  <script>
+  console.log("agora sdk version: " + AgoraRTC.VERSION + " compatible: " + AgoraRTC.checkSystemRequirements());
 
-  <!--style>
-    .video__box{width:910px; margin:0 auto; overflow:hidden;}
-    .video__main{ width:810px; height:607px;float:left }
-    .video__list{ width:200px; height:607px; float:left;}
-    .video__item{ width:200px; height:174px; hei background:url(/img/icon_live.png) center center no-repeat; }
-    </style>
-    <div class="video__main">
-    </div>
-    <div class="video__list">
-        <div class="video__item"></div>
-        <div id="video" class="video__item">
-            <div id="agora_local"></div>
-        </div>
-    </div-->
-
-  <div id="video" style="margin:0 auto;">
-    <div id="agora_local" style="float:right;width:210px;height:147px;display:inline-block;"></div>
-  </div>
-
-  <script language="javascript">
-
-    if (!AgoraRTC.checkSystemRequirements()) {
-      alert("browser is no support webRTC");
-    }
-
-    /* select Log type */
-    // AgoraRTC.Logger.setLogLevel(AgoraRTC.Logger.NONE);
-    // AgoraRTC.Logger.setLogLevel(AgoraRTC.Logger.ERROR);
-    // AgoraRTC.Logger.setLogLevel(AgoraRTC.Logger.WARNING);
-    // AgoraRTC.Logger.setLogLevel(AgoraRTC.Logger.INFO);  
-    // AgoraRTC.Logger.setLogLevel(AgoraRTC.Logger.DEBUG);
-
-    /* simulated data to proof setLogLevel() */
-    AgoraRTC.Logger.error('this is error');
-    AgoraRTC.Logger.warning('this is warning');
-    AgoraRTC.Logger.info('this is info');
-    AgoraRTC.Logger.debug('this is debug');
-
-    var client, localStream, camera, microphone;
-    var uids = [], transcodingUsers = [];
-    var streams = [];
-    var publishUrl = "YOUR_RTMP_PUSH_URL";
-
-    var audioSelect = document.querySelector('select#audioSource');
-    var videoSelect = document.querySelector('select#videoSource');
-
-    //utils
-    function toInt(val) {
-      var value = parseInt(val);
-      if (isNaN(value)) {
-        return 0;
-      } else {
-        return value;
-      }
-    }
-
-    function toFloat(val) {
-      var value = parseFloat(val);
-      if (isNaN(value)) {
-        return 0;
-      } else {
-        return value;
-      }
-    }
-
-
-    //live-streaming related
-    function addTranscodingUser(user) {
-      transcodingUsers = transcodingUsers || [];
-      transcodingUsers.push(user);
-      onContextUpdate();
-    }
-
-    function removeTranscodingUser() {
-      var selectedIdx = $("#live_streaming_users_list").val();
-      transcodingUsers.splice(selectedIdx, 1);
-      onContextUpdate();
-    }
-
-    function setEncoding() {
-      var coding = calcTranscoding();
-      client.setLiveTranscoding(coding);
-    }
-
-    function addStreaming(url, enableTranscoding) {
-      streams = streams || [];
-
-      if (streams.indexOf(url) !== -1) {
-        alert("Streaming exists already");
-        return;
-      }
-
-      if (!enableTranscoding) {
-        client.startLiveStreaming(url, false);
-      } else {
-        var transcoding = calcTranscoding();
-        client.setLiveTranscoding(transcoding);
-        client.startLiveStreaming(url, true);
-      }
-      streams.push(url);
-      onContextUpdate();
-    }
-
-    function removeStreaming() {
-      var selectedIdx = $("#live_streaming_list").val();
-      var url = streams.splice(selectedIdx, 1)[0];
-      onContextUpdate();
-      client.stopLiveStreaming(url);
-    }
-
-    function calcTranscoding() {
-      transcodingUsers = transcodingUsers || [];
-      var bgcolor = $("#live_streaming_bg_color").val();
-      //color is int type and should be parsed as 16 base
-      bgcolor = parseInt(bgcolor, 16);
-
-      if (isNaN(bgcolor)) {
-        bgcolor = 0;
-      }
-
-      var coding = {
-        width: toInt($("#live_streaming_canvas_width").val()),
-        height: toInt($("#live_streaming_canvas_height").val()),
-        videoFramerate: toInt($("#live_streaming_fps").val()),
-        videoBitrate: toInt($("#live_streaming_bitrate").val()),
-        userCount: transcodingUsers.length,
-        transcodingUsers: transcodingUsers,
-        audioBitrate: toInt($("#live_streaming_audio_bitrate").val()),
-        audioChannels: toInt($("#live_streaming_audio_channels").val()),
-        audioSampleRate: toInt($("#live_streaming_audio_samples").val()),
-        backgroundColor: bgcolor,
-        lowLatency: $("#live_streaming_low_latency").prop("checked"),
-        userConfigExtraInfo: {},
-        videoCodecProfile: toInt($("#live_streaming_codec").val()),
-        videoGop: toInt($("#live_streaming_gop").val())
-      };
-
-      return coding;
-    }
-
-    function setTranscoding() {
-      var coding = calcTranscoding();
-      client.setLiveTranscoding(coding);
-    }
-
-    function setDefaultEncoding() {
-      var width = 640,
-        height = 480,
-        framerate = 30,
-        bitrate = 750;
-
-      $("#live_streaming_url").val(publishUrl);
-      $("#live_streaming_bitrate").val(bitrate);
-      $("#live_streaming_fps").val(framerate);
-    }
-
-    function onContextUpdate() {
-      var i = 0;
-      //redraw uid list
-      $("#live_streaming_user_uid").html("");
-      for (i = 0; i < uids.length; i++) {
-        $("#live_streaming_user_uid").append("<option value='" + uids[i] + "'>" + uids[i] + "</option>");
-      }
-
-      //redraw transcoding user list
-      $("#live_streaming_users_list").html("");
-      for (var i = 0; i < transcodingUsers.length; i++) {
-        $("#live_streaming_users_list").append("<option value=\"" + i + "\">" + (i + 1) + " - " + transcodingUsers[i].uid + "</option>");
-      }
-
-      //redraw stream list
-      $("#live_streaming_list").html("");
-      for (var i = 0; i < streams.length; i++) {
-        $("#live_streaming_list").append("<option value=\"" + i + "\">" + (i + 1) + " - " + streams[i] + "</option>");
-      }
-    }
-
-    function join() {
-      document.getElementById("join").disabled = true;
-      document.getElementById("video").disabled = true;
-      var channel_key = null;
-
-      console.log("Init AgoraRTC client with vendor key: " + key.value);
-      client = AgoraRTC.createClient({ mode: 'interop' });
-      client.init(key.value, function () {
-        console.log("AgoraRTC client initialized");
-        client.join(channel_key, channel.value, null, function (uid) {
-          console.log("User " + uid + " join channel successfully");
-          uids = [uid];
-          onContextUpdate();
-
-          if (document.getElementById("video").checked) {
-            camera = videoSource.value;
-            microphone = audioSource.value;
-            localStream = AgoraRTC.createStream({ streamID: uid, audio: true, cameraId: camera, microphoneId: microphone, video: document.getElementById("video").checked, screen: false });
-            //localStream = AgoraRTC.createStream({streamID: uid, audio: false, cameraId: camera, microphoneId: microphone, video: false, screen: true, extensionId: 'minllpmhdgpndnkomcoccfekfegnlikg'});
-            if (document.getElementById("video").checked) {
-              localStream.setVideoProfile('720p_3');
-
-            }
-
-            // The user has granted access to the camera and mic.
-            localStream.on("accessAllowed", function () {
-              console.log("accessAllowed");
-            });
-
-            // The user has denied access to the camera and mic.
-            localStream.on("accessDenied", function () {
-              console.log("accessDenied");
-            });
-
-            localStream.init(function () {
-              console.log("getUserMedia successfully");
-              localStream.play('agora_local');
-
-              client.publish(localStream, function (err) {
-                console.log("Publish local stream error: " + err);
-              });
-
-              client.on('stream-published', function (evt) {
-                console.log("Publish local stream successfully");
-              });
-            }, function (err) {
-              console.log("getUserMedia failed", err);
-            });
-          }
-        }, function (err) {
-          console.log("Join channel failed", err);
-        });
-      }, function (err) {
-        console.log("AgoraRTC client init failed", err);
+  function getDevices (next) {
+    AgoraRTC.getDevices(function (items) {
+      items.filter(function (item) {
+        return ['audioinput', 'videoinput'].indexOf(item.kind) !== -1
+      })
+      .map(function (item) {
+        return {
+        name: item.label,
+        value: item.deviceId,
+        kind: item.kind,
+        }
       });
-
-      channelKey = "";
-      client.on('error', function (err) {
-        console.log("Got error msg:", err.reason);
-        if (err.reason === 'DYNAMIC_KEY_TIMEOUT') {
-          client.renewChannelKey(channelKey, function () {
-            console.log("Renew channel key successfully");
-          }, function (err) {
-            console.log("Renew channel key failed: ", err);
+      var videos = [];
+      var audios = [];
+      for (var i = 0; i < items.length; i++) {
+        var item = items[i];
+        if ('videoinput' == item.kind) {
+          var name = item.label;
+          var value = item.deviceId;
+          if (!name) {
+            name = "camera-" + videos.length;
+          }
+          videos.push({
+            name: name,
+            value: value,
+            kidn: item.kind
           });
         }
-      });
-
-
-      client.on('stream-added', function (evt) {
-        var stream = evt.stream;
-        console.log("New stream added: " + stream.getId());
-        console.log("Subscribe ", stream);
-        client.subscribe(stream, function (err) {
-          console.log("Subscribe stream failed", err);
-        });
-      });
-
-      client.on('stream-subscribed', function (evt) {
-        var stream = evt.stream;
-        console.log("Subscribe remote stream successfully: " + stream.getId());
-        uids.push(stream.getId());
-        onContextUpdate();
-        if ($('div#video #agora_remote' + stream.getId()).length === 0) {
-          $('div#video').append('<div id="agora_remote' + stream.getId() + '" style="float:left; width:810px;height:607px;display:inline-block;"></div>');
-        }
-        stream.play('agora_remote' + stream.getId());
-      });
-
-      client.on('stream-removed', function (evt) {
-        var stream = evt.stream;
-        stream.stop();
-        $('#agora_remote' + stream.getId()).remove();
-        var idx = uids.indexOf(stream.getId());
-        uids.splice(idx, 1);
-        onContextUpdate();
-        console.log("Remote stream is removed " + stream.getId());
-      });
-
-      client.on('peer-leave', function (evt) {
-        var stream = evt.stream;
-        if (stream) {
-          stream.stop();
-          $('#agora_remote' + stream.getId()).remove();
-          console.log(evt.uid + " leaved from this channel");
-        }
-      });
-      $('#live_streaming_user_add').off("click").on("click", function () {
-        var coding = {
-          x: toInt($("#live_streaming_user_x").val()),
-          y: toInt($("#live_streaming_user_y").val()),
-          width: toInt($("#live_streaming_user_width").val()),
-          height: toInt($("#live_streaming_user_height").val()),
-          zorder: toInt($("#live_streaming_user_z").val()),
-          alpha: toFloat($("#live_streaming_user_alpha").val()),
-          uid: toInt($("#live_streaming_user_uid").val())
-        };
-        if (!coding.uid) {
-          alert("you have to provide a uid for transcoding user");
-        } else {
-          addTranscodingUser(coding);
-        }
-      });
-      $('#live_streaming_user_remove').off("click").on("click", function () {
-        removeTranscodingUser();
-      });
-      $('#live_streaming_start_streaming').off("click").on("click", function () {
-        var url = $("#live_streaming_url").val();
-        var enableTranscoding = $("#live_streaming_enable_transcoding").prop("checked");
-        addStreaming(url, enableTranscoding);
-      });
-      $('#live_streaming_stop_streaming').off("click").on("click", function () {
-        removeStreaming();
-      });
-      $('#live_streaming_set_encoding').off("click").on("click", function () {
-        setEncoding();
-      });
-
-      //live streaming events..
-      client.on('liveStreamingStarted', function (evt) {
-        console.log("Live streaming started");
-      });  // streaming start callback
-      client.on('liveStreamingFailed', function (evt) {
-        console.log("Live streaming failed");
-      });  // streaming fail callback
-      client.on('liveStreamingStopped', function (evt) {
-        console.log("Live streaming stopped");
-      });  // streaming stop callback
-      client.on('liveTranscodingUpdated', function (evt) {
-        console.log("Live streaming updated");
-      });  // streaming live transcoding update calback
-    }
-
-    function leave() {
-      document.getElementById("leave").disabled = true;
-      client.leave(function () {
-        console.log("Leavel channel successfully");
-      }, function (err) {
-        console.log("Leave channel failed");
-      });
-    }
-
-    function publish() {
-      document.getElementById("publish").disabled = true;
-      document.getElementById("unpublish").disabled = false;
-      client.publish(localStream, function (err) {
-        console.log("Publish local stream error: " + err);
-      });
-    }
-
-    function unpublish() {
-      document.getElementById("publish").disabled = false;
-      document.getElementById("unpublish").disabled = true;
-      client.unpublish(localStream, function (err) {
-        console.log("Unpublish local stream failed" + err);
-      });
-    }
-
-    function getDevices() {
-      AgoraRTC.getDevices(function (devices) {
-        for (var i = 0; i !== devices.length; ++i) {
-          var device = devices[i];
-          var option = document.createElement('option');
-          option.value = device.deviceId;
-          if (device.kind === 'audioinput') {
-            option.text = device.label || 'microphone ' + (audioSelect.length + 1);
-            audioSelect.appendChild(option);
-          } else if (device.kind === 'videoinput') {
-            option.text = device.label || 'camera ' + (videoSelect.length + 1);
-            videoSelect.appendChild(option);
-          } else {
-            console.log('Some other kind of source/device: ', device);
+        if ('audioinput' == item.kind) {
+          var name = item.label;
+          var value = item.deviceId;
+          if (!name) {
+            name = "microphone-" + audios.length;
           }
+          audios.push({
+            name: name,
+            value: value,
+            kidn: item.kind
+          });
+        }
+      }
+      next({videos: videos, audios: audios});
+    });
+  }
+
+  var rtc = {
+    client: null,
+    joined: false,
+    published: false,
+    localStream: null,
+    remoteStreams: [],
+    params: {}
+  };
+
+  function handleEvents (rtc) {
+    // Occurs when an error message is reported and requires error handling.
+    rtc.client.on("error", (err) => {
+      console.log(err)
+    })
+    // Occurs when the peer user leaves the channel; for example, the peer user calls Client.leave.
+    rtc.client.on("peer-leave", function (evt) {
+      var id = evt.uid;
+      console.log("id", evt);
+      if (id != rtc.params.uid) {
+        removeView(id);
+      }
+      Toast.notice("peer leave")
+      console.log('peer-leave', id);
+    })
+    // Occurs when the local stream is published.
+    rtc.client.on("stream-published", function (evt) {
+      Toast.notice("stream published success")
+      console.log("stream-published");
+    })
+    // Occurs when the remote stream is added.
+    rtc.client.on("stream-added", function (evt) {  
+      var remoteStream = evt.stream;
+      var id = remoteStream.getId();
+      Toast.info("stream-added uid: " + id)
+      if (id !== rtc.params.uid) {
+        rtc.client.subscribe(remoteStream, function (err) {
+          console.log("stream subscribe failed", err);
+        })
+      }
+      console.log('stream-added remote-uid: ', id);
+    });
+    // Occurs when a user subscribes to a remote stream.
+    rtc.client.on("stream-subscribed", function (evt) {
+      var remoteStream = evt.stream;
+      var id = remoteStream.getId();
+      rtc.remoteStreams.push(remoteStream);
+      addView(id);
+      remoteStream.play("remote_video_" + id);
+      Toast.info('stream-subscribed remote-uid: ' + id);
+      console.log('stream-subscribed remote-uid: ', id);
+    })
+    // Occurs when the remote stream is removed; for example, a peer user calls Client.unpublish.
+    rtc.client.on("stream-removed", function (evt) {
+      var remoteStream = evt.stream;
+      var id = remoteStream.getId();
+      Toast.info("stream-removed uid: " + id)
+      remoteStream.stop("remote_video_" + id);
+      rtc.remoteStreams = rtc.remoteStreams.filter(function (stream) {
+        return stream.getId() !== id
+      })
+      removeView(id);
+      console.log('stream-removed remote-uid: ', id);
+    })
+    rtc.client.on("onTokenPrivilegeWillExpire", function(){
+      // After requesting a new token
+      // rtc.client.renewToken(token);
+      Toast.info("onTokenPrivilegeWillExpire")
+      console.log("onTokenPrivilegeWillExpire")
+    });
+    rtc.client.on("onTokenPrivilegeDidExpire", function(){
+      // After requesting a new token
+      // client.renewToken(token);
+      Toast.info("onTokenPrivilegeDidExpire")
+      console.log("onTokenPrivilegeDidExpire")
+    })
+    // Occurs when the live streaming starts.
+    rtc.client.on("liveStreamingStarted", function (evt) {
+      Toast.info("liveStreamingStarted")
+      console.log("liveStreamingStarted", evt)
+    })
+    // Occurs when the live streaming fails.
+    rtc.client.on("liveStreamingFailed", function (evt) {
+      Toast.error("liveStreamingFailed")
+      console.log("liveStreamingFailed", evt)
+    })
+    // Occurs when the live streaming stops.
+    rtc.client.on("liveStreamingStopped", function (evt) {
+      Toast.info("liveStreamingStopped")
+      console.log("liveStreamingStopped", evt)
+    })
+    // Occurs when the live transcoding setting is updated.
+    rtc.client.on("liveTranscodingUpdated", function (evt) {
+      Toast.info("liveTranscodingUpdated")
+      console.log("liveTranscodingUpdated", evt)
+    })
+  }
+
+  function join (rtc, data, next) {
+    if (rtc.joined) {
+      Toast.error("Your already joined");
+      return;
+    }
+
+    /**
+      * A class defining the properties of the config parameter in the createClient method.
+      * Note:
+      *    Ensure that you do not leave mode and codec as empty.
+      *    Ensure that you set these properties before calling Client.join.
+      *  You could find more detail here. https://docs.agora.io/en/Video/API%20Reference/web/interfaces/agorartc.clientconfig.html
+    **/
+    rtc.client = AgoraRTC.createClient({mode: 'rtc', codec: 'h264'});
+
+    rtc.params = data;
+
+    // handle AgoraRTC client event
+    handleEvents(rtc);
+
+    // init client
+    rtc.client.init(data.appID, function () {
+      console.log("init success");
+
+      /**
+        * Joins an AgoraRTC Channel
+        * This method joins an AgoraRTC channel.
+        * Parameters
+        * tokenOrKey: string | null
+        *    Low security requirements: Pass null as the parameter value.
+        *    High security requirements: Pass the string of the Token or Channel Key as the parameter value. See Use Security Keys for details.
+        *  channel: string
+        *    A string that provides a unique channel name for the Agora session. The length must be within 64 bytes. Supported character scopes:
+        *    26 lowercase English letters a-z
+        *    26 uppercase English letters A-Z
+        *    10 numbers 0-9
+        *    Space
+        *    "!", "#", "$", "%", "&", "(", ")", "+", "-", ":", ";", "<", "=", ".", ">", "?", "@", "[", "]", "^", "_", "{", "}", "|", "~", ","
+        *  uid: number | string | null
+        *    The user ID, an integer or a string, ASCII characters only. Ensure this ID is unique. If you set the uid to null, the server assigns one and returns it in the onSuccess callback.
+        *   Note:
+        *      All users in the same channel should have the same type (number or string) of uid.
+        *      If you use a number as the user ID, it should be a 32-bit unsigned integer with a value ranging from 0 to (232-1).
+        *      If you use a string as the user ID, the maximum length is 255 characters.
+      **/
+      rtc.client.join(data.token ? data.token : null, data.channel, data.uid ? data.uid : null, function (uid) {
+        Toast.notice("join channel: " + data.channel + " success, uid: " + uid);
+        console.log("join channel: " + data.channel + " success, uid: " + uid);
+        rtc.joined = true;
+
+        rtc.params.uid = uid;
+
+
+        // create local stream
+        rtc.localStream = AgoraRTC.createStream({
+          streamID: rtc.params.uid,
+          audio: true,
+          video: true,
+          screen: false,
+          microphoneId: data.microphoneId,
+          cameraId: data.cameraId
+        })
+
+        // init local stream
+        rtc.localStream.init(function () {
+          console.log("init local stream success");
+          // play stream with html element id "local_stream"
+          rtc.localStream.play("local_stream")
+
+          // publish local stream
+          publish(rtc);
+        }, function (err)  {
+          Toast.error("stream init failed, please open console see more detail")
+          console.error("init local stream failed ", err);
+        })
+      }, function(err) {
+        Toast.error("client join failed, please open console see more detail")
+        console.error("client join failed", err)
+      })
+    }, (err) => {
+      Toast.error("client init failed, please open console see more detail")
+      console.error(err);
+    });
+  }
+
+  function publish (rtc) {
+    if (!rtc.client) {
+      Toast.error("Please Join Room First");
+      return;
+    }
+    if (rtc.published) {
+      Toast.error("Your already published");
+      return;
+    }
+    var oldState = rtc.published;
+
+    // publish localStream
+    rtc.client.publish(rtc.localStream, function (err) {
+      rtc.published = oldState;
+      console.log("publish failed");
+      Toast.error("publish failed")
+      console.error(err);
+    })
+    Toast.info("publish")
+    rtc.published = true
+  }
+
+  function unpublish (rtc) {
+    if (!rtc.client) {
+      Toast.error("Please Join Room First");
+      return;
+    }
+    if (!rtc.published) {
+      Toast.error("Your didn't publish");
+      return;
+    }
+    var oldState = rtc.published;
+    rtc.client.unpublish(rtc.localStream, function (err) {
+      rtc.published = oldState;
+      console.log("unpublish failed");
+      Toast.error("unpublish failed");
+      console.error(err);
+    })
+    Toast.info("unpublish")
+    rtc.published = false;
+  }
+
+  function leave (rtc) {
+    if (!rtc.client) {
+      Toast.error("Please Join First!");
+      return;
+    }
+    if (!rtc.joined) {
+      Toast.error("You are not in channel");
+      return;
+    }
+    /**
+      * Leaves an AgoraRTC Channel
+      * This method enables a user to leave a channel.
+      **/
+    rtc.client.leave(function () {
+      // stop stream
+      rtc.localStream.stop();
+      // close stream
+      rtc.localStream.close();
+      while (rtc.remoteStreams.length > 0) {
+        var stream = rtc.remoteStreams.shift();
+        var id = stream.getId();
+        stream.stop();
+        remoteView(id);
+      }
+      rtc.localStream = null;
+      rtc.remoteStreams = [];
+      rtc.client = null;
+      console.log("client leaves channel success");
+      rtc.published = false;
+      rtc.joined = false;
+      Toast.notice("leave success");
+    }, function (err) {
+      console.log("channel leave failed");
+      Toast.error("leave success");
+      console.error(err);
+    })
+  }
+
+  function startLiveStreaming (rtc) {
+    var uid = rtc.params.uid;
+    var liveTranscoding = {
+      "180p": {
+        width: 320,
+        height: 180,
+        videoBitrate: 140,
+        videoFramerate: 15,
+        lowLatency: false,
+        audioSampleRate: AgoraRTC.AUDIO_SAMPLE_RATE_48000,
+        audioBitrate: 48,
+        audioChannels: 1,
+        videoGop: 30,
+        videoCodecProfile: AgoraRTC.VIDEO_CODEC_PROFILE_HIGH,
+        userCount: 1,
+        backgroundColor: 0x000000,
+        transcodingUsers: [{
+          uid: uid,
+          alpha: 1,
+          width: 10,
+          height: 10,
+          zOrder: 1,
+          x: 10,
+          y: 10
+        }],
+      },
+      "360p": {
+        width: 640,
+        height: 360,
+        videoBitrate: 400,
+        videoFramerate: 30,
+        lowLatency: false,
+        audioSampleRate: AgoraRTC.AUDIO_SAMPLE_RATE_48000,
+        audioBitrate: 48,
+        audioChannels: 1,
+        videoGop: 30,
+        videoCodecProfile: AgoraRTC.VIDEO_CODEC_PROFILE_HIGH,
+        userCount: 1,
+        backgroundColor: 0x000000,
+        transcodingUsers: [{
+          uid: uid,
+          alpha: 1,
+          width: 10,
+          height: 10,
+          zOrder: 1,
+          x: 10,
+          y: 10
+        }],
+      },
+      "720p": {
+        width: 1280,
+        height: 720,
+        videoBitrate: 1130,
+        videoFramerate: 24,
+        lowLatency: false,
+        audioSampleRate: AgoraRTC.AUDIO_SAMPLE_RATE_48000,
+        audioBitrate: 48,
+        audioChannels: 1,
+        videoGop: 30,
+        videoCodecProfile: AgoraRTC.VIDEO_CODEC_PROFILE_HIGH,
+        userCount: 1,
+        backgroundColor: 0x000000,
+        transcodingUsers: [{
+          uid: uid,
+          alpha: 1,
+          width: 10,
+          height: 10,
+          zOrder: 1,
+          x: 10,
+          y: 10
+        }],
+      }
+    }
+    var transcodingConfig = liveTranscoding[rtc.params.resolution];
+    rtc.client.setLiveTranscoding(transcodingConfig);
+    rtc.client.startLiveStreaming(rtc.params.url);
+  }
+
+  function stopLiveStreaming (rtc) {
+    rtc.client.stopLiveStreaming(rtc.params.url);
+  }
+
+    $(function () {
+
+      var selects = null;
+      getDevices(function (devices) {
+        selects = devices;
+        devices.audios.forEach(function (audio) {
+          $('<option/>', {
+            value: audio.value,
+            text: audio.name,
+          }).appendTo("#microphoneId");
+        })
+        devices.videos.forEach(function (video) {
+          $('<option/>', {
+            value: video.value,
+            text: video.name,
+          }).appendTo("#cameraId");
+        })
+        selects.resolutions = [
+          {
+            value: "180p", name: "resolution: 320x180 15fps 140kbps"
+          },
+          {
+            value: "360p", name: "resolution: 640x360 30fps 400kbps"
+          },
+          {
+            value: "720p", name: "resolution: 1280x720 24fps 1130kbps"
+          }
+        ]
+        selects.resolutions.forEach(function (resolution) {
+          $('<option/>', {
+            value: resolution.value,
+            text: resolution.name,
+          }).appendTo("#resolution");
+        })
+      })
+
+      var fields = ['appID', 'channel', 'url'];
+
+      $("#create").on("click", function () {
+        console.log("create")
+        var params = serializeFormData();
+        if (validator(params, fields)) {
+          join(rtc, params);
+        }
+      })
+
+      $("#startLiveStreaming").on("click", function () {
+        console.log("startLiveStreaming")
+        var params = serializeFormData();
+        if (validator(params, fields)) {
+          Toast.info("invoke startLiveStreaming")
+          startLiveStreaming(rtc);
         }
       });
-    }
-    //audioSelect.onchange = getDevices;
-    //videoSelect.onchange = getDevices;
-    getDevices();
-    setDefaultEncoding();
 
+      $("#stopLiveStreaming").on("click", function () {
+        console.log("stopLiveStreaming")
+        var params = serializeFormData();
+        if (validator(params, fields)) {
+          Toast.info("invoke stopLiveStreaming")
+          stopLiveStreaming(rtc);
+        }
+      });
+
+      $("#leave").on("click", function () {
+        console.log("leave")
+        var params = serializeFormData();
+        if (validator(params, fields)) {
+          leave(rtc);
+        }
+      })
+    })
   </script>
 </body>
 
