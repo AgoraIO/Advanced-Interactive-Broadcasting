@@ -1,6 +1,5 @@
 import AgoraRTC from 'agora-rtc-sdk';
 import Toastify from 'toastify-js';
-import $ from 'jquery';
 import "./assets/common.css";
 
 export const Toast = {

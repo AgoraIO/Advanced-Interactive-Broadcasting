@@ -130,15 +130,16 @@ export default class RTCClient {
         console.log("init success");
     
         // join client
-        this._client.join(data.token ? data.token : null, data.channel, data.uid, (uid) => {
+        this._client.join(data.token ? data.token : null, data.channel, data.uid ? data.uid : null, (uid) => {
+          this._params.uid = uid;
           Toast.notice("join channel: " + data.channel + " success, uid: " + uid);
           console.log("join channel: " + data.channel + " success, uid: " + uid);
           this._joined = true;
     
-    
+          
           // create local stream
           this._localStream = AgoraRTC.createStream({
-            streamID: data.uid,
+            streamID: this._params.uid,
             audio: true,
             video: true,
             screen: false,

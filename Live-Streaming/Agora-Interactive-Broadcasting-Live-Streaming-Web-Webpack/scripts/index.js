@@ -10,7 +10,7 @@ const distPath = NODE_ENV == 'development' ? '../dist' : '../build'
 
 module.exports = {
   entry: {
-    index: "./src/cdn.js",
+    index: "./src/index.js",
   },
   devtool: "inline-source-map",
   module: loaders,

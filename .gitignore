@@ -2,3 +2,5 @@ node_modules
 **/*.js~
 .DS_Store
 **/*.*~
+build
+Live-Streaming/Agora-Interactive-Broadcasting-Live-Streaming-Web-Webpack/package-lock.json

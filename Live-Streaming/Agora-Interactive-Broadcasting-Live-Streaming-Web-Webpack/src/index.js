@@ -1,10 +1,17 @@
 import RTCClient from './rtc-client';
-import $ from 'jquery';
 import {getDevices, serializeFormData, validator} from './common';
 import "./assets/style.scss";
+import 'bootstrap-material-design';
 
 $(() => {
   let selects = null;
+
+  $('body').bootstrapMaterialDesign();
+  $("#settings").on("click", function (e) {
+    e.preventDefault();
+    $("#settings").toggleClass("btn-raised");
+    $('#setting-collapse').collapse();
+  });
 
   getDevices(function (devices) {
     selects = devices;
@@ -22,13 +29,13 @@ $(() => {
     })
     selects.resolutions = [
       {
-        value: "180p", name: "resolution: 320x180 15fps 140kbps"
+        value: "180p", name: "320x180 15fps 140kbps"
       },
       {
-        value: "360p", name: "resolution: 640x360 30fps 400kbps"
+        value: "360p", name: "640x360 30fps 400kbps"
       },
       {
-        value: "720p", name: "resolution: 1280x720 24fps 1130kbps"
+        value: "720p", name: "1280x720 24fps 1130kbps"
       }
     ]
     selects.resolutions.forEach(function (resolution) {
@@ -43,7 +50,7 @@ $(() => {
 
   let rtc = new RTCClient();
 
-  $("#create").on("click", function () {
+  $("#join").on("click", function () {
     console.log("create")
     const params = serializeFormData();
     if (validator(params, fields)) {
