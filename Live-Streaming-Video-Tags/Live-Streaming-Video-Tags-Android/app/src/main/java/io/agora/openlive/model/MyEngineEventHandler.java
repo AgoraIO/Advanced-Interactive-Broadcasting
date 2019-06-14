@@ -47,8 +47,8 @@ public class MyEngineEventHandler {
         public int getMaxMetadataSize() {
             return MAX_META_LENGTH;
         }
-
-        @Override
+        // please do pass metadata in this callback "onReadyToSendMetadata" and make sure this callback is not blocked by anything.
+        @Override 
         public byte[] onReadyToSendMetadata(long ts) {
             if(metadata == null) {
                 return null;
