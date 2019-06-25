@@ -1,22 +1,23 @@
-# Web Tutorial - LiveStreaming Audio Only
+# Web Tutorial For Webpack - LiveStreaming
 
 *[English](README.md) | 中文*
 
-这个开源示例项目演示了如何快速集成 Agora 直播推流 SDK，实现多人语音通话。
+这个开源示例项目演示了如何快速集成 Agora 直播推流 SDK，实现多人视频通话。
 
 在这个示例项目中包含了以下功能：
 
 - 加入通话和离开通话:
-- 选择麦克风设备:
+- 选择摄像头和麦克风设备:
 - 设置直播推流url和选择直播推流分辨率，开始推流和停止推流:
 
 ## 环境准备
 
+- nodejs LTS
 - 浏览器
 
 ## 运行示例程序
 
-这个段落主要讲解了如何编译和运行示例程序。
+This section shows you how to prepare, and run the sample application.
 
 ### 创建Agora账号并获取AppId
 
@@ -24,11 +25,26 @@
 1. 在[agora.io](https://dashboard.agora.io/signin/)创建一个开发者账号
 2. 前往后台页面，点击左部导航栏的 **项目 > 项目列表** 菜单
 3. 复制后台的 **App ID** 并备注，稍后启动应用时会用到它
-4. 下载SDK到 **assets**目录，并改名为**AgoraRTCSDK-2.6.1.js**
 
 ### 集成 Agora 视频 SDK
 
-1. 用浏览器打开 index.html 文件，在对应的输入框里正确输入 APPID, Channel, UID。点击Join Room即可。
+1. 在Terminal中，在您的项目根目录输入`install`命令以安装项目依赖
+    ```shell
+    # install dependencies
+    npm install
+    ```
+2. 输入`run dev`命令以启动Web程序
+    ```shell
+    # serve with hot reload at localhost:8080
+    npm run dev
+    ```
+    输入`npm run build`会压缩静态资源文件，可作为生产环境打包发布。
+    ``` bash
+    # build for production with minification
+    npm run build
+    ```
+3. 你的浏览器默认会打开示例应用程序。
+    **注意** 如果没有自动打开，请在浏览器里手动输入URL `http://localhost:8080`。
 
 ## 联系我们
 

@@ -1,7 +1,7 @@
 {
-  "name": "Agora-Interactive-Broadcasting-Live-Streaming-Injection-Web-Webpack",
+  "name": "Agora-Interactive-Broadcasting-Live-Streaming-Audio-Only-Web-Webpack",
   "version": "2.6.1",
-  "description": "Agora Web SDK tutorial - Agora-Interactive-Broadcasting-Live-Streaming-Injection-Web-Webpack",
+  "description": "Agora Web SDK tutorial - Agora-Interactive-Broadcasting-Live-Streaming-Audio-Only-Web-Webpack",
   "main": "index.js",
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack-dev-server --config ./scripts --mode development",

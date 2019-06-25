@@ -1,7 +1,7 @@
 {
-  "name": "Agora-Web-Tutorial-Webpack-1to1-CDN",
+  "name": "Agora-Interactive-Broadcasting-Live-Streaming-Web-Webpack",
   "version": "2.6.1",
-  "description": "",
+  "description": "Agora Web SDK tutorial - Agora-Interactive-Broadcasting-Live-Streaming-Web-Webpack",
   "main": "index.js",
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack-dev-server --config ./scripts --mode development",

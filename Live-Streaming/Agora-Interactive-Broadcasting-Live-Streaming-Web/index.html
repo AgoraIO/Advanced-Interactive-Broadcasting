@@ -5,13 +5,13 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>CDN LiveStreaming</title>
+  <title>LiveStreaming</title>
   <link rel="stylesheet" href="./assets/common.css">
 </head>
 
 <body>
   <nav class="navbar navbar-light fixed-top agora-primary-bg">
-    <h5>CDN LiveStreaming</h5>
+    <h5>LiveStreaming</h5>
     <a href="https://github.com/AgoraIO/Advanced-Interactive-Broadcasting/tree/master/Live-Streaming/Agora-Interactive-Broadcasting-Live-Streaming-Web" class="agora-github-pin"></a>
   </nav>
   <form id="form">
@@ -286,7 +286,7 @@
         *    Ensure that you set these properties before calling Client.join.
         *  You could find more detail here. https://docs.agora.io/en/Video/API%20Reference/web/interfaces/agorartc.clientconfig.html
       **/
-      rtc.client = AgoraRTC.createClient({ mode: 'rtc', codec: 'h264' });
+      rtc.client = AgoraRTC.createClient({ mode: data.mode, codec: data.codec });
 
       rtc.params = data;
 

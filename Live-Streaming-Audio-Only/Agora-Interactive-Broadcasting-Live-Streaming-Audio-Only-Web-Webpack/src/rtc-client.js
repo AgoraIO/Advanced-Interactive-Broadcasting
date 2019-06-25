@@ -37,7 +37,7 @@ export default class RTCClient {
       var id = remoteStream.getId();
       Toast.info("stream-added uid: " + id)
       if (id !== this._params.uid) {
-        this._client.subscribe(remoteStream, (err) => {
+        this._client.subscribe(remoteStream, {audio: true, video: false}, (err) => {
           console.log("stream subscribe failed", err);
         })
       }
@@ -141,7 +141,7 @@ export default class RTCClient {
           this._localStream = AgoraRTC.createStream({
             streamID: this._params.uid,
             audio: true,
-            video: true,
+            video: false,
             screen: false,
             microphoneId: data.microphoneId,
             cameraId: data.cameraId
