@@ -1,0 +1,5 @@
+.DS_Store
+xcshareddata
+libcrypto.a
+AgoraRtcEngineKit.framework
+AgoraRtcCryptoLoader.framework
