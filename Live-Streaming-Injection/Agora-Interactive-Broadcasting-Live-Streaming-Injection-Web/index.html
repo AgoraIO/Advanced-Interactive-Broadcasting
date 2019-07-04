@@ -5,14 +5,14 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>LiveStreaming Audio Only</title>
+  <title>LiveStreaming RTMP Injection</title>
   <link rel="stylesheet" href="./assets/common.css">
 </head>
 
 <body>
   <nav class="navbar navbar-light fixed-top agora-primary-bg">
-    <h5>LiveStreaming Audio Only</h5>
-    <a href="https://github.com/AgoraIO/Advanced-Interactive-Broadcasting/tree/master/Live-Streaming-Audio-Only/Agora-Interactive-Broadcasting-Live-Streaming-Audio-Only-Web" class="agora-github-pin"></a>
+    <h5>LiveStreaming RTMP Injection</h5>
+    <a href="https://github.com/AgoraIO/Advanced-Interactive-Broadcasting/tree/master/Live-Streaming-Injection/Agora-Interactive-Broadcasting-Live-Streaming-Injection-Web" class="agora-github-pin"></a>
   </nav>
   <form id="form">
     <div class="custom-container container">
@@ -44,10 +44,10 @@
                     class="btn btn-raised btn-primary agora-primary-bg">PUBLISH</button>
                   <button id="unpublish" type="button"
                     class="btn btn-raised btn-primary agora-primary-bg">UNPUBLISH</button>
-                  <button id="startLiveStreaming" type="button"
-                    class="btn btn-raised btn-primary agora-primary-bg">STARTSTREAMING</button>
-                  <button id="stopLiveStreaming" type="button"
-                    class="btn btn-raised btn-primary agora-primary-bg">STOPTSTREAMING</button>
+                  <button id="addInjection" type="button"
+                    class="btn btn-raised btn-primary agora-primary-bg">ADDINJECTION</button>
+                  <button id="removeInjection" type="button"
+                    class="btn btn-raised btn-primary agora-primary-bg">REMOVEINJECTION</button>
                 </div>
               </div>
               <div class="card">
@@ -211,7 +211,7 @@
         var id = remoteStream.getId();
         Toast.info("stream-added uid: " + id)
         if (id !== rtc.params.uid) {
-          rtc.client.subscribe(remoteStream, {video: false, audio: true}, function (err) {
+          rtc.client.subscribe(remoteStream, function (err) {
             console.log("stream subscribe failed", err);
           })
         }
@@ -251,25 +251,11 @@
         Toast.info("onTokenPrivilegeDidExpire")
         console.log("onTokenPrivilegeDidExpire")
       })
-      // Occurs when the live streaming starts.
-      rtc.client.on("liveStreamingStarted", function (evt) {
-        Toast.info("liveStreamingStarted")
-        console.log("liveStreamingStarted", evt)
-      })
-      // Occurs when the live streaming fails.
-      rtc.client.on("liveStreamingFailed", function (evt) {
-        Toast.error("liveStreamingFailed")
-        console.log("liveStreamingFailed", evt)
-      })
-      // Occurs when the live streaming stops.
-      rtc.client.on("liveStreamingStopped", function (evt) {
-        Toast.info("liveStreamingStopped")
-        console.log("liveStreamingStopped", evt)
-      })
-      // Occurs when the live transcoding setting is updated.
-      rtc.client.on("liveTranscodingUpdated", function (evt) {
-        Toast.info("liveTranscodingUpdated")
-        console.log("liveTranscodingUpdated", evt)
+      // Occurs when invoke client.addInjectStreamUrl success;
+      rtc.client.on("streamInjectedStatus", function (evt) {
+        Toast.info("streamInjectedStatus changed");
+        // You could see streamInjectedStatus here.
+        console.log(evt)
       })
     }
 
@@ -330,7 +316,7 @@
           rtc.localStream = AgoraRTC.createStream({
             streamID: rtc.params.uid,
             audio: true,
-            video: false,
+            video: true,
             screen: false,
             microphoneId: data.microphoneId,
             cameraId: data.cameraId
@@ -438,86 +424,24 @@
       })
     }
 
-    function startLiveStreaming(rtc) {
-      var uid = rtc.params.uid;
-      var liveTranscoding = {
-        "180p": {
-          width: 320,
-          height: 180,
-          videoBitrate: 140,
-          videoFramerate: 15,
-          lowLatency: false,
-          audioSampleRate: AgoraRTC.AUDIO_SAMPLE_RATE_48000,
-          audioBitrate: 48,
-          audioChannels: 1,
-          videoGop: 30,
-          videoCodecProfile: AgoraRTC.VIDEO_CODEC_PROFILE_HIGH,
-          userCount: 1,
-          backgroundColor: 0x000000,
-          transcodingUsers: [{
-            uid: uid,
-            alpha: 1,
-            width: 10,
-            height: 10,
-            zOrder: 1,
-            x: 10,
-            y: 10
-          }],
-        },
-        "360p": {
-          width: 640,
-          height: 360,
-          videoBitrate: 400,
-          videoFramerate: 30,
-          lowLatency: false,
-          audioSampleRate: AgoraRTC.AUDIO_SAMPLE_RATE_48000,
-          audioBitrate: 48,
-          audioChannels: 1,
-          videoGop: 30,
-          videoCodecProfile: AgoraRTC.VIDEO_CODEC_PROFILE_HIGH,
-          userCount: 1,
-          backgroundColor: 0x000000,
-          transcodingUsers: [{
-            uid: uid,
-            alpha: 1,
-            width: 10,
-            height: 10,
-            zOrder: 1,
-            x: 10,
-            y: 10
-          }],
-        },
-        "720p": {
-          width: 1280,
-          height: 720,
-          videoBitrate: 1130,
-          videoFramerate: 24,
-          lowLatency: false,
-          audioSampleRate: AgoraRTC.AUDIO_SAMPLE_RATE_48000,
-          audioBitrate: 48,
-          audioChannels: 1,
-          videoGop: 30,
-          videoCodecProfile: AgoraRTC.VIDEO_CODEC_PROFILE_HIGH,
-          userCount: 1,
-          backgroundColor: 0x000000,
-          transcodingUsers: [{
-            uid: uid,
-            alpha: 1,
-            width: 10,
-            height: 10,
-            zOrder: 1,
-            x: 10,
-            y: 10
-          }],
-        }
-      }
-      var transcodingConfig = liveTranscoding[rtc.params.resolution];
-      rtc.client.setLiveTranscoding(transcodingConfig);
-      rtc.client.startLiveStreaming(rtc.params.url);
+    // add rtmp inject stream
+    function addRTMPInjectStream(rtc) {
+      var injectStreamConfig = {
+        width: 640,
+        height: 480,
+        videoGop: 30,
+        videoFramerate: 30,
+        videoBitrate: 500,
+        audioSampleRate: 48000,
+        audioBitrate: 50,
+        audioChannels: 1,
+      };
+      rtc.client.addInjectStreamUrl(rtc.params.url, injectStreamConfig);
     }
 
-    function stopLiveStreaming(rtc) {
-      rtc.client.stopLiveStreaming(rtc.params.url);
+    // remove rtmp inject stream
+    function removeRTMPInjectStream(rtc) {
+      rtc.client.removeInjection(rtc.params.url);
     }
 
     $(function () {
@@ -574,21 +498,21 @@
         }
       })
 
-      $("#startLiveStreaming").on("click", function () {
-        console.log("startLiveStreaming")
+      $("#addInjection").on("click", function () {
+        console.log("addRTMPInjectStream")
         var params = serializeFormData();
         if (validator(params, fields)) {
-          Toast.info("invoke startLiveStreaming")
-          startLiveStreaming(rtc);
+          Toast.info("invoke addRTMPInjectStream")
+          addRTMPInjectStream(rtc);
         }
       });
 
-      $("#stopLiveStreaming").on("click", function () {
-        console.log("stopLiveStreaming")
+      $("#removeInjection").on("click", function () {
+        console.log("removeRTMPInjectStream")
         var params = serializeFormData();
         if (validator(params, fields)) {
-          Toast.info("invoke stopLiveStreaming")
-          stopLiveStreaming(rtc);
+          Toast.info("invoke removeRTMPInjectStream")
+          removeRTMPInjectStream(rtc);
         }
       });
 

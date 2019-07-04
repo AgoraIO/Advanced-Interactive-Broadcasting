@@ -1,14 +1,14 @@
-# Web Tutorial - LiveStreaming Audio Only
+# Web Tutorial - Live Streaming Injection
 
 *[English](README.md) | 中文*
 
-这个开源示例项目演示了如何快速集成 Agora 直播推流 SDK，实现多人语音通话。
+这个开源示例项目演示了如何快速集成 Agora 注入RTMP直播流 SDK，实现多人视频通话。
 
 在这个示例项目中包含了以下功能：
 
 - 加入通话和离开通话:
-- 选择麦克风设备:
-- 设置直播推流url和选择直播推流分辨率，开始推流和停止推流:
+- 选择摄像头和麦克风设备:
+- 设置流url，添加注入和移除注入:
 
 ## 环境准备
 

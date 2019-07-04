@@ -1,14 +1,14 @@
-# Web Tutorial - LiveStreaming Audio Only
+# Web Tutorial - Live Streaming Injection
 
 *English | [中文](README.zh.md)*
 
-This tutorial shows you how to quickly create a audio only live streaming webapp using the Agora sample app.
+This tutorial shows you how to quickly create a live streaming injection webapp using the Agora sample app.
 
 The following features are included in this sample project:
 
 - join and leave room:
-- set microphone device:
-- set live streaming cdn url, resolution, start and stop live streaming publish:
+- set microphone and camera device:
+- inject live streaming cdn url, add and remove live streaming url:
 
 ## Prerequisites
 
