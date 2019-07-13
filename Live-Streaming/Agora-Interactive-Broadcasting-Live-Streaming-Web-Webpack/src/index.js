@@ -50,6 +50,10 @@ $(() => {
 
   let rtc = new RTCClient();
 
+  $("#check_quality").on("change", function () {
+    rtc.setNetworkQualityAndStreamStats(this.checked);
+  })
+
   $("#join").on("click", function () {
     console.log("create")
     const params = serializeFormData();

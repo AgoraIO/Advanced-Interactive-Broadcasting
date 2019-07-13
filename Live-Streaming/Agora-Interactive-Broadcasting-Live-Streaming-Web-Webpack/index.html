@@ -11,6 +11,7 @@
 <body>
   <nav class="navbar navbar-light fixed-top agora-primary-bg">
     <h5>LiveStreaming</h5>
+    <a href="https://github.com/AgoraIO/Advanced-Interactive-Broadcasting/tree/master/Live-Streaming/Agora-Interactive-Broadcasting-Live-Streaming-Web-Webpack" class="agora-github-pin"></a>
   </nav>
   <form id="form">
     <div class="custom-container container">
@@ -45,6 +46,14 @@
                   <button id="startLiveStreaming" type="button" class="btn btn-raised btn-primary agora-primary-bg">STARTSTREAMING</button>
                   <button id="stopLiveStreaming" type="button" class="btn btn-raised btn-primary agora-primary-bg">STOPTSTREAMING</button>
                 </div>
+                <div class="form-group bmd-form-group">
+                  <div class="switch">
+                    <label>
+                      <input type="checkbox" id="check_quality">
+                      Show Network Quality
+                    </label>
+                  </div>
+                </div>
               </div>
               <div class="card">
                 <button class="btn btn-raised agora-expand-btn" id="settings" data-toggle="collapse"
@@ -58,7 +67,7 @@
                       <input type="text" class="form-control" name="uid" id="uid">
                     </div>
                     <div class="form-group">
-                      <label for="resolution" class="bmd-label-floating">RESOLUTION</label>
+                      <label for="resolution" class="bmd-label-floating">LIVE STREAM RESOLUTION</label>
                       <select class="form-control" name="resolution" id="resolution"></select>
                     </div>
                     <div class="form-group">
@@ -111,8 +120,9 @@
             </div>
           </div>
           <div class="video-grid" id="video">
-            <div id="local_stream" class="video-placeholder">
-              <div id="local_video_info" class="video-info"></div>
+            <div class="video-view">
+              <div id="local_stream" class="video-placeholder"></div>
+              <div id="local_video_info" class="video-profile hide"></div>
             </div>
           </div>
         </div>
