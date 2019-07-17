@@ -4,3 +4,4 @@ node_modules
 **/*.*~
 build
 Live-Streaming/Agora-Interactive-Broadcasting-Live-Streaming-Web-Webpack/package-lock.json
+package-lock.json
