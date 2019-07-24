@@ -1,7 +1,7 @@
 {
-  "name": "Agora-Interactive-Broadcasting-Live-Streaming-Audio-Only-Web-Webpack",
+  "name": "Live Streaming Audio Only",
   "version": "2.8.0",
-  "description": "Agora Web SDK tutorial - Agora-Interactive-Broadcasting-Live-Streaming-Audio-Only-Web-Webpack",
+  "description": "Agora Web SDK tutorial - Live-Streaming Audio Only",
   "keywords": [
     "realtime-communication",
     "agora-rtc-sdk",

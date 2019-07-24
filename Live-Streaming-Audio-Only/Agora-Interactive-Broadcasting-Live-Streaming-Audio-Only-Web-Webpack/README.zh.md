@@ -1,13 +1,13 @@
-# Web Tutorial For Webpack - LiveStreaming
+# Web Tutorial For Webpack - LiveStreaming Audio Only
 
 *[English](README.md) | 中文*
 
-这个开源示例项目演示了如何快速集成 Agora 直播推流 SDK，实现多人视频通话。
+这个开源示例项目演示了如何快速集成 Agora 直播推流 SDK，实现多人语音通话。
 
 在这个示例项目中包含了以下功能：
 
 - 加入通话和离开通话:
-- 选择摄像头和麦克风设备:
+- 选择麦克风设备:
 - 设置直播推流url和选择直播推流分辨率，开始推流和停止推流:
 
 ## 环境准备

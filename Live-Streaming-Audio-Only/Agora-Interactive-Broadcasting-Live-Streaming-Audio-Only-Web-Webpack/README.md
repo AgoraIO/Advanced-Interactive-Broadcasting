@@ -1,13 +1,13 @@
-# Web Tutorial For Webpack - LiveStreaming
+# Web Tutorial For Webpack - LiveStreaming Audio Only
 
 *English | [中文](README.zh.md)*
 
-This tutorial shows you how to quickly create a live streaming webapp using the Agora sample app.
+This tutorial shows you how to quickly create a audio only live streaming webapp using the Agora sample app.
 
 The following features are included in this sample project:
 
 - join and leave room:
-- set microphone and camera device:
+- set microphone device:
 - set live streaming cdn url and then start and stop live streaming publish:
   
 

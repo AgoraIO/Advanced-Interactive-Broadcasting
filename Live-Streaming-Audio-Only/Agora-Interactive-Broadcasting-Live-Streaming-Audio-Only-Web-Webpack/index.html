@@ -37,11 +37,15 @@
                 <label for="url" class="active">URL</label>
                 <input type="text" name="url" placeholder="url">
               </div>
-              <div class="row" style="margin: 0">
+              <div class="row" style="margin: auto">
                 <button class="btn btn-raised btn-primary waves-effect waves-light" id="join">JOIN</button>
                 <button class="btn btn-raised btn-primary waves-effect waves-light" id="leave">LEAVE</button>
                 <button class="btn btn-raised btn-primary waves-effect waves-light" id="publish">PUBLISH</button>
                 <button class="btn btn-raised btn-primary waves-effect waves-light" id="unpublish">UNPUBLISH</button>
+              </div>
+              <div class="row"  style="margin: auto; margin-top: 15px">
+                <button id="startLiveStreaming" type="button" class="btn btn-raised btn-primary agora-primary-bg">START STREAMING</button>
+                <button id="stopLiveStreaming" type="button" class="btn btn-raised btn-primary agora-primary-bg">STOPT STREAMING</button>
               </div>
               <div class="row col" style="margin: 0">
                 <div class="switch">
@@ -69,6 +73,10 @@
                   <div class="input-field">
                     <label for="microphoneId" class="active">MICROPHONE</label>
                     <select name="microphoneId" id="microphoneId"></select>
+                  </div>
+                  <div class="input-field">
+                    <label for="resolution" class="active">LIVESTREAM RESOLUTION</label>
+                    <select name="resolution" id="resolution"></select>
                   </div>
                   <div class="row col s12">
                     <div class="row">
@@ -112,6 +120,7 @@
           <div class="video-view">
             <div id="local_stream" class="video-placeholder"></div>
             <div id="local_video_info" class="video-profile hide"></div>
+            <div id="video_autoplay_local" class="autoplay-fallback hide"></div>
           </div>
         </div>
       </div>
