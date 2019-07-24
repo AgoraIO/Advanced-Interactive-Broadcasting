@@ -3,16 +3,16 @@ import * as M from 'materialize-css';
 
 export const resolutions = [
   {
-    name: '480p',
-    value: '480p',
+    name: '180p',
+    value: '180p',
+  },
+  {
+    name: '360p',
+    value: '360p',
   },
   {
     name: '720p',
-    value: '720p',
-  },
-  {
-    name: '1080p',
-    value: '1080p'
+    value: '720p'
   }
 ];
 
@@ -81,6 +81,11 @@ export function addView (id, show) {
     $("<div/>", {
       id: "remote_video_info_" + id,
       class: "video-profile " + (show ? "" :  "hide"),
+    }).appendTo("#remote_video_panel_" + id);
+
+    $("<div/>", {
+      id: "video_autoplay_"+ id,
+      class: "autoplay-fallback hide",
     }).appendTo("#remote_video_panel_" + id);
   }
 }
