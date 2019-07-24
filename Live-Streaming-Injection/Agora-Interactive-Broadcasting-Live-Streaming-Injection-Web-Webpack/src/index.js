@@ -4,11 +4,6 @@ import "./assets/style.scss";
 import * as M from 'materialize-css';
 
 $(() => {
-  $("#settings").on("click", function (e) {
-    e.preventDefault();
-    $(this).open(1);
-  });
-
   getDevices(function (devices) {
     devices.audios.forEach(function (audio) {
       $('<option/>', {
@@ -35,7 +30,7 @@ $(() => {
 
   let rtc = new RTCClient();
 
-  $("#show_quality").on("change", function (e) {
+  $("#show_profile").on("change", function (e) {
     e.preventDefault();
     rtc.setNetworkQualityAndStreamStats(this.checked);
   });

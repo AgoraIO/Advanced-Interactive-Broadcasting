@@ -11,6 +11,8 @@ export default class RTCClient {
     this._localStream = null;
     this._remoteStreams = [];
     this._params = {};
+
+    this._showProfile = false;
   }
 
   handleEvents() {
@@ -37,7 +39,7 @@ export default class RTCClient {
       var id = remoteStream.getId();
       Toast.info("stream-added uid: " + id)
       if (id !== this._params.uid) {
-        this._client.subscribe(remoteStream, {audio: true, video: false}, (err) => {
+        this._client.subscribe(remoteStream, (err) => {
           console.log("stream subscribe failed", err);
         })
       }
@@ -48,8 +50,8 @@ export default class RTCClient {
       const remoteStream = evt.stream;
       const id = remoteStream.getId();
       this._remoteStreams.push(remoteStream);
-      addView(id);
-      remoteStream.play("remote_video_" + id, {fit: "cover", muted: true});
+      addView(id, this._showProfile);
+      remoteStream.play("remote_video_" + id, {fit: "cover"});
       Toast.info('stream-subscribed remote-uid: ' + id);
       console.log('stream-subscribed remote-uid: ', id);
     })
@@ -136,6 +138,13 @@ export default class RTCClient {
           console.log("join channel: " + data.channel + " success, uid: " + uid);
           this._joined = true;
     
+          // start stream interval stats
+          // if you don't need show stream profile you can comment this
+          if (!this._interval) {
+            this._interval = setInterval(() => {
+              this._updateVideoInfo();
+            }, 0);
+          }
           
           // create local stream
           this._localStream = AgoraRTC.createStream({
@@ -151,7 +160,7 @@ export default class RTCClient {
           this._localStream.init(() => {
             console.log("init local stream success");
             // play stream with html element id "local_stream"
-            this._localStream.play("local_stream")
+            this._localStream.play("local_stream", {fit: "cover"})
     
             // run callback
             resolve();
@@ -168,6 +177,48 @@ export default class RTCClient {
         console.error(err);
       });
     })
+  }
+
+  publish () {
+    if (!this._client) {
+      Toast.error("Please Join First");
+      return;
+    }
+    if (this._published) {
+      Toast.error("Your already published");
+      return;
+    }
+    const oldState = this._published;
+  
+    // publish localStream
+    this._client.publish(this._localStream, (err) => {
+      this._published = oldState;
+      console.log("publish failed");
+      Toast.error("publish failed");
+      console.error(err);
+    })
+    Toast.info("publish");
+    this._published = true;
+  }
+
+  unpublish () {
+    if (!this._client) {
+      Toast.error("Please Join First");
+      return;
+    }
+    if (!this._published) {
+      Toast.error("Your didn't publish");
+      return;
+    }
+    const oldState = this._published;
+    this._client.unpublish(this._localStream, (err) => {
+      this._published = oldState;
+      console.log("unpublish failed");
+      Toast.error("unpublish failed")
+      console.error(err);
+    });
+    Toast.info("unpublish");
+    this._published = false;
   }
   
   leave () {
@@ -294,5 +345,36 @@ export default class RTCClient {
     }
     this._client.stopLiveStreaming(this._params.url);
   }
-}
 
+  _updateVideoInfo () {
+    this._localStream && this._localStream.getStats((stats) => {
+      const localStreamProfile = [
+        ['Uid: ', this._localStream.getId()].join(''),
+        ['SDN access delay: ', stats.accessDelay, 'ms'].join(''),
+        ['Video send: ', stats.videoSendFrameRate, 'fps ', stats.videoSendResolutionWidth + 'x' + stats.videoSendResolutionHeight].join(''),
+      ].join('<br/>');
+      $("#local_video_info")[0].innerHTML = localStreamProfile;
+    })
+
+    if (this._remoteStreams.length > 0) {
+      for (let remoteStream of this._remoteStreams) {
+        remoteStream.getStats((stats) => {
+          const remoteStreamProfile = [
+            ['Uid: ', remoteStream.getId()].join(''),
+            ['SDN access delay: ', stats.accessDelay, 'ms'].join(''),
+            ['End to end delay: ', stats.endToEndDelay, 'ms'].join(''),
+            ['Video recv: ', stats.videoReceiveFrameRate, 'fps ', stats.videoReceiveResolutionWidth + 'x' + stats.videoReceiveResolutionHeight].join(''),
+          ].join('<br/>');
+          if ($("#remote_video_info_"+remoteStream.getId())[0]) {
+            $("#remote_video_info_"+remoteStream.getId())[0].innerHTML = remoteStreamProfile;
+          }
+        })
+      }
+    }
+  }
+
+  setNetworkQualityAndStreamStats (enable) {
+    this._showProfile = enable;
+    this._showProfile ? $(".video-profile").removeClass("hide") : $(".video-profile").addClass("hide")
+  }
+}

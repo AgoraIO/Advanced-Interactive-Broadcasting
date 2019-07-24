@@ -2,6 +2,14 @@
   "name": "Agora-Interactive-Broadcasting-Live-Streaming-Audio-Only-Web-Webpack",
   "version": "2.8.0",
   "description": "Agora Web SDK tutorial - Agora-Interactive-Broadcasting-Live-Streaming-Audio-Only-Web-Webpack",
+  "keywords": [
+    "realtime-communication",
+    "agora-rtc-sdk",
+    "webrtc",
+    "agora-example",
+    "webpack",
+    "javascript"
+  ],
   "main": "index.js",
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack-dev-server --config ./scripts --mode development",
@@ -9,10 +17,8 @@
   },
   "dependencies": {
     "agora-rtc-sdk": "^2.8.0",
-    "bootstrap-material-design": "^4.1.2",
     "jquery": "^3.4.1",
-    "popper.js": "^1.15.0",
-    "toastify-js": "^1.5.0"
+    "materialize-css": "^1.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.4.5",
@@ -32,11 +38,6 @@
     "webpack-cli": "^3.3.0",
     "webpack-dev-server": "^3.2.1"
   },
-  "keywords": [
-    "agora",
-    "agora-rtc-sdk",
-    "webrtc"
-  ],
   "author": "agora",
   "license": "ISC"
 }

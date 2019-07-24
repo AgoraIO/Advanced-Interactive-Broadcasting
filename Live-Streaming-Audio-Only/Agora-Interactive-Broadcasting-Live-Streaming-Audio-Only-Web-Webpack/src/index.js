@@ -1,20 +1,11 @@
 import RTCClient from './rtc-client';
-import {getDevices, serializeFormData, validator} from './common';
+import {getDevices, serializeFormData, validator, resolutions} from './common';
 import "./assets/style.scss";
-import 'bootstrap-material-design';
+import * as M from 'materialize-css';
 
 $(() => {
-  let selects = null;
-
-  $('body').bootstrapMaterialDesign();
-  $("#settings").on("click", function (e) {
-    e.preventDefault();
-    $("#settings").toggleClass("btn-raised");
-    $('#setting-collapse').collapse();
-  });
 
   getDevices(function (devices) {
-    selects = devices;
     devices.audios.forEach(function (audio) {
       $('<option/>', {
         value: audio.value,
@@ -27,30 +18,52 @@ $(() => {
         text: video.name,
       }).appendTo("#cameraId");
     })
-    selects.resolutions = [
-      {
-        value: "180p", name: "320x180 15fps 140kbps"
-      },
-      {
-        value: "360p", name: "640x360 30fps 400kbps"
-      },
-      {
-        value: "720p", name: "1280x720 24fps 1130kbps"
-      }
-    ]
-    selects.resolutions.forEach(function (resolution) {
+    resolutions.forEach(function (resolution) {
       $('<option/>', {
         value: resolution.value,
         text: resolution.name,
       }).appendTo("#resolution");
     })
+    M.AutoInit();
   })
 
   const fields = ['appID', 'channel', 'url'];
 
   let rtc = new RTCClient();
 
-  $("#join").on("click", function () {
+  $(".autoplay-fallback").on("click", function (e) {
+    e.preventDefault()
+    const id = e.target.getAttribute("id").split("video_autoplay_")[1]
+    console.log("autoplay fallback")
+    if (id === 'local') {
+      rtc._localStream.resume().then(() => {
+        Toast.notice("local resume")
+        $(e.target).addClass("hide")
+      }).catch((err) => {
+        Toast.error("resume failed, please open console see more details")
+        console.error(err)
+      })
+      return;
+    }
+    const remoteStream = rtc._remoteStreams.find((item) => `${item.getId()}` == id)
+    if (remoteStream) {
+      remoteStream.resume().then(() => {
+        Toast.notice("remote resume")
+        $(e.target).addClass("hide")
+      }).catch((err) => {
+        Toast.error("resume failed, please open console see more details")
+        console.error(err)
+      })
+    }
+  })
+
+  $("#show_profile").on("change", function (e) {
+    e.preventDefault();
+    rtc.setNetworkQualityAndStreamStats(this.checked);
+  })
+
+  $("#join").on("click", function (e) {
+    e.preventDefault();
     console.log("create")
     const params = serializeFormData();
     if (validator(params, fields)) {
@@ -58,7 +71,8 @@ $(() => {
     }
   })
 
-  $("#startLiveStreaming").on("click", function () {
+  $("#startLiveStreaming").on("click", function (e) {
+    e.preventDefault();
     console.log("startLiveStreaming")
     const params = serializeFormData();
     if (validator(params, fields)) {
@@ -66,7 +80,8 @@ $(() => {
     }
   });
 
-  $("#stopLiveStreaming").on("click", function () {
+  $("#stopLiveStreaming").on("click", function (e) {
+    e.preventDefault();
     console.log("stopLiveStreaming")
     const params = serializeFormData();
     if (validator(params, fields)) {
@@ -74,7 +89,26 @@ $(() => {
     }
   });
 
-  $("#leave").on("click", function () {
+  $("#publish").on("click", function (e) {
+    e.preventDefault();
+    console.log("startLiveStreaming")
+    const params = serializeFormData();
+    if (validator(params, fields)) {
+      rtc.publish();
+    }
+  });
+
+  $("#unpublish").on("click", function (e) {
+    e.preventDefault();
+    console.log("stopLiveStreaming")
+    const params = serializeFormData();
+    if (validator(params, fields)) {
+      rtc.unpublish();
+    }
+  });
+
+  $("#leave").on("click", function (e) {
+    e.preventDefault();
     console.log("leave")
     const params = serializeFormData();
     if (validator(params, fields)) {
