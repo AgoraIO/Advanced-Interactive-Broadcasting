@@ -13,6 +13,7 @@ export default class RTCClient {
     this._params = {};
 
     this._showProfile = false;
+    this._liveStreaming = false;
   }
 
   handleEvents() {
@@ -82,6 +83,7 @@ export default class RTCClient {
     // Occurs when the live streaming starts.
     this._client.on("liveStreamingStarted", (evt) => {
       Toast.info("liveStreamingStarted")
+      this._liveStreaming = true;
       console.log("liveStreamingStarted", evt)
     })
     // Occurs when the live streaming fails.
@@ -92,6 +94,7 @@ export default class RTCClient {
     // Occurs when the live streaming stops.
     this._client.on("liveStreamingStopped", (evt) => {
       Toast.info("liveStreamingStopped")
+      this._liveStreaming = false;
       console.log("liveStreamingStopped", evt)
     })
     // Occurs when the live transcoding setting is updated.
@@ -132,7 +135,7 @@ export default class RTCClient {
         console.log("init success");
     
         // join client
-        this._client.join(data.token ? data.token : null, data.channel, data.uid ? data.uid : null, (uid) => {
+        this._client.join(data.token ? data.token : null, data.channel, data.uid ? +data.uid : null, (uid) => {
           this._params.uid = uid;
           Toast.notice("join channel: " + data.channel + " success, uid: " + uid);
           console.log("join channel: " + data.channel + " success, uid: " + uid);
@@ -279,11 +282,11 @@ export default class RTCClient {
         transcodingUsers: [{
           uid,
           alpha: 1,
-          width: 10,
-          height: 10,
+          width: 320 / 2,
+          height: 180,
           zOrder: 1,
-          x: 10,
-          y: 10
+          x: 0,
+          y: 0
         }],
       },
       "360p": {
@@ -302,11 +305,11 @@ export default class RTCClient {
         transcodingUsers: [{
           uid,
           alpha: 1,
-          width: 10,
-          height: 10,
+          width: 640 / 2,
+          height: 360,
           zOrder: 1,
-          x: 10,
-          y: 10
+          x: 0,
+          y: 0
         }],
       },
       "720p": {
@@ -325,17 +328,101 @@ export default class RTCClient {
         transcodingUsers: [{
           uid,
           alpha: 1,
-          width: 10,
-          height: 10,
+          width: 1280 / 2,
+          height: 720,
           zOrder: 1,
-          x: 10,
-          y: 10
+          x: 0,
+          y: 0
         }],
       }
     }
     const transcodingConfig = liveTranscoding[this._params.resolution];
+    console.log("setLiveTranscoding", transcodingConfig)
     this._client.setLiveTranscoding(transcodingConfig);
-    this._client.startLiveStreaming(this._params.url);
+    this._client.startLiveStreaming(this._params.url, true);
+  }
+
+  // you can still update live transcoding when you already start live streaming
+  updateLiveTranscoding () {
+    if (!this._liveStreaming) {
+      Toast.error("Please Start Streaming First!");
+      return;
+    }
+    const uid = +this._params.uid;
+    const liveTranscoding = {
+      "180p": {
+        width: 320,
+        height: 180,
+        videoBitrate: 140,
+        videoFramerate: 15,
+        lowLatency: false,
+        audioSampleRate: AgoraRTC.AUDIO_SAMPLE_RATE_48000,
+        audioBitrate: 48,
+        audioChannels: 1,
+        videoGop: 30,
+        videoCodecProfile: AgoraRTC.VIDEO_CODEC_PROFILE_HIGH,
+        userCount: 1,
+        backgroundColor: 0x000000,
+        transcodingUsers: [{
+          uid,
+          alpha: 1,
+          width: 320 / 2,
+          height: 180,
+          zOrder: 1,
+          x: 0,
+          y: 0
+        }],
+      },
+      "360p": {
+        width: 640,
+        height: 360,
+        videoBitrate: 400,
+        videoFramerate: 30,
+        lowLatency: false,
+        audioSampleRate: AgoraRTC.AUDIO_SAMPLE_RATE_48000,
+        audioBitrate: 48,
+        audioChannels: 1,
+        videoGop: 30,
+        videoCodecProfile: AgoraRTC.VIDEO_CODEC_PROFILE_HIGH,
+        userCount: 1,
+        backgroundColor: 0x000000,
+        transcodingUsers: [{
+          uid,
+          alpha: 1,
+          width: 640 / 2,
+          height: 360,
+          zOrder: 1,
+          x: 0,
+          y: 0
+        }],
+      },
+      "720p": {
+        width: 1280,
+        height: 720,
+        videoBitrate: 1130,
+        videoFramerate: 24,
+        lowLatency: false,
+        audioSampleRate: AgoraRTC.AUDIO_SAMPLE_RATE_48000,
+        audioBitrate: 48,
+        audioChannels: 1,
+        videoGop: 30,
+        videoCodecProfile: AgoraRTC.VIDEO_CODEC_PROFILE_HIGH,
+        userCount: 1,
+        backgroundColor: 0x000000,
+        transcodingUsers: [{
+          uid,
+          alpha: 1,
+          width: 1280 / 2,
+          height: 720,
+          zOrder: 1,
+          x: 0,
+          y: 0
+        }],
+      }
+    }
+    const transcodingConfig = liveTranscoding[this._params.resolution];
+    console.log("setLiveTranscoding", transcodingConfig)
+    this._client.setLiveTranscoding(transcodingConfig);
   }
     
   stopLiveStreaming () {
