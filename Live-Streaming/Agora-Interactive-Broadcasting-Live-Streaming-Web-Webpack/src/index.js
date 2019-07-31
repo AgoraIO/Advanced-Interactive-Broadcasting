@@ -67,7 +67,9 @@ $(() => {
     console.log("create")
     const params = serializeFormData();
     if (validator(params, fields)) {
-      rtc.join(params);
+      rtc.join(params).then(() => {
+        rtc.publish()
+      })
     }
   })
 
@@ -79,6 +81,15 @@ $(() => {
       rtc.startLiveStreaming();
     }
   });
+
+  $("#updateLiveStreaming").on('click', function (e) {
+    e.preventDefault();
+    console.log("startLiveStreaming")
+    const params = serializeFormData();
+    if (validator(params, fields)) {
+      rtc.updateLiveTranscoding();
+    }
+  })
 
   $("#stopLiveStreaming").on("click", function (e) {
     e.preventDefault();
