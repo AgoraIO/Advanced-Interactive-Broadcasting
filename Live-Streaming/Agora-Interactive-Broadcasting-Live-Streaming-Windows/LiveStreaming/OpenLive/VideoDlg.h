@@ -87,6 +87,7 @@ protected:
 	afx_msg LRESULT OnStopRecordingService(WPARAM wParam, LPARAM lParam);
 	afx_msg LRESULT OnApiCallExecuted(WPARAM wParam, LPARAM lParam);
 
+	afx_msg LRESULT OnRtmpStateChanged(WPARAM wParam, LPARAM lParam);
 	DECLARE_MESSAGE_MAP()
 
 protected:

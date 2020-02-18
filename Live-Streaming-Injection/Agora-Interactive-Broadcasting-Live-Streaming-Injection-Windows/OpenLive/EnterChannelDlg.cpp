@@ -101,6 +101,8 @@ void CEnterChannelDlg::InitCtrls()
 
 	m_ctrInJectedUrl.MoveWindow(ClientRect.Width() / 2 - 150,130,300,22 ,TRUE);
 	m_ctrInJectedUrl.SetTip(L"Injected URL");
+	m_ctrInJectedUrl.SetFocus();
+	m_ctrChannel.SetFocus();
 
 	m_ctrRole.Create(WS_CHILD | WS_VISIBLE | CBS_DROPDOWNLIST | CBS_OWNERDRAWVARIABLE, CRect(ClientRect.Width() / 2 + 1, 168, 180, 32), this, IDC_CMBROLE_CHANNEL);
 	m_ctrRole.MoveWindow(ClientRect.Width() / 2 + 40, 78, 130, 22, TRUE);
@@ -244,3 +246,20 @@ void CEnterChannelDlg::SetVideoString(LPCTSTR lpVideoString)
 	m_btnSetup.SetWindowText(lpVideoString);
 }
 
+
+void CEnterChannelDlg::SetCtrlPos()
+{
+	CRect ClientRect;
+
+	GetClientRect(&ClientRect);
+	m_ctrChannel.MoveWindow(ClientRect.Width() / 2 - 150, 33, 300, 22, TRUE);
+
+	m_ctrPassword.MoveWindow(ClientRect.Width() / 2 - 150, 82, 120, 22, TRUE);
+	m_ctrRole.MoveWindow(ClientRect.Width() / 2 + 40, 78, 130, 22, TRUE);
+
+	int height = 36;
+	m_btnJoin.MoveWindow(ClientRect.Width() / 2 - 180, 310, 350, height, TRUE);
+	m_btnTest.MoveWindow(ClientRect.Width() / 2 - 180, 355, 108, height, TRUE);
+	m_btnSetup.MoveWindow(ClientRect.Width() / 2 - 60, 355, 240, height, TRUE);
+	m_ctrInJectedUrl.MoveWindow(ClientRect.Width() / 2 - 150, 130, 300, 22, TRUE);//m_btnTest downside
+}

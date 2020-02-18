@@ -1,4 +1,4 @@
-// AGHyperLink.cpp : 实现文件
+// AGHyperLink.cpp : implement file
 //
 
 #include "stdafx.h"
@@ -36,7 +36,7 @@ BEGIN_MESSAGE_MAP(CAGHyperLink, CStatic)
 	ON_WM_MOUSELEAVE()
 END_MESSAGE_MAP()
 
-// CAGHyperLink 消息处理程序
+// CAGHyperLink Message Handler
 void CAGHyperLink::PreSubclassWindow()
 {
 	// We want to get mouse clicks via STN_CLICKED
@@ -69,7 +69,7 @@ void CAGHyperLink::PreSubclassWindow()
 
 void CAGHyperLink::OnMouseMove(UINT nFlags, CPoint point)
 {
-	// TODO:  在此添加消息处理程序代码和/或调用默认值
+	
 	if (!m_bOverControl){
 		m_bOverControl = TRUE;
 		Invalidate(FALSE);
@@ -90,7 +90,7 @@ void CAGHyperLink::OnMouseMove(UINT nFlags, CPoint point)
 
 BOOL CAGHyperLink::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message)
 {
-	// TODO:  在此添加消息处理程序代码和/或调用默认值
+	
 	m_hLinkCursor = ::LoadCursor(NULL, IDC_HAND);
 	if (m_hLinkCursor != NULL) {
 		::SetCursor(m_hLinkCursor);
@@ -103,7 +103,7 @@ BOOL CAGHyperLink::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message)
 
 void CAGHyperLink::OnStnClicked()
 {
-	// TODO:  在此添加控件通知处理程序代码
+	
 	m_bOverControl = FALSE;
 
 	HINSTANCE hInstance = ::ShellExecute(GetParent()->GetSafeHwnd(), _T("open"), m_strURL, NULL, NULL, SW_MAXIMIZE);
@@ -155,8 +155,6 @@ COLORREF CAGHyperLink::GetHoverColor() const
 void CAGHyperLink::OnPaint()
 {
 	CPaintDC dc(this); // device context for painting
-	// TODO:  在此处添加消息处理程序代码
-	// 不为绘图消息调用 CStatic::OnPaint()
 
 	CString strWindowText;
 	CRect	rcClient;
@@ -178,7 +176,7 @@ void CAGHyperLink::OnPaint()
 
 void CAGHyperLink::OnMouseLeave()
 {
-	// TODO:  在此添加消息处理程序代码和/或调用默认值
+	
 	m_bTrackMouseEvent = FALSE;
 	m_bOverControl = FALSE;
 	Invalidate(FALSE);
