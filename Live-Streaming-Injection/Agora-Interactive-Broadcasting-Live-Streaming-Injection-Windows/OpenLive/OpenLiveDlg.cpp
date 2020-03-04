@@ -194,7 +194,7 @@ void COpenLiveDlg::InitChildDialog()
 
 	m_dlgEnterChannel.MoveWindow(110, 70, 500, 450, TRUE);
 	m_dlgSetup.MoveWindow(110, 70, 500, 450, TRUE);
-
+	m_dlgEnterChannel.SetCtrlPos();
 	m_dlgEnterChannel.ShowWindow(SW_SHOW);
 	m_lpCurDialog = &m_dlgEnterChannel;
 
@@ -376,8 +376,8 @@ LRESULT COpenLiveDlg::OnNetworkQuality(WPARAM wParam, LPARAM lParam)
 {
 	LPAGE_NETWORK_QUALITY lpData = (LPAGE_NETWORK_QUALITY)wParam;
 
-	if (m_nNetworkQuality != lpData->quality) {
-		m_nNetworkQuality = lpData->quality;
+	if (m_nNetworkQuality != lpData->rxQuality) {
+		m_nNetworkQuality = lpData->rxQuality;
 		InvalidateRect(CRect(16, 40, 48, 72), TRUE);
 	}
 

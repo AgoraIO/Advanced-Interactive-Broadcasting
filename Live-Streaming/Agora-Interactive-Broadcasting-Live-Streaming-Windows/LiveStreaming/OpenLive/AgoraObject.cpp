@@ -783,6 +783,7 @@ BOOL CAgoraObject::GetSEIInfoByIndex(int nIndex, LPSEI_INFO lpSEIInfo)
 BOOL CAgoraObject::EnableSEIPush(BOOL bEnable, COLORREF crBack)
 {
 	CStringA	strBackColor;
+#if 0
 	VideoCompositingLayout layout;
 	int	nRet = 0;
 
@@ -828,6 +829,8 @@ BOOL CAgoraObject::EnableSEIPush(BOOL bEnable, COLORREF crBack)
 	delete[] lpRegion;
 
 	return nRet == 0 ? TRUE : FALSE;
+#endif
+	return TRUE;
 }
 
 BOOL CAgoraObject::EnableH264Compatible()

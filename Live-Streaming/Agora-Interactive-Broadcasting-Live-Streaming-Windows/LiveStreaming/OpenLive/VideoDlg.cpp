@@ -55,7 +55,8 @@ BEGIN_MESSAGE_MAP(CVideoDlg, CDialogEx)
 	ON_MESSAGE(WM_MSGID(EID_FIRST_REMOTE_VIDEO_DECODED), &CVideoDlg::OnEIDFirstRemoteFrameDecoded)
 	ON_MESSAGE(WM_MSGID(EID_USER_JOINED),&CVideoDlg::OnEIDUserJoined)
 	ON_MESSAGE(WM_MSGID(EID_USER_OFFLINE), &CVideoDlg::OnEIDUserOffline)
-	
+
+	ON_MESSAGE(WM_MSGID(EID_RTMP_STATE_CHANGED), &CVideoDlg::OnRtmpStateChanged)
 	ON_MESSAGE(WM_MSGID(EID_REMOTE_VIDEO_STAT), &CVideoDlg::OnRemoteVideoStat)
 
 	ON_MESSAGE(WM_MSGID(EID_START_RCDSRV), &CVideoDlg::OnStartRecordingService)
@@ -780,8 +781,11 @@ LRESULT CVideoDlg::OnEIDJoinChannelSuccess(WPARAM wParam, LPARAM lParam)
 	lpAgoraObject->SetSEIInfo(lpAgoraObject->GetSelfUID(), &seiInfo);
 	m_lstUid.emplace_back(lpData->uid);
 	SetAgoraPublishLayout();
-	delete lpData;
 
+	delete[] lpData->channel;
+	lpData->channel = NULL;
+	delete lpData;
+	lpData = NULL;
 	return 0;
 }
 
@@ -822,15 +826,18 @@ LRESULT CVideoDlg::OnEIDFirstRemoteFrameDecoded(WPARAM wParam, LPARAM lParam)
 {
 	LPAGE_FIRST_REMOTE_VIDEO_DECODED lpData = (LPAGE_FIRST_REMOTE_VIDEO_DECODED)wParam;
 	m_lstUid.emplace_back(lpData->uid);
+	if (lpData){
+		delete lpData;
+		lpData = NULL;
+	}
 	SetAgoraPublishLayout();
 	return false;
 }
 
 LRESULT CVideoDlg::OnEIDUserJoined(WPARAM wParam, LPARAM lParam)
 {
-	LPAGE_FIRST_REMOTE_VIDEO_DECODED lpData = (LPAGE_FIRST_REMOTE_VIDEO_DECODED)wParam;
+	LPAGE_USER_JOINED lpData = (LPAGE_USER_JOINED)wParam;
 	BOOL bFound = FALSE;
-	SEI_INFO seiInfo;
 
 	POSITION pos = m_listWndInfo.GetHeadPosition();
 	while (pos != NULL) {
@@ -845,26 +852,13 @@ LRESULT CVideoDlg::OnEIDUserJoined(WPARAM wParam, LPARAM lParam)
 		AGVIDEO_WNDINFO agvWndInfo;
 		memset(&agvWndInfo, 0, sizeof(AGVIDEO_WNDINFO));
 		agvWndInfo.nUID = lpData->uid;
-		agvWndInfo.nWidth = lpData->width;
-		agvWndInfo.nHeight = lpData->height;
-
 		m_listWndInfo.AddTail(agvWndInfo);
 	}
-
-	RebindVideoWnd();
-
-	memset(&seiInfo, 0, sizeof(SEI_INFO));
-
-	seiInfo.nUID = lpData->uid;
-	seiInfo.nWidth = lpData->width;
-	seiInfo.nHeight = lpData->height;
-	CAgoraObject::GetAgoraObject()->SetSEIInfo(seiInfo.nUID, &seiInfo);
 
 	delete lpData;
 
 	return 0;
 }
-
 LRESULT CVideoDlg::OnEIDUserOffline(WPARAM wParam, LPARAM lParam)
 {
 	LPAGE_USER_OFFLINE lpData = (LPAGE_USER_OFFLINE)wParam;
@@ -1283,4 +1277,55 @@ void CVideoDlg::OnShowWindow(BOOL bShow, UINT nStatus)
 		else
 			m_cbxRole.SetCurSel(1);
 	}
+}
+
+LRESULT CVideoDlg::OnRtmpStateChanged(WPARAM wParam, LPARAM lParam)
+{
+	LPAGE_RTMP_STATE_DATA lpData = (LPAGE_RTMP_STATE_DATA)wParam;
+	if (lpData){
+		CString errMsg;
+		switch (lpData->error){
+		case RTMP_STREAM_PUBLISH_ERROR_INVALID_ARGUMENT:
+			errMsg = _T("参数无效。请检查输入参数是否正确。");
+			break;
+		case RTMP_STREAM_PUBLISH_ERROR_ENCRYPTED_STREAM_NOT_ALLOWED:
+			errMsg = _T("推流已加密，不能推流。");
+			break;
+		case RTMP_STREAM_PUBLISH_ERROR_CONNECTION_TIMEOUT:
+		//	errMsg = _T("推流超时未成功。调用 addPublishStreamUrl 重新推流。");
+			CAgoraObject::GetAgoraObject()->AddPublishStreamUrl(lpData->url, bTranscoding);
+			break;
+		case RTMP_STREAM_PUBLISH_ERROR_INTERNAL_SERVER_ERROR:
+			errMsg = _T("推流服务器出现错误。");
+			break;
+		case RTMP_STREAM_PUBLISH_ERROR_RTMP_SERVER_ERROR:
+			errMsg = _T("RTMP 服务器出现错误。");
+			break;
+		case RTMP_STREAM_PUBLISH_ERROR_TOO_OFTEN:
+			errMsg = _T("推流请求过于频繁。");
+			break;
+		case RTMP_STREAM_PUBLISH_ERROR_REACH_LIMIT:
+			errMsg = _T("单个主播的推流地址数目达到上线 10。");
+			break;
+		case RTMP_STREAM_PUBLISH_ERROR_NOT_AUTHORIZED:
+			errMsg = _T("单个主播的推流地址数目达到上线 10。");
+			break;
+		case RTMP_STREAM_PUBLISH_ERROR_STREAM_NOT_FOUND:
+			errMsg = _T("服务器未找到这个流。");
+			break;
+		case RTMP_STREAM_PUBLISH_ERROR_FORMAT_NOT_SUPPORTED:
+			errMsg = _T("推流地址格式有错误。请检查推流地址格式是否正确。");
+			break;
+		default:
+			break;
+		}
+		if (!errMsg.IsEmpty()){
+			AfxMessageBox(errMsg);
+		}
+		delete lpData;
+		lpData = NULL;
+	}
+
+
+	return 0;
 }
