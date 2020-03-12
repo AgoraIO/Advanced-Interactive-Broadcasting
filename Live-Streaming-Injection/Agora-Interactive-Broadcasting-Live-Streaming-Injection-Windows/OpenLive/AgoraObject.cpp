@@ -865,6 +865,7 @@ BOOL CAgoraObject::StreamInjected(LPCTSTR lpInjectedURL)
 
 		return nRet == 0 ? TRUE : FALSE;
 	}
+    return FALSE;
 }
 
 BOOL CAgoraObject::EnableWhiteboardVer(BOOL bEnable)

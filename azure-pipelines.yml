@@ -9,3 +9,10 @@ jobs:
       workingDirectory: 'Live-Streaming/Agora-Interactive-Broadcasting-Live-Streaming-Windows/LiveStreaming'
       scheme: 'Agora-Interactive-Broadcasting-Live-Streaming-Windows'
       sdkurl: $(WindowsRTCSDK)
+
+  - template: cicd/templates/build-windows-LiveStreaming-Injection.yml
+    parameters:
+      displayName: 'WindowsLiveStreamingInjection'
+      workingDirectory: 'Live-Streaming-Injection\Agora-Interactive-Broadcasting-Live-Streaming-Injection-Windows'
+      scheme: 'Agora-Interactive-Broadcasting-Live-Streaming-Injection-Windows'
+      sdkurl: $(WindowsRTCSDK)
