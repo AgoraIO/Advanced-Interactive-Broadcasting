@@ -1,0 +1,18 @@
+variables:
+  WindowsRTCSDK: 'https://download.agora.io/sdk/release/Agora_Native_SDK_for_Windows(x86)_v2_9_3_FULL.zip'
+ 
+jobs:
+    
+  - template: cicd/templates/build-windows-LiveStreaming.yml
+    parameters:
+      displayName: 'WindowsLiveStreaming'
+      workingDirectory: 'Live-Streaming/Agora-Interactive-Broadcasting-Live-Streaming-Windows/LiveStreaming'
+      scheme: 'Agora-Interactive-Broadcasting-Live-Streaming-Windows'
+      sdkurl: $(WindowsRTCSDK)
+
+  - template: cicd/templates/build-windows-LiveStreaming-Injection.yml
+    parameters:
+      displayName: 'WindowsLiveStreamingInjection'
+      workingDirectory: 'Live-Streaming-Injection\Agora-Interactive-Broadcasting-Live-Streaming-Injection-Windows'
+      scheme: 'Agora-Interactive-Broadcasting-Live-Streaming-Injection-Windows'
+      sdkurl: $(WindowsRTCSDK)
