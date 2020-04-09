@@ -1,117 +1,117 @@
-import RTCClient from './rtc-client';
-import {getDevices, serializeFormData, validator, resolutions} from './common';
-import "./assets/style.scss";
-import * as M from 'materialize-css';
+import RTCClient from './rtc-client'
+import {getDevices, Toast, serializeFormData, validator, resolutions} from './common'
+import './assets/style.css'
+import * as M from 'materialize-css'
 
 $(() => {
-  getDevices(function (devices) {
-    devices.audios.forEach(function (audio) {
-      $('<option/>', {
-        value: audio.value,
-        text: audio.name,
-      }).appendTo("#microphoneId");
+    getDevices(function (devices) {
+        devices.audios.forEach(function (audio) {
+            $('<option/>', {
+                value: audio.value,
+                text: audio.name,
+            }).appendTo('#microphoneId')
+        })
+        devices.videos.forEach(function (video) {
+            $('<option/>', {
+                value: video.value,
+                text: video.name,
+            }).appendTo('#cameraId')
+        })
+        resolutions.forEach(function (resolution) {
+            $('<option/>', {
+                value: resolution.value,
+                text: resolution.name,
+            }).appendTo('#resolution')
+        })
+        M.AutoInit()
     })
-    devices.videos.forEach(function (video) {
-      $('<option/>', {
-        value: video.value,
-        text: video.name,
-      }).appendTo("#cameraId");
+
+    const fields = ['appID', 'channel', 'url']
+
+    let rtc = new RTCClient()
+
+    $('.autoplay-fallback').on('click', function (e) {
+        e.preventDefault()
+        const id = e.target.getAttribute('id').split('video_autoplay_')[1]
+        console.log('autoplay fallback')
+        if (id === 'local') {
+            rtc._localStream.resume().then(() => {
+                Toast.notice('local resume')
+                $(e.target).addClass('hide')
+            }).catch((err) => {
+                Toast.error('resume failed, please open console see more details')
+                console.error(err)
+            })
+            return
+        }
+        const remoteStream = rtc._remoteStreams.find((item) => `${item.getId()}` == id)
+        if (remoteStream) {
+            remoteStream.resume().then(() => {
+                Toast.notice('remote resume')
+                $(e.target).addClass('hide')
+            }).catch((err) => {
+                Toast.error('resume failed, please open console see more details')
+                console.error(err)
+            })
+        }
     })
-    resolutions.forEach(function (resolution) {
-      $('<option/>', {
-        value: resolution.value,
-        text: resolution.name,
-      }).appendTo("#resolution");
+
+    $('#show_profile').on('change', function (e) {
+        e.preventDefault()
+        rtc.setNetworkQualityAndStreamStats(this.checked)
     })
-    M.AutoInit();
-  })
 
-  const fields = ['appID', 'channel', 'url'];
+    $('#join').on('click', function (e) {
+        e.preventDefault()
+        console.log('create')
+        const params = serializeFormData()
+        if (validator(params, fields)) {
+            rtc.join(params)
+        }
+    })
 
-  let rtc = new RTCClient();
+    $('#addInjection').on('click', function (e) {
+        e.preventDefault()
+        console.log('addInjection')
+        const params = serializeFormData()
+        if (validator(params, fields)) {
+            rtc.addRTMPInjectStream()
+        }
+    })
 
-  $(".autoplay-fallback").on("click", function (e) {
-    e.preventDefault()
-    const id = e.target.getAttribute("id").split("video_autoplay_")[1]
-    console.log("autoplay fallback")
-    if (id === 'local') {
-      rtc._localStream.resume().then(() => {
-        Toast.notice("local resume")
-        $(e.target).addClass("hide")
-      }).catch((err) => {
-        Toast.error("resume failed, please open console see more details")
-        console.error(err)
-      })
-      return;
-    }
-    const remoteStream = rtc._remoteStreams.find((item) => `${item.getId()}` == id)
-    if (remoteStream) {
-      remoteStream.resume().then(() => {
-        Toast.notice("remote resume")
-        $(e.target).addClass("hide")
-      }).catch((err) => {
-        Toast.error("resume failed, please open console see more details")
-        console.error(err)
-      })
-    }
-  })
+    $('#removeInjection').on('click', function (e) {
+        e.preventDefault()
+        console.log('removeInjection')
+        const params = serializeFormData()
+        if (validator(params, fields)) {
+            rtc.removeRTMPInjectStream()
+        }
+    })
 
-  $("#show_profile").on("change", function (e) {
-    e.preventDefault();
-    rtc.setNetworkQualityAndStreamStats(this.checked);
-  });
+    $('#publish').on('click', function (e) {
+        e.preventDefault()
+        console.log('startLiveStreaming')
+        const params = serializeFormData()
+        if (validator(params, fields)) {
+            rtc.publish()
+        }
+    })
 
-  $("#join").on("click", function (e) {
-    e.preventDefault();
-    console.log("create")
-    const params = serializeFormData();
-    if (validator(params, fields)) {
-      rtc.join(params);
-    }
-  })
+    $('#unpublish').on('click', function (e) {
+        e.preventDefault()
+        console.log('stopLiveStreaming')
+        const params = serializeFormData()
+        if (validator(params, fields)) {
+            rtc.unpublish()
+        }
+    })
 
-  $("#addInjection").on("click", function (e) {
-    e.preventDefault();
-    console.log("addInjection")
-    const params = serializeFormData();
-    if (validator(params, fields)) {
-      rtc.addRTMPInjectStream();
-    }
-  });
-
-  $("#removeInjection").on("click", function (e) {
-    e.preventDefault();
-    console.log("removeInjection")
-    const params = serializeFormData();
-    if (validator(params, fields)) {
-      rtc.removeRTMPInjectStream();
-    }
-  });
-
-  $("#publish").on("click", function (e) {
-    e.preventDefault();
-    console.log("startLiveStreaming")
-    const params = serializeFormData();
-    if (validator(params, fields)) {
-      rtc.publish();
-    }
-  });
-
-  $("#unpublish").on("click", function (e) {
-    e.preventDefault();
-    console.log("stopLiveStreaming")
-    const params = serializeFormData();
-    if (validator(params, fields)) {
-      rtc.unpublish();
-    }
-  });
-
-  $("#leave").on("click", function (e) {
-    e.preventDefault();
-    console.log("leave")
-    const params = serializeFormData();
-    if (validator(params, fields)) {
-      rtc.leave();
-    }
-  })
+    $('#leave').on('click', function (e) {
+        e.preventDefault()
+        console.log('leave')
+        const params = serializeFormData()
+        if (validator(params, fields)) {
+            rtc.leave()
+        }
+    })
 })
