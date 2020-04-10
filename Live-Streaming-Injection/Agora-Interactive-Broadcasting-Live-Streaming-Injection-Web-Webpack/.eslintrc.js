@@ -3,7 +3,7 @@ module.exports = {
         'browser': true,
         'es6': true,
         'node': true,
-        "jquery": true,
+        'jquery': true,
     },
     'extends': 'eslint:recommended',
     'globals': {
@@ -17,7 +17,7 @@ module.exports = {
     'rules': {
         'indent': [
             'warn',
-            4
+            2
         ],
         'linebreak-style': [
             'warn',
@@ -31,6 +31,6 @@ module.exports = {
             'warn',
             'never'
         ],
-        "no-unused-vars": 0,
+        'no-unused-vars': 0,
     }
 }
