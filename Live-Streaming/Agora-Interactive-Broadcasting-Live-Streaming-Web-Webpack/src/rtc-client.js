@@ -1,119 +1,119 @@
-import AgoraRTC from 'agora-rtc-sdk';
-import {Toast, addView, removeView} from './common';
+import AgoraRTC from 'agora-rtc-sdk'
+import {Toast, addView, removeView} from './common'
 
-console.log("agora sdk version: " + AgoraRTC.VERSION + " compatible: " + AgoraRTC.checkSystemRequirements());
+console.log('agora sdk version: ' + AgoraRTC.VERSION + ' compatible: ' + AgoraRTC.checkSystemRequirements())
 
 export default class RTCClient {
   constructor () {
-    this._client = null;
-    this._joined = false;
-    this._published = false;
-    this._localStream = null;
-    this._remoteStreams = [];
-    this._params = {};
+    this._client = null
+    this._joined = false
+    this._published = false
+    this._localStream = null
+    this._remoteStreams = []
+    this._params = {}
 
-    this._showProfile = false;
-    this._liveStreaming = false;
+    this._showProfile = false
+    this._liveStreaming = false
   }
 
   handleEvents() {
-    this._client.on("error", (err) => {
+    this._client.on('error', (err) => {
       console.log(err)
     })
     // Occurs when the peer user leaves the channel; for example, the peer user calls Client.leave.
-    this._client.on("peer-leave", (evt) => {
-      var id = evt.uid;
+    this._client.on('peer-leave', (evt) => {
+      var id = evt.uid
       if (id != this._params.uid) {
-        removeView(id);
+        removeView(id)
       }
-      Toast.notice("peer leave")
-      console.log('peer-leave', id);
+      Toast.notice('peer leave')
+      console.log('peer-leave', id)
     })
     // Occurs when the local stream is _published.
-    this._client.on("stream-published", (evt) => {
-      Toast.notice("stream published success")
-      console.log("stream-published");
+    this._client.on('stream-published', (evt) => {
+      Toast.notice('stream published success')
+      console.log('stream-published')
     })
     // Occurs when the remote stream is added.
-    this._client.on("stream-added", (evt) => {  
-      var remoteStream = evt.stream;
-      var id = remoteStream.getId();
-      Toast.info("stream-added uid: " + id)
+    this._client.on('stream-added', (evt) => {  
+      var remoteStream = evt.stream
+      var id = remoteStream.getId()
+      Toast.info('stream-added uid: ' + id)
       if (id !== this._params.uid) {
         this._client.subscribe(remoteStream, (err) => {
-          console.log("stream subscribe failed", err);
+          console.log('stream subscribe failed', err)
         })
       }
-      console.log('stream-added remote-uid: ', id);
-    });
+      console.log('stream-added remote-uid: ', id)
+    })
     // Occurs when a user subscribes to a remote stream.
-    this._client.on("stream-subscribed", (evt) => {
-      const remoteStream = evt.stream;
-      const id = remoteStream.getId();
-      this._remoteStreams.push(remoteStream);
-      addView(id, this._showProfile);
-      remoteStream.play("remote_video_" + id, {fit: "cover"});
-      Toast.info('stream-subscribed remote-uid: ' + id);
-      console.log('stream-subscribed remote-uid: ', id);
+    this._client.on('stream-subscribed', (evt) => {
+      const remoteStream = evt.stream
+      const id = remoteStream.getId()
+      this._remoteStreams.push(remoteStream)
+      addView(id, this._showProfile)
+      remoteStream.play('remote_video_' + id, {fit: 'cover'})
+      Toast.info('stream-subscribed remote-uid: ' + id)
+      console.log('stream-subscribed remote-uid: ', id)
     })
     // Occurs when the remote stream is removed; for example, a peer user calls Client.unpublish.
-    this._client.on("stream-removed", (evt) => {
-      const remoteStream = evt.stream;
-      const id = remoteStream.getId();
-      Toast.info("stream-removed uid: " + id)
-      remoteStream.stop("remote_video_" + id);
+    this._client.on('stream-removed', (evt) => {
+      const remoteStream = evt.stream
+      const id = remoteStream.getId()
+      Toast.info('stream-removed uid: ' + id)
+      remoteStream.stop('remote_video_' + id)
       this._remoteStreams = this._remoteStreams.filter((stream) => {
         return stream.getId() !== id
       })
-      removeView(id);
-      console.log('stream-removed remote-uid: ', id);
+      removeView(id)
+      console.log('stream-removed remote-uid: ', id)
     })
-    this._client.on("onTokenPrivilegeWillExpire", () => {
+    this._client.on('onTokenPrivilegeWillExpire', () => {
       // After requesting a new token
       // this._client.renewToken(token);
-      Toast.info("onTokenPrivilegeWillExpire")
-      console.log("onTokenPrivilegeWillExpire")
-    });
-    this._client.on("onTokenPrivilegeDidExpire", () => {
+      Toast.info('onTokenPrivilegeWillExpire')
+      console.log('onTokenPrivilegeWillExpire')
+    })
+    this._client.on('onTokenPrivilegeDidExpire', () => {
       // After requesting a new token
       // client.renewToken(token);
-      Toast.info("onTokenPrivilegeDidExpire")
-      console.log("onTokenPrivilegeDidExpire")
+      Toast.info('onTokenPrivilegeDidExpire')
+      console.log('onTokenPrivilegeDidExpire')
     })
     // Occurs when the live streaming starts.
-    this._client.on("liveStreamingStarted", (evt) => {
-      Toast.info("liveStreamingStarted")
-      this._liveStreaming = true;
-      console.log("liveStreamingStarted", evt)
+    this._client.on('liveStreamingStarted', (evt) => {
+      Toast.info('liveStreamingStarted')
+      this._liveStreaming = true
+      console.log('liveStreamingStarted', evt)
     })
     // Occurs when the live streaming fails.
-    this._client.on("liveStreamingFailed", (evt) => {
-      Toast.error("liveStreamingFailed")
-      console.log("liveStreamingFailed", evt)
+    this._client.on('liveStreamingFailed', (evt) => {
+      Toast.error('liveStreamingFailed')
+      console.log('liveStreamingFailed', evt)
     })
     // Occurs when the live streaming stops.
-    this._client.on("liveStreamingStopped", (evt) => {
-      Toast.info("liveStreamingStopped")
-      this._liveStreaming = false;
-      console.log("liveStreamingStopped", evt)
+    this._client.on('liveStreamingStopped', (evt) => {
+      Toast.info('liveStreamingStopped')
+      this._liveStreaming = false
+      console.log('liveStreamingStopped', evt)
     })
     // Occurs when the live transcoding setting is updated.
-    this._client.on("liveTranscodingUpdated", (evt) => {
-      Toast.info("liveTranscodingUpdated")
-      console.log("liveTranscodingUpdated", evt)
+    this._client.on('liveTranscodingUpdated', (evt) => {
+      Toast.info('liveTranscodingUpdated')
+      console.log('liveTranscodingUpdated', evt)
     })
   }
 
   join (data) {
     return new Promise((resolve, reject) => {
       if (this._client) {
-        Toast.error("Your already create client");
-        return;
+        Toast.error('Your already create client')
+        return
       }
     
       if (this._joined) {
-        Toast.error("Your already joined");
-        return;
+        Toast.error('Your already joined')
+        return
       }
     
       /**
@@ -123,30 +123,30 @@ export default class RTCClient {
        *    Ensure that you set these properties before calling Client.join.
        *  You could find more detail here. https://docs.agora.io/en/Video/API%20Reference/web/interfaces/agorartc.clientconfig.html
       **/
-      this._client = AgoraRTC.createClient({mode: data.mode, codec: data.codec});
+      this._client = AgoraRTC.createClient({mode: data.mode, codec: data.codec})
     
-      this._params = data;
+      this._params = data
     
       // handle AgoraRTC client event
-      this.handleEvents();
+      this.handleEvents()
     
       // init client
       this._client.init(data.appID, () => {
-        console.log("init success");
+        console.log('init success')
     
         // join client
         this._client.join(data.token ? data.token : null, data.channel, data.uid ? +data.uid : null, (uid) => {
-          this._params.uid = uid;
-          Toast.notice("join channel: " + data.channel + " success, uid: " + uid);
-          console.log("join channel: " + data.channel + " success, uid: " + uid);
-          this._joined = true;
+          this._params.uid = uid
+          Toast.notice('join channel: ' + data.channel + ' success, uid: ' + uid)
+          console.log('join channel: ' + data.channel + ' success, uid: ' + uid)
+          this._joined = true
     
           // start stream interval stats
           // if you don't need show stream profile you can comment this
           if (!this._interval) {
             this._interval = setInterval(() => {
-              this._updateVideoInfo();
-            }, 0);
+              this._updateVideoInfo()
+            }, 0)
           }
           
           // create local stream
@@ -161,112 +161,112 @@ export default class RTCClient {
     
           // init local stream
           this._localStream.init(() => {
-            console.log("init local stream success");
+            console.log('init local stream success')
             // play stream with html element id "local_stream"
-            this._localStream.play("local_stream", {fit: "cover"})
+            this._localStream.play('local_stream', {fit: 'cover'})
     
             // run callback
-            resolve();
+            resolve()
           }, (err) =>  {
-            Toast.error("stream init failed, please open console see more detail")
-            console.error("init local stream failed ", err);
+            Toast.error('stream init failed, please open console see more detail')
+            console.error('init local stream failed ', err)
           })
         }, function(err) {
-          Toast.error("client join failed, please open console see more detail")
-          console.error("client join failed", err)
+          Toast.error('client join failed, please open console see more detail')
+          console.error('client join failed', err)
         })
       }, (err) => {
-        Toast.error("client init failed, please open console see more detail")
-        console.error(err);
-      });
+        Toast.error('client init failed, please open console see more detail')
+        console.error(err)
+      })
     })
   }
 
   publish () {
     if (!this._client) {
-      Toast.error("Please Join First");
-      return;
+      Toast.error('Please Join First')
+      return
     }
     if (this._published) {
-      Toast.error("Your already published");
-      return;
+      Toast.error('Your already published')
+      return
     }
-    const oldState = this._published;
+    const oldState = this._published
   
     // publish localStream
     this._client.publish(this._localStream, (err) => {
-      this._published = oldState;
-      console.log("publish failed");
-      Toast.error("publish failed");
-      console.error(err);
+      this._published = oldState
+      console.log('publish failed')
+      Toast.error('publish failed')
+      console.error(err)
     })
-    Toast.info("publish");
-    this._published = true;
+    Toast.info('publish')
+    this._published = true
   }
 
   unpublish () {
     if (!this._client) {
-      Toast.error("Please Join First");
-      return;
+      Toast.error('Please Join First')
+      return
     }
     if (!this._published) {
-      Toast.error("Your didn't publish");
-      return;
+      Toast.error('Your didn\'t publish')
+      return
     }
-    const oldState = this._published;
+    const oldState = this._published
     this._client.unpublish(this._localStream, (err) => {
-      this._published = oldState;
-      console.log("unpublish failed");
-      Toast.error("unpublish failed")
-      console.error(err);
-    });
-    Toast.info("unpublish");
-    this._published = false;
+      this._published = oldState
+      console.log('unpublish failed')
+      Toast.error('unpublish failed')
+      console.error(err)
+    })
+    Toast.info('unpublish')
+    this._published = false
   }
   
   leave () {
     if (!this._client) {
-      Toast.error("Please Join First!");
-      return;
+      Toast.error('Please Join First!')
+      return
     }
     if (!this._joined) {
-      Toast.error("You are not in channel");
-      return;
+      Toast.error('You are not in channel')
+      return
     }
     // leave channel
     this._client.leave(() => {
       // close stream
-      this._localStream.close();
+      this._localStream.close()
       // stop stream
-      this._localStream.stop();
+      this._localStream.stop()
       while (this._remoteStreams.length > 0) {
-        const stream = this._remoteStreams.shift();
+        const stream = this._remoteStreams.shift()
         const id = stream.getId()
-        stream.stop();
-        removeView(id);
+        stream.stop()
+        removeView(id)
       }
-      this._localStream = null;
-      this._remoteStreams = [];
-      this._client = null;
-      console.log("client leaves channel success");
-      this._published = false;
-      this._joined = false;
-      Toast.notice("leave success")
+      this._localStream = null
+      this._remoteStreams = []
+      this._client = null
+      console.log('client leaves channel success')
+      this._published = false
+      this._joined = false
+      Toast.notice('leave success')
     }, (err) => {
-      console.log("channel leave failed");
-      Toast.error("leave success")
-      console.error(err);
+      console.log('channel leave failed')
+      Toast.error('leave success')
+      console.error(err)
     })
   }
   
   startLiveStreaming () {
     if (!this._client) {
-      Toast.error("Please Join First!");
-      return;
+      Toast.error('Please Join First!')
+      return
     }
-    const uid = this._params.uid;
+    const uid = this._params.uid
     const liveTranscoding = {
-      "180p": {
+      '180p': {
         width: 320,
         height: 180,
         videoBitrate: 140,
@@ -289,7 +289,7 @@ export default class RTCClient {
           y: 0
         }],
       },
-      "360p": {
+      '360p': {
         width: 640,
         height: 360,
         videoBitrate: 400,
@@ -312,7 +312,7 @@ export default class RTCClient {
           y: 0
         }],
       },
-      "720p": {
+      '720p': {
         width: 1280,
         height: 720,
         videoBitrate: 1130,
@@ -336,21 +336,21 @@ export default class RTCClient {
         }],
       }
     }
-    const transcodingConfig = liveTranscoding[this._params.resolution];
-    console.log("setLiveTranscoding", transcodingConfig)
-    this._client.setLiveTranscoding(transcodingConfig);
-    this._client.startLiveStreaming(this._params.url, true);
+    const transcodingConfig = liveTranscoding[this._params.resolution]
+    console.log('setLiveTranscoding', transcodingConfig)
+    this._client.setLiveTranscoding(transcodingConfig)
+    this._client.startLiveStreaming(this._params.url, true)
   }
 
   // you can still update live transcoding when you already start live streaming
   updateLiveTranscoding () {
     if (!this._liveStreaming) {
-      Toast.error("Please Start Streaming First!");
-      return;
+      Toast.error('Please Start Streaming First!')
+      return
     }
-    const uid = +this._params.uid;
+    const uid = +this._params.uid
     const liveTranscoding = {
-      "180p": {
+      '180p': {
         width: 320,
         height: 180,
         videoBitrate: 140,
@@ -373,7 +373,7 @@ export default class RTCClient {
           y: 0
         }],
       },
-      "360p": {
+      '360p': {
         width: 640,
         height: 360,
         videoBitrate: 400,
@@ -396,7 +396,7 @@ export default class RTCClient {
           y: 0
         }],
       },
-      "720p": {
+      '720p': {
         width: 1280,
         height: 720,
         videoBitrate: 1130,
@@ -420,17 +420,17 @@ export default class RTCClient {
         }],
       }
     }
-    const transcodingConfig = liveTranscoding[this._params.resolution];
-    console.log("setLiveTranscoding", transcodingConfig)
-    this._client.setLiveTranscoding(transcodingConfig);
+    const transcodingConfig = liveTranscoding[this._params.resolution]
+    console.log('setLiveTranscoding', transcodingConfig)
+    this._client.setLiveTranscoding(transcodingConfig)
   }
     
   stopLiveStreaming () {
     if (!this._client) {
-      Toast.error("Please Join First!");
-      return;
+      Toast.error('Please Join First!')
+      return
     }
-    this._client.stopLiveStreaming(this._params.url);
+    this._client.stopLiveStreaming(this._params.url)
   }
 
   _updateVideoInfo () {
@@ -439,8 +439,8 @@ export default class RTCClient {
         ['Uid: ', this._localStream.getId()].join(''),
         ['SDN access delay: ', stats.accessDelay, 'ms'].join(''),
         ['Video send: ', stats.videoSendFrameRate, 'fps ', stats.videoSendResolutionWidth + 'x' + stats.videoSendResolutionHeight].join(''),
-      ].join('<br/>');
-      $("#local_video_info")[0].innerHTML = localStreamProfile;
+      ].join('<br/>')
+      $('#local_video_info')[0].innerHTML = localStreamProfile
     })
 
     if (this._remoteStreams.length > 0) {
@@ -451,9 +451,9 @@ export default class RTCClient {
             ['SDN access delay: ', stats.accessDelay, 'ms'].join(''),
             ['End to end delay: ', stats.endToEndDelay, 'ms'].join(''),
             ['Video recv: ', stats.videoReceiveFrameRate, 'fps ', stats.videoReceiveResolutionWidth + 'x' + stats.videoReceiveResolutionHeight].join(''),
-          ].join('<br/>');
-          if ($("#remote_video_info_"+remoteStream.getId())[0]) {
-            $("#remote_video_info_"+remoteStream.getId())[0].innerHTML = remoteStreamProfile;
+          ].join('<br/>')
+          if ($('#remote_video_info_'+remoteStream.getId())[0]) {
+            $('#remote_video_info_'+remoteStream.getId())[0].innerHTML = remoteStreamProfile
           }
         })
       }
@@ -461,8 +461,8 @@ export default class RTCClient {
   }
 
   setNetworkQualityAndStreamStats (enable) {
-    this._showProfile = enable;
-    this._showProfile ? $(".video-profile").removeClass("hide") : $(".video-profile").addClass("hide")
+    this._showProfile = enable
+    this._showProfile ? $('.video-profile').removeClass('hide') : $('.video-profile').addClass('hide')
   }
 }
 
