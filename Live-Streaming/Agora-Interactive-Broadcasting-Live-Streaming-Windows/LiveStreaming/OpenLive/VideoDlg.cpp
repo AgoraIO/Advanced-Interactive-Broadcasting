@@ -773,14 +773,10 @@ LRESULT CVideoDlg::OnEIDJoinChannelSuccess(WPARAM wParam, LPARAM lParam)
 	
 	lpAgoraObject->SetSelfUID(lpData->uid);
 
-	SEI_INFO seiInfo;
-	if (lpAgoraObject->GetSEIInfo(0, &seiInfo))
-		seiInfo.nUID = lpAgoraObject->GetSelfUID();
-
-	lpAgoraObject->RemoveSEIInfo(0);
-	lpAgoraObject->SetSEIInfo(lpAgoraObject->GetSelfUID(), &seiInfo);
-	m_lstUid.emplace_back(lpData->uid);
-	SetAgoraPublishLayout();
+ m_lstUid.emplace_back(lpData->uid);
+ SetAgoraPublishLayout();
+ if (!rtmp_url.empty())
+  lpAgoraObject->AddPublishStreamUrl(rtmp_url.c_str(), bTranscoding);
 
 	delete[] lpData->channel;
 	lpData->channel = NULL;

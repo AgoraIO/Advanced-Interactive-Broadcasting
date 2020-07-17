@@ -361,11 +361,6 @@ LRESULT COpenLiveDlg::OnJoinChannel(WPARAM wParam, LPARAM lParam)
 
     lpAgoraObject->SetMsgHandlerWnd(m_dlgVideo.GetSafeHwnd());
     
-	if (!m_rtmp_url.empty()){
-
-		lpAgoraObject->AddPublishStreamUrl(m_rtmp_url.c_str(), bTranscoding);
-	}
-	
 	return 0;
 }
 
@@ -407,6 +402,7 @@ LRESULT COpenLiveDlg::OnSetPublishRtmp(WPARAM wParam, LPARAM lParam)
 		m_rtmp_url = publishdlg.publish_rtmp_url;
 		bTranscoding = publishdlg.bTranscoding && !m_rtmp_url.empty();
 		m_dlgVideo.bTranscoding = bTranscoding;
+  m_dlgVideo.rtmp_url = publishdlg.publish_rtmp_url;
 		m_dlgVideo.liveTranscoding = publishdlg.liveTranscoding;
 		m_dlgVideo.water_type = (CVideoDlg::WATERMARK_TYPE)publishdlg.m_watertype;
 		m_dlgVideo.rcWaterMark = publishdlg.rcWaterMark;
