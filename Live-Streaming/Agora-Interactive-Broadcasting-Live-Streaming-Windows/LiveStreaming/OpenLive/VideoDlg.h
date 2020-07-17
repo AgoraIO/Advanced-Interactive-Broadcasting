@@ -176,7 +176,7 @@ private:	// data
 	std::list<unsigned int> m_lstUid;
 public:
 	bool bTranscoding;
- std::string rtmp_url;
+	std::string rtmp_url;
 	LiveTranscoding liveTranscoding;
 	CString waterMarkUrl;
 	CRect       rcWaterMark;
