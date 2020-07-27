@@ -773,14 +773,10 @@ LRESULT CVideoDlg::OnEIDJoinChannelSuccess(WPARAM wParam, LPARAM lParam)
 	
 	lpAgoraObject->SetSelfUID(lpData->uid);
 
-	SEI_INFO seiInfo;
-	if (lpAgoraObject->GetSEIInfo(0, &seiInfo))
-		seiInfo.nUID = lpAgoraObject->GetSelfUID();
-
-	lpAgoraObject->RemoveSEIInfo(0);
-	lpAgoraObject->SetSEIInfo(lpAgoraObject->GetSelfUID(), &seiInfo);
 	m_lstUid.emplace_back(lpData->uid);
 	SetAgoraPublishLayout();
+	if (!rtmp_url.empty())
+	lpAgoraObject->AddPublishStreamUrl(rtmp_url.c_str(), bTranscoding);
 
 	delete[] lpData->channel;
 	lpData->channel = NULL;
@@ -1286,35 +1282,35 @@ LRESULT CVideoDlg::OnRtmpStateChanged(WPARAM wParam, LPARAM lParam)
 		CString errMsg;
 		switch (lpData->error){
 		case RTMP_STREAM_PUBLISH_ERROR_INVALID_ARGUMENT:
-			errMsg = _T("²ÎÊýÎÞÐ§¡£Çë¼ì²éÊäÈë²ÎÊýÊÇ·ñÕýÈ·¡£");
+			errMsg = _T("å‚æ•°æ— æ•ˆã€‚è¯·æ£€æŸ¥è¾“å…¥å‚æ•°æ˜¯å¦æ­£ç¡®ã€‚");
 			break;
 		case RTMP_STREAM_PUBLISH_ERROR_ENCRYPTED_STREAM_NOT_ALLOWED:
-			errMsg = _T("ÍÆÁ÷ÒÑ¼ÓÃÜ£¬²»ÄÜÍÆÁ÷¡£");
+			errMsg = _T("æŽ¨æµå·²åŠ å¯†ï¼Œä¸èƒ½æŽ¨æµã€‚");
 			break;
 		case RTMP_STREAM_PUBLISH_ERROR_CONNECTION_TIMEOUT:
-		//	errMsg = _T("ÍÆÁ÷³¬Ê±Î´³É¹¦¡£µ÷ÓÃ addPublishStreamUrl ÖØÐÂÍÆÁ÷¡£");
+		//	errMsg = _T("æŽ¨æµè¶…æ—¶æœªæˆåŠŸã€‚è°ƒç”¨ addPublishStreamUrl é‡æ–°æŽ¨æµã€‚");
 			CAgoraObject::GetAgoraObject()->AddPublishStreamUrl(lpData->url, bTranscoding);
 			break;
 		case RTMP_STREAM_PUBLISH_ERROR_INTERNAL_SERVER_ERROR:
-			errMsg = _T("ÍÆÁ÷·þÎñÆ÷³öÏÖ´íÎó¡£");
+			errMsg = _T("æŽ¨æµæœåŠ¡å™¨å‡ºçŽ°é”™è¯¯ã€‚");
 			break;
 		case RTMP_STREAM_PUBLISH_ERROR_RTMP_SERVER_ERROR:
-			errMsg = _T("RTMP ·þÎñÆ÷³öÏÖ´íÎó¡£");
+			errMsg = _T("RTMP æœåŠ¡å™¨å‡ºçŽ°é”™è¯¯ã€‚");
 			break;
 		case RTMP_STREAM_PUBLISH_ERROR_TOO_OFTEN:
-			errMsg = _T("ÍÆÁ÷ÇëÇó¹ýÓÚÆµ·±¡£");
+			errMsg = _T("æŽ¨æµè¯·æ±‚è¿‡äºŽé¢‘ç¹ã€‚");
 			break;
 		case RTMP_STREAM_PUBLISH_ERROR_REACH_LIMIT:
-			errMsg = _T("µ¥¸öÖ÷²¥µÄÍÆÁ÷µØÖ·ÊýÄ¿´ïµ½ÉÏÏß 10¡£");
+			errMsg = _T("å•ä¸ªä¸»æ’­çš„æŽ¨æµåœ°å€æ•°ç›®è¾¾åˆ°ä¸Šçº¿ 10ã€‚");
 			break;
 		case RTMP_STREAM_PUBLISH_ERROR_NOT_AUTHORIZED:
-			errMsg = _T("µ¥¸öÖ÷²¥µÄÍÆÁ÷µØÖ·ÊýÄ¿´ïµ½ÉÏÏß 10¡£");
+			errMsg = _T("å•ä¸ªä¸»æ’­çš„æŽ¨æµåœ°å€æ•°ç›®è¾¾åˆ°ä¸Šçº¿ 10ã€‚");
 			break;
 		case RTMP_STREAM_PUBLISH_ERROR_STREAM_NOT_FOUND:
-			errMsg = _T("·þÎñÆ÷Î´ÕÒµ½Õâ¸öÁ÷¡£");
+			errMsg = _T("æœåŠ¡å™¨æœªæ‰¾åˆ°è¿™ä¸ªæµã€‚");
 			break;
 		case RTMP_STREAM_PUBLISH_ERROR_FORMAT_NOT_SUPPORTED:
-			errMsg = _T("ÍÆÁ÷µØÖ·¸ñÊ½ÓÐ´íÎó¡£Çë¼ì²éÍÆÁ÷µØÖ·¸ñÊ½ÊÇ·ñÕýÈ·¡£");
+			errMsg = _T("æŽ¨æµåœ°å€æ ¼å¼æœ‰é”™è¯¯ã€‚è¯·æ£€æŸ¥æŽ¨æµåœ°å€æ ¼å¼æ˜¯å¦æ­£ç¡®ã€‚");
 			break;
 		default:
 			break;
